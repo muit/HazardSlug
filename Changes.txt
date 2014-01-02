@@ -1,0 +1,20 @@
+-fix- eje "y" invertido
+-Added- camara 
+-Added- Bloques de Mapa
+-Added- Perlin Noise Implementado
+-Added- Principio de generacion de mapas
+-Added- Base de Datos Global - Npcs
+-Added- Enemigos(Inacabado)
+-Added- Stats
+-Added- Recoleccion de Cubos->Items
+-Added- Inventario
+-Added- Base de Datos Global - Items
+-Added- Gravedad de Cubos, Bloques y Jugadores
+-Added- Player
+-Added- Cubos flotantes
+-Added- Items
+-Added- Objetos de Juego(GameObjects)
+-Added- Frames
+-Added- Sprites
+-Added- Base de dinamicas(Game)
+-Added- Motor Gráfico
