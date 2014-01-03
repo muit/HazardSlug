@@ -16,7 +16,6 @@ import com.base.game.gameobject.item.Item;
  */
 public class Block extends Item{
     public static final float SIZE = 16;
-    
     private Player player;
     private Game game;
     private Chunk chunk;

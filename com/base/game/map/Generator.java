@@ -6,13 +6,11 @@
 
 package com.base.game.map;
 
-import com.base.util.Util;
-
 /**
  *
  * @author Miguel_F
  */
-public class GeneratorPerlin {
+public class Generator {
     private  int chunkNum;
     private  int frequency;
     private  int amplitude;
@@ -35,7 +33,7 @@ public class GeneratorPerlin {
         chunkPoints = new int[chunkNum][frequency];
         for (int[] chunkPoint : chunkPoints) {
             for (int o = 0; o < frequency; o++) {
-                chunkPoint[o] = Util.random(0,amplitude);
+                chunkPoint[o] = random(0,amplitude);
             }
         }
     }
@@ -80,5 +78,8 @@ public class GeneratorPerlin {
         return Math.round((float)(P*Math.pow(x,3) + Q*Math.pow(x,2) + R*x + S));
     }
     
-    
+    private static int random(int min, int max)
+    {
+        return (int)(min + (Math.random() * ((max - min) + 1)));
+    }
 }

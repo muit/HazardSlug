@@ -25,7 +25,16 @@ public class Chunk {
     }
     public void update()
     {
-        
+        for(int x = 0; x<cubes.length; x++)
+        {
+            for(int y = 0; y<cubes.length;y++)
+            { 
+            if(cubes[x][y].getId()!=0)
+            {
+                cubes[x][y].update();
+            }
+            }
+        }
     }
     public void render()
     {

@@ -12,9 +12,10 @@ package com.base.game.map;
  */
 public class Map {
     private Chunk chunks[];
-    public Map(int cSize)
+    private GeneratorMidpoint mp = new GeneratorMidpoint();
+    public Map(int Size)
     {
-        chunks = new Chunk[cSize];
+        mp.generate(Size);
     }
     
     public void load()
@@ -32,16 +33,21 @@ public class Map {
     
     public void update()
     {
-        for (Chunk chunk : chunks) {
+        /*
+        for (Chunk chunk : chunks) 
+        {
             if(chunk!=null)
                 chunk.update();
         }
+        */
     }
     public void render()
     {
+        /*
         for (Chunk chunk : chunks) {
             if(chunk!=null)
                 chunk.render();
         }
+        */
     }
 }

@@ -41,9 +41,9 @@ public class Player extends GameObject
     @Override
     public void update()
     {
-        if(x<=-100)
+        if(y<=-100)
         {
-            System.out.println(stats.getName()+"");
+            System.out.println("Murio al caer al vacio.");
             //die();
         }
     }

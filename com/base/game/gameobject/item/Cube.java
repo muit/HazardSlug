@@ -39,7 +39,7 @@ public class Cube extends Item {
     @Override
     public void update()
     {
-        if(y<=100)
+        if(y<=-100)
         {
             remove = true;
             return;

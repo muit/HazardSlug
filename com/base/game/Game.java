@@ -20,7 +20,7 @@ import org.lwjgl.opengl.Display;
 public class Game 
 {
     private final ArrayList<GameObject> objects;
-    private final Map map = new Map(7);
+    private final Map map = new Map(0);
     private final ArrayList<GameObject> remove;
     private final Player player;
     private final Camera cam = new Camera();

@@ -48,4 +48,9 @@ public class Item extends GameObject {
             gSpeed+=db.getItemGravity(id);
         return gSpeed;
     }
+    
+    public int getId()
+    {
+        return id;
+    }
 }
