@@ -53,4 +53,9 @@ public class Item extends GameObject {
     {
         return id;
     }
+    
+    public void setId(int id)
+    {
+        this.id = id;
+    }
 }

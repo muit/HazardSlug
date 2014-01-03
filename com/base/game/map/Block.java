@@ -16,17 +16,11 @@ import com.base.game.gameobject.item.Item;
  */
 public class Block extends Item{
     public static final float SIZE = 16;
-    private Player player;
-    private Game game;
-    private Chunk chunk;
     
-    public Block(int x, int y, int id, Game game, Chunk chunk)
+    public Block(int x, int y, int id)
     {
-        this.player = game.getPlayer();
         this.id = id;
-        this.game = game;
-        this.chunk = chunk;
-        init(db.getItemName(id), x, y, 1.0f, 0.5f, 0, SIZE, SIZE);
+        init(db.getItemName(id), x*SIZE, y*SIZE, 1.0f, 0.5f, 0, SIZE, SIZE);
     }
     
     @Override

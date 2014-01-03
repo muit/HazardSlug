@@ -22,6 +22,11 @@ public class Chunk {
         this.chunkSizeX = 32;
         this.chunkSizeY = 200;
         cubes = new Block[chunkSizeX][chunkSizeY];
+        for(int x = 0; x<cubes.length; x++)
+            for(int y = 0; y<cubes[x].length; y++)
+            {
+                cubes[x][y] = new Block(x,y, 0);
+            }
     }
     public void update()
     {
@@ -29,10 +34,10 @@ public class Chunk {
         {
             for(int y = 0; y<cubes.length;y++)
             { 
-            if(cubes[x][y].getId()!=0)
-            {
-                cubes[x][y].update();
-            }
+                if(cubes[x][y].getId()!=0)
+                {
+                    cubes[x][y].update();
+                }
             }
         }
     }
@@ -45,6 +50,14 @@ public class Chunk {
                 cube.render();
             }
         }
+    }
+    public Block[][] getBlocks()
+    {
+        return cubes;
+    }
+    public void setBlock(int x, int y, int id)
+    {
+        cubes[x][y].setId(id);
     }
     public Block[] getXLineWhereY(int y)
     {

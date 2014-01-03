@@ -12,10 +12,13 @@ package com.base.game.map;
  */
 public class Map {
     private Chunk chunks[];
+    private int ChunkMapSize;
     private GeneratorMidpoint mp = new GeneratorMidpoint();
     public Map(int Size)
     {
-        mp.generate(Size);
+        ChunkMapSize = 1024*(int)Math.pow(2,Size)+1024;;
+        chunks = new Chunk[ChunkMapSize];
+        mp.generate(ChunkMapSize, chunks);
     }
     
     public void load()

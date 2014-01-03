@@ -19,12 +19,11 @@ public class GeneratorMidpoint {
     private int chunksNum;
     private Chunk chunks[];
     private Vector vects[];
-    private Vector vect = new Vector(2);
-    public void generate(int Size)
+    public void generate(int Size, Chunk[] chunks)
     {
         //Size 0-pequeño 1-mediano 2-grande 3-enorme
-        chunksNum = 1024*(int)Math.pow(2,Size)+1024;
-        chunks = new Chunk[chunksNum];
+        chunksNum = Size;
+        this.chunks = chunks;
         vects = new Vector[chunksNum*32+1];
         
         //nivel de creacion 1
@@ -61,7 +60,14 @@ public class GeneratorMidpoint {
         }
         
     }
-    
+    public Chunk generateChunk()
+    {
+        Chunk chunk = new Chunk();
+        //////////////////
+        
+        //////////////////
+        return chunk;
+    }
     private Vector genPoint(Vector y1, Vector y2)
     {
         if(y1.get(1)<y2.get(1))
