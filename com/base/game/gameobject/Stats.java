@@ -11,12 +11,13 @@ package com.base.game.gameobject;
 public class Stats {
     private String name;
     private int health;
-    private int maxHealth;
+    private int maxHealth=0;
     private int energy;
-    private int maxEnergy;
-    private int invSpace;
+    private int maxEnergy=0;
+    private int invSpace = 12;
     private int level;
     private int xp;
+    private float speed = 5;
     private boolean jumping;
     private boolean leveable;
     
@@ -36,10 +37,7 @@ public class Stats {
             
         name= "";
         health = maxHealth;
-        maxHealth = 0;
-        energy = 0;
-        maxEnergy = 0;
-        invSpace = 8;
+        energy = maxEnergy;
         
         jumping=false;
     }
@@ -128,5 +126,13 @@ public class Stats {
     public void setJumping(boolean jumping)
     {
         this.jumping = jumping;
+    }
+    public float getSpeed()
+    {
+        return speed/16;
+    }
+    public void setSpeed(float speed)
+    {
+        this.speed = speed;
     }
 }

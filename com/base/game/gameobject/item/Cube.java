@@ -7,6 +7,7 @@ package com.base.game.gameobject.item;
 import com.base.engine.Physics;
 import com.base.game.Game;
 import com.base.game.gameobject.Player;
+import static com.base.game.gameobject.item.Item.db;
 
 /**
  *
@@ -40,7 +41,7 @@ public class Cube extends Item {
     @Override
     public void update()
     {
-        if(y<=-100)
+        if(y<=-16)
         {
             remove = true;
             return;
@@ -53,7 +54,7 @@ public class Cube extends Item {
         }
         else
         {
-            fisic(-1);
+            fisic();
         }
     }
     

@@ -24,8 +24,7 @@ public class Player extends GameObject
     public Player(float X, float Y, Game game)
     {
         this.game = game;
-        init(0, X, Y, 0.1f,1f,0.25f,SIZE,SIZE);
-        this.type = 1;
+        init(1, X, Y, 0.1f,1f,0.25f,SIZE,SIZE);
     }
     
     public void getInput()

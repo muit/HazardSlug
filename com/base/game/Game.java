@@ -8,6 +8,7 @@ import com.base.data.DataBase;
 import com.base.engine.Camera;
 import com.base.engine.GameObject;
 import com.base.game.gameobject.Player;
+import com.base.game.gameobject.enemy.Babosa_Azul;
 import com.base.game.gameobject.item.Cube;
 import com.base.game.map.Map;
 import java.util.ArrayList;
@@ -33,10 +34,12 @@ public class Game
         player = new Player(0, 5, this);
         
         objects.add(player);
+        objects.add(new Babosa_Azul(1, -8, 1));
         //WORLD//////////////////////
         
         //ITEMS//////////////////////
         objects.add(new Cube(1, 5, 3, this));
+        objects.add(new Cube(-1, 5, 4, this));
     }
     
     public void getInput()
@@ -85,14 +88,14 @@ public class Game
     {
         return player;
     }
-    public GameObject[] sphereCollide(float x, float y, float radius)
+    public ArrayList<GameObject> sphereCollide(float x, float y, float radius)
     {
         ArrayList<GameObject> res = new ArrayList<>();
         for(GameObject go : objects)
         {
-            if(Util.dist(go.getX(), go.getY(), x, y)< radius)
+            if(Util.dist(go.getX(), go.getY(), x, y) <= radius)
                 res.add(go);
         }
-        return (GameObject[])res.toArray();
+        return res;
     }
 }

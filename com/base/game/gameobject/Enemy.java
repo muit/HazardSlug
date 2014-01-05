@@ -5,7 +5,6 @@
 package com.base.game.gameobject;
 
 import com.base.engine.GameObject;
-import com.base.engine.Main;
 import com.base.game.Util;
 
 /**
@@ -16,6 +15,10 @@ public class Enemy extends GameObject
 {
     private Stats stats;
     private GameObject target;
+    private boolean justEnterCombat=false;
+    protected int MELE_RANGE=0;
+    protected int VISION_RANGE=0;
+    protected int DISTANCE_RANGE=0;
     
     public Enemy (int level)
     {
@@ -28,19 +31,29 @@ public class Enemy extends GameObject
     public void update()
     {
         if(target==null)
+        {
+            if(justEnterCombat)
+                justEnterCombat = false;
             look();
+        }
         else
         {
+            if(!justEnterCombat)
+            {
+                justEnterCombat = true;
+                justEnterCombat();
+            }
             chase();
             if(Util.LineOfSight(this,target))
                 attack();
         }
         if(stats.getHealth()<=0)
-            die();
+            justDied();
     }
     
     protected void look()
     {
+        
     }
     
     protected void chase()
@@ -53,7 +66,11 @@ public class Enemy extends GameObject
         
     }
     
-    protected void die()
+    protected void justDied()
+    {
+        
+    }
+    protected void justEnterCombat()
     {
         
     }
@@ -64,5 +81,13 @@ public class Enemy extends GameObject
     protected void setTarget(GameObject go)
     {
         target = go;
+    }
+    protected GameObject getTarget()
+    {
+        return target;
+    }
+    protected Stats getStats()
+    {
+        return stats;
     }
 }

@@ -38,16 +38,21 @@ public class Item extends GameObject {
     {
     }
     
-    protected void fisic(float magy)
+    protected void fisic()
     {
-        y+=getGSpeed()/16*magy;
+        y-=getGSpeed()/16;
     }
+    
     protected float getGSpeed()
     {
         if(gSpeed<5)
             gSpeed+=db.getItemGravity(id);
+        else 
+            gSpeed = 5;
+            
         return gSpeed;
     }
+
     
     public int getId()
     {
