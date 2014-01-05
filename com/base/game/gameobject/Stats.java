@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.base.game.gameobject.player;
+package com.base.game.gameobject;
 
 /**
  *
@@ -17,17 +17,31 @@ public class Stats {
     private int invSpace;
     private int level;
     private int xp;
+    private boolean jumping;
+    private boolean leveable;
     
-    public Stats()
+    public Stats(int xp, boolean leveable)
     {
+        this.leveable = leveable;
+        if(leveable)
+        {
+            this.xp = xp;
+            this.level = 1;
+        }
+        else
+        {
+            this.xp = -1;
+            this.level = xp;
+        }
+            
         name= "";
-        health = 0;
+        health = maxHealth;
         maxHealth = 0;
         energy = 0;
         maxEnergy = 0;
         invSpace = 8;
-        level = 1;
-        xp = 0;
+        
+        jumping=false;
     }
     //XP////////////////////////////////////////////////////////////////////////
     public void addXp(int plus)
@@ -106,5 +120,13 @@ public class Stats {
     public void setInvSpace(int invSpace)
     {
         this.invSpace = invSpace;
+    }
+    public boolean getJumping()
+    {
+        return jumping;
+    }
+    public void setJumping(boolean jumping)
+    {
+        this.jumping = jumping;
     }
 }

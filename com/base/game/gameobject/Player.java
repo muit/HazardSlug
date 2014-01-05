@@ -5,9 +5,8 @@
 package com.base.game.gameobject;
 
 import com.base.engine.GameObject;
+import com.base.game.Game;
 import com.base.game.gameobject.item.Item;
-import com.base.game.gameobject.player.Inventory;
-import com.base.game.gameobject.player.Stats;
 import org.lwjgl.input.Keyboard;
 
 /**
@@ -17,44 +16,70 @@ import org.lwjgl.input.Keyboard;
 public class Player extends GameObject
 {
     public static final float SIZE = 16;
-    
-    private final Stats stats = new Stats();
+    protected double gSpeed = 0;
+    private final Stats stats = new Stats(0, true);
     private final Inventory inv = new Inventory(16);
-    
-    
-    public Player(float x, float y)
+    private Game game;
+    private boolean colision = false;
+    public Player(float X, float Y, Game game)
     {
-        init(0, x, y, 0.1f,1f,0.25f,SIZE,SIZE);
+        this.game = game;
+        init(0, X, Y, 0.1f,1f,0.25f,SIZE,SIZE);
+        this.type = 1;
     }
     
     public void getInput()
     {
-        if(Keyboard.isKeyDown(Keyboard.KEY_W))
-            move(0,1);
-        else if(Keyboard.isKeyDown(Keyboard.KEY_S))
-            move(0,-1);
         if(Keyboard.isKeyDown(Keyboard.KEY_A))
-            move(-1,0);
+            move(-1);
         else if(Keyboard.isKeyDown(Keyboard.KEY_D))
-            move(1,0);
+            move(1);
+        if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
+            stats.setJumping(true);
     }
     @Override
     public void update()
     {
-        if(y<=-100)
+        if(y<=-16)
         {
-            System.out.println("Murio al caer al vacio.");
+            y=-16;
             //die();
+            if(stats.getJumping())
+            {
+                gSpeed=5;
+                stats.setJumping(false);
+                colision = false;
+            }
+            else
+            {
+                gSpeed=0;
+                colision = true;
+            }
         }
+        if(!colision)
+            fisic();
     }
-    private void move(float magx, float magy)
+    
+    public void fisic()
     {
-        x+=getSpeed()*magx;
-        y+=getSpeed()*magy;
+        y+=getGSpeed()/16;
+    }
+    private void move(float magx)
+    {
+        x+=getSpeed()/16*magx;
+    }
+    
+    protected double getGSpeed()
+    {
+        if(gSpeed>-5)
+            gSpeed-=0.2;
+        else if(gSpeed<=-5)
+            gSpeed=-5;
+        return gSpeed;
     }
     public float getSpeed()
     {
-        return 6;
+        return (float)5;
     }
     public int getLevel()
     {

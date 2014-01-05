@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.base.game.gameobject.player;
+package com.base.game.gameobject;
 
 import com.base.game.gameobject.item.Item;
 

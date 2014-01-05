@@ -6,7 +6,7 @@
 
 package com.base.game.map;
 
-import com.base.util.Util;
+import com.base.game.Util;
 
 /**
  *

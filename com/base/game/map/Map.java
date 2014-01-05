@@ -18,7 +18,6 @@ public class Map {
     {
         ChunkMapSize = 1024*(int)Math.pow(2,Size)+1024;;
         chunks = new Chunk[ChunkMapSize];
-        mp.generate(ChunkMapSize, chunks);
     }
     
     public void load()
@@ -34,23 +33,22 @@ public class Map {
         
     }
     
-    public void update()
+    public void update(float camx, float camWidth)
     {
-        /*
-        for (Chunk chunk : chunks) 
-        {
-            if(chunk!=null)
-                chunk.update();
-        }
-        */
+        for(int i =Math.round(camx/36)+ChunkMapSize/2; i<=Math.round(camx/36)+Math.round(camWidth/16/32)+ChunkMapSize/2;i++)
+            if(chunks[i]!=null)
+                chunks[i].update();
+            else
+                chunks[i] = new Chunk();
     }
-    public void render()
+    public void render(float camx, float camWidth)
     {
-        /*
-        for (Chunk chunk : chunks) {
-            if(chunk!=null)
-                chunk.render();
-        }
-        */
+        for(int i =Math.round(camx/36)+ChunkMapSize/2; i<=Math.round(camx/36)+Math.round(camWidth/16/32)+ChunkMapSize/2;i++)
+            if(chunks[i]!=null)
+                chunks[i].render();
+    }
+    public void generateChunk(int chunkId)
+    {
+        
     }
 }

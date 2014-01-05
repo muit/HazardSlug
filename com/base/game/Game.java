@@ -20,7 +20,7 @@ import org.lwjgl.opengl.Display;
 public class Game 
 {
     private final ArrayList<GameObject> objects;
-    private final Map map = new Map(0);
+    private final Map map = new Map(3);
     private final ArrayList<GameObject> remove;
     private final Player player;
     private final Camera cam = new Camera();
@@ -30,15 +30,13 @@ public class Game
     {
         objects = new ArrayList<>();
         remove = new ArrayList<>();
-        
-        player = new Player(Display.getWidth() / 2 - Player.SIZE / 2, Display.getHeight() / 2 - Player.SIZE / 2);
+        player = new Player(0, 5, this);
         
         objects.add(player);
         //WORLD//////////////////////
-        map.load();
         
         //ITEMS//////////////////////
-        objects.add(new Cube((int)(Display.getWidth() / 2 - Player.SIZE / 2), 200, 3, this));
+        objects.add(new Cube(1, 5, 3, this));
     }
     
     public void getInput()
@@ -48,7 +46,7 @@ public class Game
     
     public void update()
     {
-        map.update();
+        map.update(cam.getX()/16, Display.getWidth());
         for(GameObject go : objects)
         {
             if(!go.getRemove())
@@ -63,12 +61,12 @@ public class Game
             objects.remove(go);
         }
         remove.clear();
-        cam.setCamera((int)(player.getX()+player.getSX()/2-Display.getWidth()/2),(int)(player.getY()+player.getSY()/2-Display.getHeight()/2), Display.getWidth(), Display.getHeight());
+        cam.setCamera((int)(player.getX()*16+player.getSX()/2-Display.getWidth()/2),(int)(player.getY()*16+player.getSY()/2-Display.getHeight()/2), Display.getWidth(), Display.getHeight());
     }
     
     public void render()
     {
-        map.render();
+        map.render(cam.getX()/16, Display.getWidth());
         for(GameObject go : objects)
             go.render();
     }
@@ -86,5 +84,15 @@ public class Game
     public Player getPlayer()
     {
         return player;
+    }
+    public GameObject[] sphereCollide(float x, float y, float radius)
+    {
+        ArrayList<GameObject> res = new ArrayList<>();
+        for(GameObject go : objects)
+        {
+            if(Util.dist(go.getX(), go.getY(), x, y)< radius)
+                res.add(go);
+        }
+        return (GameObject[])res.toArray();
     }
 }

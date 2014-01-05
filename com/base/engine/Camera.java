@@ -24,4 +24,8 @@ public class Camera {
         glOrtho( x, w+x, y, h+y, -1, 1);
         glMatrixMode(GL_MODELVIEW);
     }
+    public int getX()
+    {
+        return x;
+    }
 }

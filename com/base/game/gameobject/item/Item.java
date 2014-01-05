@@ -28,7 +28,7 @@ public class Item extends GameObject {
     protected void init(String name, float x, float y, float r, float g, float b, float sx,float sy)
     {
         this.name = name;
-        this.type = 1;
+        this.type = 3;
         this.x = x;
         this.y = y;
         this.spr = new Sprite(r,g,b,sx,sy);
@@ -40,7 +40,7 @@ public class Item extends GameObject {
     
     protected void fisic(float magy)
     {
-        y+=getGSpeed()*magy;
+        y+=getGSpeed()/16*magy;
     }
     protected float getGSpeed()
     {

@@ -6,6 +6,7 @@
 
 package com.base.game.map;
 
+import com.base.engine.Physics;
 import com.base.game.Game;
 import com.base.game.gameobject.Player;
 import com.base.game.gameobject.item.Item;
@@ -20,18 +21,11 @@ public class Block extends Item{
     public Block(int x, int y, int id)
     {
         this.id = id;
-        init(db.getItemName(id), x*SIZE, y*SIZE, 1.0f, 0.5f, 0, SIZE, SIZE);
+        init(db.getItemName(id), x, y, 1.0f, 0.5f, 0, SIZE, SIZE);
     }
     
     @Override
     public void update()
     {
-        if(db.getItemGravity(id) != 0)
-        {
-        //if(!Physics.checkCollision(this, *arraycubos*))
-            //gSpeed*=-2;
-        //else
-            fisic(-1);
-        }
     }
 }

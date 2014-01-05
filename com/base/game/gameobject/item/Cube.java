@@ -25,6 +25,7 @@ public class Cube extends Item {
         this.id = id;
         this.game = game;
         init(db.getItemName(id), x, y, 1.0f, 0.5f, 0, SIZE, SIZE);
+        this.type = 4;
     }
     
     @Override
@@ -45,7 +46,7 @@ public class Cube extends Item {
             return;
         }
         
-        if(Physics.checkCollision(this, player))
+        if(Physics.checkCollision(this, player)!=null)
         {
             gSpeed = 0;
             pickUp();

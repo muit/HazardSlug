@@ -12,7 +12,7 @@ import static org.lwjgl.opengl.GL11.*;
 public abstract class GameObject 
 {
     protected float x,y;
-    protected int type;
+    protected int type = 0;
     protected Sprite spr;
     protected boolean remove = false;
     
@@ -24,7 +24,7 @@ public abstract class GameObject
     {
         glPushMatrix();
         {
-            glTranslatef(x, y, 0);
+            glTranslatef(x*16, y*16, 0);
             spr.render();
         }
         glPopMatrix();

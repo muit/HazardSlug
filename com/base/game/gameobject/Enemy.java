@@ -5,44 +5,64 @@
 package com.base.game.gameobject;
 
 import com.base.engine.GameObject;
-import com.base.game.gameobject.player.Stats;
+import com.base.engine.Main;
+import com.base.game.Util;
 
 /**
  *
  * @author Miguel
  */
-public class Enemy extends GameObject{
+public class Enemy extends GameObject
+{
     private Stats stats;
     private GameObject target;
     
-    public Enemy ()
+    public Enemy (int level)
     {
+        stats = new Stats(level, false);
         target = null;
+        this.type = 2;
     }
     
     @Override
     public void update()
     {
-        if(target!=null)
-            cUpdate();
-        
-        //Attack call
+        if(target==null)
+            look();
+        else
+        {
+            chase();
+            if(Util.LineOfSight(this,target))
+                attack();
+        }
         if(stats.getHealth()<=0)
             die();
     }
     
-    public void cUpdate()
+    protected void look()
+    {
+    }
+    
+    protected void chase()
     {
         
     }
     
-    public void attack()
+    protected void attack()
     {
         
     }
     
-    public void die()
+    protected void die()
     {
         
+    }
+    public static int LevelToXP(int level)
+    {
+        return 0;
+    }
+    protected void setTarget(GameObject go)
+    {
+        target = go;
     }
 }

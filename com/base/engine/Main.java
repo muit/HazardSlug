@@ -31,7 +31,10 @@ public class Main {
         cleanUp();
     }
     
-    
+    public static GameObject[] sphereCollide(float x, float y, float radius)
+    {
+        return game.sphereCollide(x, y, radius);
+    }
     
     private static void getInput()
     {
