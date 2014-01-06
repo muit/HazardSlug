@@ -6,9 +6,6 @@
 
 package com.base.game.map;
 
-import com.base.engine.Physics;
-import com.base.game.Game;
-import com.base.game.gameobject.Player;
 import com.base.game.gameobject.item.Item;
 
 /**
@@ -27,5 +24,6 @@ public class Block extends Item{
     @Override
     public void update()
     {
+        
     }
 }

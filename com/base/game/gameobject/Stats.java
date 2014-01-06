@@ -17,7 +17,7 @@ public class Stats {
     private int invSpace = 12;
     private int level;
     private int xp;
-    private float speed = 5;
+    private float speed = 4;
     private boolean jumping;
     private boolean leveable;
     

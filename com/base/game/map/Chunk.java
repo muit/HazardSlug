@@ -7,6 +7,8 @@
 package com.base.game.map;
 
 import com.base.game.Game;
+import com.base.game.Util;
+import com.base.game.Vector;
 import java.util.ArrayList;
 
 /**
@@ -18,6 +20,8 @@ public class Chunk {
     private final int chunkSizeY;
     private Block cubes[][];
     private Game game;
+    private boolean initialiced=false;
+    private int firstPoint=0;
     
     public Chunk()
     {
@@ -73,8 +77,91 @@ public class Chunk {
         }
         return blocks;
     }
+    
     public Block[] getYLineWhereX(int x)
     {
         return cubes[x];
     }
+    
+    public void generate(Map map, int seed, int id, int maxid)
+    {
+        initialiced = true;
+        int space = map.getMaxAlt()-map.getFloorAlt();
+        
+        float nextPoint;
+        int[] points = new int[32];
+        float[] point = new float[33];
+        
+        point[0] = generateFpoint(seed, id, space);
+        point[32] = generateFpoint(seed, id+1, space);
+        
+        
+        point[16] = genPoint(point[0],  point[32], space, 2);
+        
+        point[8]  = genPoint(point[0],  point[16], space, 4);
+        point[24] = genPoint(point[16], point[32], space, 4);
+        
+        point[4]  = genPoint(point[0],  point[8],  space, 8);
+        point[12] = genPoint(point[8],  point[16], space, 8);
+        point[20] = genPoint(point[16], point[24], space, 8);
+        point[28] = genPoint(point[24], point[32], space, 8);
+        
+        point[2]  = genPoint(point[0],  point[4],  space, 16);
+        point[6]  = genPoint(point[4],  point[8],  space, 16);
+        point[10] = genPoint(point[8],  point[12], space, 16);
+        point[14] = genPoint(point[12], point[16], space, 16);
+        point[18] = genPoint(point[16], point[20], space, 16);
+        point[22] = genPoint(point[20], point[24], space, 16);
+        point[26] = genPoint(point[24], point[28], space, 16);
+        point[30] = genPoint(point[28], point[32], space, 16);
+        
+        
+        point[1]  = genPoint(point[0],  point[2],  space, 32);
+        point[3]  = genPoint(point[2],  point[4],  space, 32);
+        point[5]  = genPoint(point[4],  point[6],  space, 32);
+        point[7]  = genPoint(point[6],  point[8],  space, 32);
+        point[9]  = genPoint(point[8],  point[10], space, 32);
+        point[11] = genPoint(point[10], point[12], space, 32);
+        point[13] = genPoint(point[12], point[14], space, 32);
+        point[15] = genPoint(point[14], point[16], space, 32);
+        point[17] = genPoint(point[16], point[18], space, 32);
+        point[19] = genPoint(point[18], point[20], space, 32);
+        point[21] = genPoint(point[20], point[22], space, 32);
+        point[23] = genPoint(point[22], point[24], space, 32);
+        point[25] = genPoint(point[24], point[26], space, 32);
+        point[27] = genPoint(point[26], point[28], space, 32);
+        point[29] = genPoint(point[28], point[30], space, 32);
+        point[31] = genPoint(point[30], point[32], space, 32);
+        for(int i=0; i<32;i++)
+            cubes[i][(int)point[i]] = new Block(i+(id-maxid/2)*32, (int)point[i]+map.getFloorAlt(), 4);
+    }
+    public boolean getInit()
+    {
+        return initialiced;
+    }
+    
+    public int getFirstPoint()
+    {
+        return firstPoint;
+    }
+    
+    public void setFirstPoint(int firstPoint)
+    {
+        this.firstPoint = firstPoint;
+    }
+    
+    public float generateFpoint(int seed, int id, int space)
+    {
+        //implementar variacion por id******************************************
+        double pointer = (double)seed/999999999*space;
+        return (float)pointer;
+    }
+    
+    private float genPoint(float y1, float y2, int multiplier, int space)
+    {
+        float C = (y1 + y2) / 2 + (float)(Math.random()*space /multiplier);
+        System.out.println((y1 + y2) / 2);
+        return C;
+    }
+    
 }

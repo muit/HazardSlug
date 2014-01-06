@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Babosa_Azul extends Enemy
 {
     public static final int SIZE = 16;
-    public static final float DAMPING = 0.5f;
+    public static final float DAMPING = 0.8f;
     
     public Babosa_Azul(float x, float y, int level)
     {
@@ -24,24 +24,26 @@ public class Babosa_Azul extends Enemy
         MELE_RANGE = 3;
         init(type, x, y, 0.2f, 0.2f, 1.0f, SIZE, SIZE);
     }
+    
     @Override
     protected void look()
     {
         ArrayList<GameObject> objects = Main.sphereCollide(x, y, 10);
-        for(GameObject go : objects)
+        
+        for( GameObject go : objects)
         {
-            if(go.getType()==1)
+            if( go.getType() == 1)
             {
                 setTarget(go);
             }
         }
     }
+    
     @Override
     protected void justEnterCombat()
     {
             System.out.println("Zarigüella quiere sapatos pa comer!!");
     }
-    
     
     @Override
     protected void chase()
@@ -50,18 +52,22 @@ public class Babosa_Azul extends Enemy
         float speedY = (getTarget().getY()-y);
         
         float maxSpeed = getStats().getSpeed()*DAMPING;
+        
         if(speedX > maxSpeed)
             speedX = maxSpeed;
+        
         if(speedX < -maxSpeed)
             speedX = -maxSpeed;
         
         if(speedY > maxSpeed)
             speedY = maxSpeed;
+        
         if(speedY < -maxSpeed)
             speedY = -maxSpeed;
         x+=speedX;
         y+=speedY;
     }
+    
     @Override
     protected void attack()
     {

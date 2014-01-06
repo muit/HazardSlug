@@ -31,15 +31,15 @@ public class Game
     {
         objects = new ArrayList<>();
         remove = new ArrayList<>();
-        player = new Player(0, 5, this);
+        player = new Player(-5, 250, this);
         
         objects.add(player);
-        objects.add(new Babosa_Azul(1, -8, 1));
+        objects.add(new Babosa_Azul(1, 230, 1));
         //WORLD//////////////////////
         
         //ITEMS//////////////////////
-        objects.add(new Cube(1, 5, 3, this));
-        objects.add(new Cube(-1, 5, 4, this));
+        objects.add(new Cube( 1, 250, 3, this));
+        objects.add(new Cube(-1, 250, 4, this));
     }
     
     public void getInput()
@@ -49,7 +49,7 @@ public class Game
     
     public void update()
     {
-        map.update(cam.getX()/16, Display.getWidth());
+        map.update((int)player.getX(), Display.getWidth()/16);
         for(GameObject go : objects)
         {
             if(!go.getRemove())
@@ -69,7 +69,7 @@ public class Game
     
     public void render()
     {
-        map.render(cam.getX()/16, Display.getWidth());
+        map.render((int)player.getX(), Display.getWidth()/16);
         for(GameObject go : objects)
             go.render();
     }

@@ -29,11 +29,12 @@ public class Player extends GameObject
     
     public void getInput()
     {
-        if(Keyboard.isKeyDown(Keyboard.KEY_A))
-            move(-1);
-        else if(Keyboard.isKeyDown(Keyboard.KEY_D))
-            move(1);
+            if(Keyboard.isKeyDown(Keyboard.KEY_A))
+                move(-1);
+            else if(Keyboard.isKeyDown(Keyboard.KEY_D))
+                move(1);
         if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
+            if(colision)
             stats.setJumping(true);
     }
     @Override
@@ -41,44 +42,52 @@ public class Player extends GameObject
     {
         if(y<=-16)
         {
-            y=-16;
             //die();
+        }
+        
+        if(y<=227)//futura colision aqui
+        {
+            y=227;
+            colision = true;
             if(stats.getJumping())
             {
                 gSpeed=5;
                 stats.setJumping(false);
+                fisic();
                 colision = false;
             }
             else
             {
                 gSpeed=0;
-                colision = true;
             }
         }
-        if(!colision)
+        else
+        {  
             fisic();
+        }
     }
     
     public void fisic()
     {
         y+=getGSpeed()/16;
     }
+    
     private void move(float magx)
     {
-        x+=getSpeed()/16*magx;
+        x+=getSpeed()*magx;
     }
     
     protected double getGSpeed()
     {
-        if(gSpeed>-5)
+        if(gSpeed>=-5)
             gSpeed-=0.2;
-        else if(gSpeed<=-5)
+        else if(gSpeed<-5)
             gSpeed=-5;
         return gSpeed;
     }
     public float getSpeed()
     {
-        return (float)5;
+        return stats.getSpeed();
     }
     public int getLevel()
     {
