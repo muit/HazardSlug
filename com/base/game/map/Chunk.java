@@ -7,9 +7,6 @@
 package com.base.game.map;
 
 import com.base.game.Game;
-import com.base.game.Util;
-import com.base.game.Vector;
-import java.util.ArrayList;
 
 /**
  *
@@ -18,8 +15,7 @@ import java.util.ArrayList;
 public class Chunk {
     private final int chunkSizeX;
     private final int chunkSizeY;
-    private Block cubes[][];
-    private Game game;
+    private final Block cubes[][];
     private boolean initialiced=false;
     private int firstPoint=0;
     
@@ -37,28 +33,19 @@ public class Chunk {
     }
     public void update()
     {
-        for(int x = 0; x<cubes.length; x++)
-        {
-            for(int y = 0; y<cubes.length;y++)
-            { 
-                if(cubes[x][y]!=null)
-                    if(cubes[x][y].getId()!=0)
-                    {
-                        cubes[x][y].update();
-                    }
-            }
-        }
+        for (Block[] cubex : cubes) //X
+            for (Block cube : cubex) //Y{
+                if (cube != null)
+                    if (cube.getId() != 0) 
+                        cube.update();
     }
     public void render()
     {
         for (Block[] cubex : cubes) //X
-        {
             for (Block cube : cubex) //Y
-            {
                 if(cube!=null)
-                    cube.render();
-            }
-        }
+                    if (cube.getId() != 0)
+                        cube.render();
     }
     public Block[][] getBlocks()
     {
@@ -88,8 +75,6 @@ public class Chunk {
         initialiced = true;
         int space = map.getMaxAlt()-map.getFloorAlt();
         
-        float nextPoint;
-        int[] points = new int[32];
         float[] point = new float[33];
         
         point[0] = generateFpoint(seed, id, space);
