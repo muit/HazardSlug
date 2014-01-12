@@ -27,4 +27,20 @@ public class Util {
         double y = y2 - y1;
         return (float)Math.sqrt((x*x)-y*y);
     }
+    
+    public static int encriptChunkId(int chunkId)
+    {
+        String cIdCacheStr = ""+chunkId;
+        //cifrado String////////////////////////////////////////////////////////
+        String cIdInverted = "";
+        for (int i = cIdCacheStr.length()-1; i >=0 ; i--) { 
+            cIdInverted += cIdCacheStr.charAt(i); 
+        }
+        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        chunkId = Integer.parseInt(cIdInverted);
+        //cifrado Integer///////////////////////////////////////////////////////
+        
+        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        return chunkId;
+    }
 }

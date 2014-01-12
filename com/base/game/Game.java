@@ -21,7 +21,7 @@ import org.lwjgl.opengl.Display;
 public class Game 
 {
     private final ArrayList<GameObject> objects;
-    private final Map map = new Map(3);
+    private final Map map = new Map(3, this);
     private final ArrayList<GameObject> remove;
     private final Player player;
     private final Camera cam = new Camera();
@@ -87,6 +87,10 @@ public class Game
     public Player getPlayer()
     {
         return player;
+    }
+    public Map getMap()
+    {
+        return map;
     }
     public ArrayList<GameObject> sphereCollide(float x, float y, float radius)
     {

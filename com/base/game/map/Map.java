@@ -6,6 +6,9 @@
 
 package com.base.game.map;
 
+import com.base.game.Game;
+import java.util.ArrayList;
+
 /**
  *
  * @author Miguel_F
@@ -15,11 +18,14 @@ public class Map {
     private int ChunkMapSize;
     private int maxAlt = 240;
     private int floorAlt = 200;
+    private Game game;
+    private ArrayList<Chunk> chunkIdsLoaded = new ArrayList<>();
     private GeneratorMidpoint mp = new GeneratorMidpoint();
-    public Map(int Size)
+    public Map(int Size, Game game)
     {
         ChunkMapSize = 1024*(int)Math.pow(2,Size)+1024;;
         chunks = new Chunk[ChunkMapSize];
+        this.game = game;
     }
     
     public void load()
@@ -30,17 +36,16 @@ public class Map {
     {
         
     }
-    public void generateChunk()
-    {
-        
-    }
     
     public void update(float playerx, float playerWidth)
     {
+        chunkIdsLoaded.clear();
+        game.getPlayer().setMapColision(false);
         for(int i =(int) ((playerx + 0.5 - playerWidth/16/2) /32 + ChunkMapSize/2-1); i<=(int) ((playerx + 0.5 + playerWidth/16/2) /32 + ChunkMapSize/2+1);i++)
             if(chunks[i]!=null && chunks[i].getInit())
             {
-                chunks[i].update();
+                chunkIdsLoaded.add(chunks[i]);
+                chunks[i].update(game.getPlayer());
             }
             else
             {
@@ -55,18 +60,22 @@ public class Map {
             if(chunks[i]!=null && chunks[i].getInit())
                 chunks[i].render();
     }
-    public void generateChunk(int chunkId)
-    {
-        
-    }
+    
     public Chunk getChunk(int id)
     {
         return chunks[id];
     }
+    
+    public Chunk[] getLoadedChunks()
+    {
+        return (Chunk[])chunkIdsLoaded.toArray();
+    }
+    
     public int getMaxAlt()
     {
         return maxAlt;
     }
+    
     public int getFloorAlt()
     {
         return floorAlt;

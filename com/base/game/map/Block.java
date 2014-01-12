@@ -6,6 +6,8 @@
 
 package com.base.game.map;
 
+import com.base.engine.Physics;
+import com.base.game.gameobject.Player;
 import com.base.game.gameobject.item.Item;
 
 /**
@@ -21,9 +23,15 @@ public class Block extends Item{
         init(db.getItemName(id), x, y, 1.0f, 0.5f, 0, SIZE, SIZE);
     }
     
-    @Override
-    public void update()
+    public void update(Player player)
     {
-        
+        if(Physics.checkCollision(this, player)!=null)
+        {
+            player.setMapColision(true);
+            if(this.y==player.getY())
+                player.setY(Math.round(player.getY()+1));
+            else
+                player.setY(Math.round(player.getY()));
+        }
     }
 }

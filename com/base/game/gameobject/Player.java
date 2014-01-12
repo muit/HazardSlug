@@ -7,6 +7,8 @@ package com.base.game.gameobject;
 import com.base.engine.GameObject;
 import com.base.game.Game;
 import com.base.game.gameobject.item.Item;
+import com.base.game.map.Block;
+import com.base.game.map.Chunk;
 import org.lwjgl.input.Keyboard;
 
 /**
@@ -20,7 +22,8 @@ public class Player extends GameObject
     private final Stats stats = new Stats(0, true);
     private final Inventory inv = new Inventory(16);
     private Game game;
-    private boolean colision = false;
+    private Chunk actualChunk;
+    private boolean mapColision = false;
     public Player(float X, float Y, Game game)
     {
         this.game = game;
@@ -34,7 +37,7 @@ public class Player extends GameObject
             else if(Keyboard.isKeyDown(Keyboard.KEY_D))
                 move(1);
         if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
-            if(colision)
+            if(mapColision)
             stats.setJumping(true);
     }
     @Override
@@ -45,26 +48,12 @@ public class Player extends GameObject
             //die();
         }
         
-        if(y<=227)//futura colision aqui
+        if(y<=-16)//futura mapColision aqui
         {
-            y=227;
-            colision = true;
-            if(stats.getJumping())
-            {
-                gSpeed=5;
-                stats.setJumping(false);
-                fisic();
-                colision = false;
-            }
-            else
-            {
-                gSpeed=0;
-            }
+            y=-16;
+            mapColision = true;
         }
-        else
-        {  
-            fisic();
-        }
+        mapColision();
     }
     
     public void fisic()
@@ -79,10 +68,10 @@ public class Player extends GameObject
     
     protected double getGSpeed()
     {
-        if(gSpeed>=-5)
-            gSpeed-=0.2;
-        else if(gSpeed<-5)
+        if(gSpeed<-5)
             gSpeed=-5;
+        else
+            gSpeed-=0.2;
         return gSpeed;
     }
     public float getSpeed()
@@ -121,5 +110,36 @@ public class Player extends GameObject
     public boolean addItem(Item item)
     {
         return inv.add(item);
+    }
+    public void mapColision()
+    {
+        if(mapColision == true)
+        {
+            if(stats.getJumping())
+            {
+                gSpeed=5;
+                stats.setJumping(false);
+                mapColision = false;
+                fisic();
+            }
+            else
+            {
+                gSpeed=0;
+            }
+        }
+        else
+            fisic();
+    }
+    public void setMapColision(boolean mapColision)
+    {
+        this.mapColision = mapColision;
+    }
+    public void setY(int y)
+    {
+    this.y = y;
+    }
+    public void setX(int x)
+    {
+    this.x = x;
     }
 }

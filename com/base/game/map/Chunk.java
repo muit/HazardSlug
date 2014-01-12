@@ -7,6 +7,8 @@
 package com.base.game.map;
 
 import com.base.game.Game;
+import com.base.game.Util;
+import com.base.game.gameobject.Player;
 
 /**
  *
@@ -31,21 +33,19 @@ public class Chunk {
         this.chunkSizeY = 200;
         this.cubes = cubes;
     }
-    public void update()
+    public void update(Player player)
     {
         for (Block[] cubex : cubes) //X
             for (Block cube : cubex) //Y{
-                if (cube != null)
-                    if (cube.getId() != 0) 
-                        cube.update();
+                if (cube != null && cube.getId() != 0) 
+                    cube.update(player);
     }
     public void render()
     {
         for (Block[] cubex : cubes) //X
             for (Block cube : cubex) //Y
-                if(cube!=null)
-                    if (cube.getId() != 0)
-                        cube.render();
+                if(cube!=null && cube.getId() != 0)
+                    cube.render();
     }
     public Block[][] getBlocks()
     {
@@ -77,8 +77,8 @@ public class Chunk {
         
         float[] point = new float[33];
         
-        point[0] = generateFpoint(seed, id, space);
-        point[32] = generateFpoint(seed, id+1, space);
+        point[0] = generateFpoint(seed, id, space, maxid);
+        point[32] = generateFpoint(seed, id+1, space, maxid);
         
         
         point[16] = genPoint(point[0],  point[32], space, 2);
@@ -135,18 +135,28 @@ public class Chunk {
         this.firstPoint = firstPoint;
     }
     
-    public float generateFpoint(int seed, int id, int space)
+    private float generateFpoint(int cifSeed, int id, int space, int maxid)
     {
         //implementar variacion por id******************************************
-        double pointer = (double)seed/999999999*space;
+        //mejorar el cifrado de id para randomizarlo
+        //(cifSeed/999999999*space)...
+        double pointer = (double)Util.encriptChunkId(id)/maxid*space;
         return (float)pointer;
     }
     
     private float genPoint(float y1, float y2, int multiplier, int space)
     {
         float C = (y1 + y2) / 2 + (float)(Math.random()*space /multiplier);
-        System.out.println((y1 + y2) / 2);
         return C;
     }
     
+    public int getChunkSizeX()
+    {
+        return chunkSizeX;
+    }
+    
+    public int getChunkSizeY()
+    {
+        return chunkSizeY;
+    }
 }
