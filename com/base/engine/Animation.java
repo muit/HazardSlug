@@ -14,7 +14,38 @@ public class Animation
 {
     private ArrayList<Frame> frames;
     private int curFrame;
-    
+    public enum AnimationType {
+        //MOVEMENT///////////
+        //Stay///////
+        ANIM_STAY_R, 
+        ANIM_STAY_L, 
+        
+        //Run////////
+        ANIM_RUN_R, 
+        ANIM_RUN_L, 
+        
+        //Jump///////
+        ANIM_JUMP_R, 
+        ANIM_JUMP_L, 
+        
+        //Bow////////
+        ANIM_BOW_R,
+        ANIM_BOW_L,
+        
+        //COMBAT//////////////
+        //Attack/////
+        ANIM_ATTACK_R, 
+        ANIM_ATTACK_L, 
+        
+        //Hit////////
+        ANIM_HIT_R, 
+        ANIM_HIT_L, 
+        
+        //Stun///////
+        ANIM_STUN_R, 
+        ANIM_STUN_L
+    };
+    private AnimationType currentAnimation;
     public Animation()
     {
         frames = new ArrayList<Frame>();
@@ -29,5 +60,9 @@ public class Animation
             curFrame++;
             curFrame %= frames.size();
         }
+    }
+    public void setAnimation(AnimationType anim)
+    {
+        currentAnimation = anim;
     }
 }
