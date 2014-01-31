@@ -17,17 +17,20 @@ public class Enemy extends Unit
 {
     private Stats stats;
     private Unit target;
-    private boolean justEnterCombat=false;
-    protected int MELEE_RANGE=0;
-    protected int VISION_RANGE=0;
-    protected int DISTANCE_RANGE=0;
+    private boolean justEnterCombat;
+    protected float MELEE_RANGE=0;
+    protected float VISION_RANGE=0;
+    protected float DISTANCE_RANGE=0;
     protected float DAMPING;
     public int SIZE;
+    private boolean meleRangeCorrect;
     
     public Enemy (int level)
     {
         stats = new Stats(level, false);
         target = null;
+        meleRangeCorrect = false;
+        justEnterCombat = false;
         toCreature();
     }
     
@@ -47,13 +50,13 @@ public class Enemy extends Unit
                 justEnterCombat = true;
                 EnterCombat(target);
             }
-            
-            chase();
+            if(!meleRangeCorrect)
+                chase();
             if(Util.LineOfSight(this,target))
-                attack();
+                Attack();
         }
         if(stats.getHealth()<=0)
-            justDied();
+            JustDied(target);
     }
     
     protected void look()
@@ -92,16 +95,20 @@ public class Enemy extends Unit
         y+=speedY;
     }
     
-    protected void attack()
+    protected void Attack()
     {
         
     }
     
-    protected void justDied()
+    protected void JustDied(Unit killer)
     {
         
     }
     protected void EnterCombat(Unit who)
+    {
+        
+    }
+    protected void DamageTaken(Unit who)
     {
         
     }
@@ -124,6 +131,11 @@ public class Enemy extends Unit
     protected void DoAttackWhenReady()
     {
         if(Util.dist(x, y, target.getX(), target.getY())< MELEE_RANGE)
-            System.out.println("HIT!!");
+        {
+            meleRangeCorrect = true;
+            System.out.println("Pum");
+        }
+        else
+            meleRangeCorrect = false;
     }
 }

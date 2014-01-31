@@ -17,7 +17,7 @@ public class Babosa_Azul extends Enemy
     public Babosa_Azul(float x, float y, int level)
     {
         super(level);
-        MELEE_RANGE = 2;
+        MELEE_RANGE = (float)1.5;
         DAMPING = 0.8f;
         SIZE = 16;
         init(type, x, y, 0.2f, 0.2f, 1.0f, SIZE, SIZE);
@@ -26,12 +26,29 @@ public class Babosa_Azul extends Enemy
     @Override
     protected void EnterCombat(Unit who)
     {
+        //When npc enter combat:
         System.out.println("Zarigüella quiere sapatos pa comer!!");
+        //End-------------------
     }
     
     @Override
-    protected void attack()
+    protected void Attack()
     {
+        //If npc is in combat:
+        
+        //End-------------------
         DoAttackWhenReady();
+    }
+    
+    @Override
+    protected void JustDied(Unit killer)
+    {
+    
+    }
+    
+    @Override
+    protected void DamageTaken(Unit who)
+    {
+        
     }
 }
