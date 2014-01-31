@@ -8,8 +8,10 @@ import com.base.data.DataBase;
 import com.base.engine.Camera;
 import com.base.engine.GameObject;
 import com.base.game.gameobject.Player;
+import com.base.game.gameobject.Unit;
 import com.base.game.gameobject.enemy.Babosa_Azul;
 import com.base.game.gameobject.item.Cube;
+import com.base.game.map.Block;
 import com.base.game.map.Map;
 import java.util.ArrayList;
 import org.lwjgl.opengl.Display;
@@ -21,6 +23,7 @@ import org.lwjgl.opengl.Display;
 public class Game 
 {
     private final ArrayList<GameObject> objects;
+    private final ArrayList<Unit> entitys;
     private final Map map = new Map(3, this);
     private final ArrayList<GameObject> remove;
     private final Player player;
@@ -30,11 +33,12 @@ public class Game
     public Game()
     {
         objects = new ArrayList<>();
+        entitys = new ArrayList<>();
         remove = new ArrayList<>();
         player = new Player(-5, 250, this);
         
-        objects.add(player);
-        objects.add(new Babosa_Azul(1, 230, 1));
+        entitys.add(player);
+        entitys.add(new Babosa_Azul(1, 235, 1));
         //WORLD//////////////////////
         
         //ITEMS//////////////////////
@@ -59,6 +63,15 @@ public class Game
                 remove.add(go);
             }
         }
+        for(Unit go : entitys)
+        {
+            if(!go.getRemove())
+                go.update();
+            else
+            {
+                remove.add(go);
+            }
+        }
         for(GameObject go : remove)
         {
             objects.remove(go);
@@ -72,6 +85,8 @@ public class Game
         map.render((int)player.getX(), Display.getWidth()/16);
         for(GameObject go : objects)
             go.render();
+        for(Unit go : entitys)
+            go.render();
     }
     
     private void removeObject(GameObject target)
@@ -79,6 +94,12 @@ public class Game
         for(GameObject go : objects)
             if(go == target)
                 objects.remove(go);
+    }
+    private void removeUnit(Unit target)
+    {
+        for(Unit go : entitys)
+            if(go == target)
+                entitys.remove(go);
     }
     public DataBase db()
     {
@@ -92,10 +113,10 @@ public class Game
     {
         return map;
     }
-    public ArrayList<GameObject> sphereCollide(float x, float y, float radius)
+    public ArrayList<Unit> sphereCollide(float x, float y, float radius)
     {
-        ArrayList<GameObject> res = new ArrayList<>();
-        for(GameObject go : objects)
+        ArrayList<Unit> res = new ArrayList<>();
+        for(Unit go : entitys)
         {
             if(Util.dist(go.getX(), go.getY(), x, y) <= radius)
                 res.add(go);

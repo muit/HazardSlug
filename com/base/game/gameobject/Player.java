@@ -15,7 +15,7 @@ import org.lwjgl.input.Keyboard;
  *
  * @author Miguel
  */
-public class Player extends GameObject
+public class Player extends Unit
 {
     public static final float SIZE = 16;
     protected double gSpeed = 0;
@@ -27,7 +27,8 @@ public class Player extends GameObject
     public Player(float X, float Y, Game game)
     {
         this.game = game;
-        init(1, X, Y, 0.1f,1f,0.25f,SIZE,SIZE);
+        init(type, X, Y, 0.1f,1f,0.25f,SIZE,SIZE);
+        toPlayer();
     }
     
     public void getInput()
