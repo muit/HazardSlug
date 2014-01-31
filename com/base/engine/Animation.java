@@ -14,6 +14,7 @@ public class Animation
 {
     private ArrayList<Frame> frames;
     private int curFrame;
+    
     public enum AnimationType {
         //MOVEMENT///////////
         //Stay///////
@@ -26,7 +27,11 @@ public class Animation
         
         //Jump///////
         ANIM_JUMP_R, 
-        ANIM_JUMP_L, 
+        ANIM_JUMP_L,
+        
+        //Falling////
+        ANIM_FALL_R, 
+        ANIM_FALL_L, 
         
         //Bow////////
         ANIM_BOW_R,
