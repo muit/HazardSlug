@@ -6,6 +6,7 @@ package com.base.game.gameobject;
 
 import com.base.engine.GameObject;
 import com.base.engine.Main;
+import com.base.game.Delay;
 import com.base.game.Util;
 import java.util.ArrayList;
 
@@ -15,14 +16,16 @@ import java.util.ArrayList;
  */
 public class Enemy extends Unit
 {
-    private Stats stats;
-    private Unit target;
+    protected Stats stats;
+    protected Unit target;
     private boolean justEnterCombat;
     protected float MELEE_RANGE=0;
     protected float VISION_RANGE=0;
     protected float DISTANCE_RANGE=0;
     protected float DAMPING;
-    public int SIZE;
+    protected float ATTACK_SPEED;
+    protected Delay hitDelay;
+    protected int SIZE;
     private boolean meleRangeCorrect;
     
     public Enemy (int level)
@@ -31,6 +34,8 @@ public class Enemy extends Unit
         target = null;
         meleRangeCorrect = false;
         justEnterCombat = false;
+        hitDelay = new Delay(0);
+        hitDelay.end();
         toCreature();
     }
     
@@ -128,12 +133,26 @@ public class Enemy extends Unit
     {
         return stats;
     }
+    public void setAttackDelay(float cof_time)
+    {
+        int time = (int) (cof_time*1000);
+        hitDelay = new Delay(time);
+        hitDelay.end();
+    }
+    public void resetAttackDelay()
+    {
+        hitDelay.start();
+    }
     protected void DoAttackWhenReady()
     {
         if(Util.dist(x, y, target.getX(), target.getY())< MELEE_RANGE)
         {
             meleRangeCorrect = true;
-            System.out.println("Pum");
+            if(hitDelay.over())
+            {
+                System.out.println("Pum");
+                resetAttackDelay();
+            }
         }
         else
             meleRangeCorrect = false;

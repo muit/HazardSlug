@@ -30,7 +30,7 @@ public class Delay
     public void start()
     {
         started = true;
-        endTime = length * 1000 + Time.getTime();
+        endTime = length * 1000000 + Time.getTime();
     }
     public void reset()
     {
@@ -39,5 +39,10 @@ public class Delay
     public boolean active()
     {
         return started;
+    }
+    public void end()
+    {
+        started = true;
+        endTime = 0;
     }
 }

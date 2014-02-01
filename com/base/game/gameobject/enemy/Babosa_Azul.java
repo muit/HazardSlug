@@ -16,10 +16,11 @@ public class Babosa_Azul extends Enemy
     
     public Babosa_Azul(float x, float y, int level)
     {
-        super(level);
+        super(level);//0.8f: 1sec*% attack speed
         MELEE_RANGE = (float)1.5;
         DAMPING = 0.8f;
         SIZE = 16;
+        setAttackDelay(0.8f);//0.8f: 1sec*% attack speed
         init(type, x, y, 0.2f, 0.2f, 1.0f, SIZE, SIZE);
     }
     

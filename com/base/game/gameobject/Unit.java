@@ -5,6 +5,7 @@
 package com.base.game.gameobject;
 
 import com.base.engine.GameObject;
+import com.base.game.Delay;
 
 /**
  *

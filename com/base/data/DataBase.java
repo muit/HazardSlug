@@ -19,12 +19,13 @@ public class DataBase {
         objects = new ArrayList<>();
         npcs = new ArrayList<>();
         //ITEMS/////////////////////////////////////////////////////////////////
-        objects.add(new BaseItem(1, "Piedra", 0, 10));
-        objects.add(new BaseItem(2, "Piedra encajada", 0, 10));
-        objects.add(new BaseItem(3, "Arena", 0.2, 10));
-        objects.add(new BaseItem(4, "Tierra", 0, 10));
+        objects.add(new BaseItem(0, "Piedra", 0, 10));
+        objects.add(new BaseItem(1, "Piedra encajada", 0, 10));
+        objects.add(new BaseItem(2, "Arena", 0.2, 10));
+        objects.add(new BaseItem(3, "Tierra", 0, 10));
         //NPCS//////////////////////////////////////////////////////////////////
-        npcs.add(new BaseNpc(0, "Cria de Babosa", 1, 10,5,5));
+        npcs.add(new BaseNpc(0, "Cria de Babosa", 1, 10,5,5,-1,-1,-1,-1));
+        npcs.add(new BaseNpc(1, "Babosa Adulta", 1, 10,5,5,-1,-1,-1,-1));
     }
     
     
