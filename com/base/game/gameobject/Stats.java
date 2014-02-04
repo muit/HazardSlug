@@ -11,15 +11,16 @@ package com.base.game.gameobject;
 public class Stats {
     private String name;
     private int health;
-    private int maxHealth=0;
+    private int maxHealth;
     private int energy;
-    private int maxEnergy=0;
-    private int invSpace = 12;
+    private int maxEnergy;
+    private int invSpace;
     private int level;
     private int xp;
-    private float speed = 4;
+    private float speed;
     private boolean jumping;
     private boolean leveable;
+    private boolean alive;
     
     public Stats(int xp, boolean leveable)
     {
@@ -34,11 +35,14 @@ public class Stats {
             this.xp = -1;
             this.level = xp;
         }
-            
+        maxHealth = 10;
+        invSpace = 12;
+        speed = 4;
+        maxEnergy=10;
         name= "";
         health = maxHealth;
         energy = maxEnergy;
-        
+        alive = true;
         jumping=false;
     }
     //XP////////////////////////////////////////////////////////////////////////
@@ -90,6 +94,31 @@ public class Stats {
     public void setMaxHealth(int maxHealth)
     {
         this.maxHealth = maxHealth;
+    }
+    public boolean modifyHealth(int live)
+    {
+        int newhealth = health+live;
+        if(newhealth <= 0)
+        {
+            health = 0;
+            alive = false;
+            return true;
+        }
+        else
+        {
+            health = newhealth;
+            return false;
+        }
+    }
+    
+    public boolean isAlive()
+    {
+        return alive;
+    }
+    public void kill()
+    {
+        alive = false;
+        health = 0;
     }
     
     //ENERGY////////////////////////////////////////////////////////////////////

@@ -16,7 +16,6 @@ import java.util.ArrayList;
  */
 public class Enemy extends Unit
 {
-    protected Stats stats;
     protected Unit target;
     private boolean justEnterCombat;
     protected float MELEE_RANGE=0;
@@ -42,7 +41,7 @@ public class Enemy extends Unit
     @Override
     public void update()
     {
-        if(target==null)
+        if(target == null || !getTarget().isAlive())
         {
             if(justEnterCombat)
                 justEnterCombat = false;
@@ -57,7 +56,7 @@ public class Enemy extends Unit
             }
             if(!meleRangeCorrect)
                 chase();
-            if(Util.LineOfSight(this,target))
+            if(Util.LineOfSight(this,target)&& getTarget().isAlive())
                 Attack();
         }
         if(stats.getHealth()<=0)
@@ -72,7 +71,6 @@ public class Enemy extends Unit
         {
             if(go.isPlayer()&& go != this)
             {
-                System.out.println("Ping");
                 setTarget(go);
             }
         }
@@ -96,8 +94,8 @@ public class Enemy extends Unit
         
         if(speedY < -maxSpeed)
             speedY = -maxSpeed;
-        x+=speedX;
-        y+=speedY;
+        x+=speedX * getDelta();
+        y+=speedY * getDelta();
     }
     
     protected void Attack()
@@ -125,14 +123,11 @@ public class Enemy extends Unit
     {
         target = go;
     }
-    protected GameObject getTarget()
+    protected Unit getTarget()
     {
         return target;
     }
-    protected Stats getStats()
-    {
-        return stats;
-    }
+    
     public void setAttackDelay(float cof_time)
     {
         int time = (int) (cof_time*1000);
@@ -150,7 +145,9 @@ public class Enemy extends Unit
             meleRangeCorrect = true;
             if(hitDelay.over())
             {
+                int damage = 1;
                 System.out.println("Pum");
+                getTarget().modifyHealth(damage);
                 resetAttackDelay();
             }
         }

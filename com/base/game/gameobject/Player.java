@@ -6,11 +6,12 @@ package com.base.game.gameobject;
 
 import com.base.engine.GameObject;
 import com.base.game.Game;
+import com.base.game.Time;
 import com.base.game.gameobject.item.Item;
 import com.base.game.map.Block;
 import com.base.game.map.Chunk;
 import org.lwjgl.input.Keyboard;
-
+ 
 /**
  *
  * @author Miguel
@@ -19,7 +20,6 @@ public class Player extends Unit
 {
     public static final float SIZE = 16;
     protected double gSpeed = 0;
-    private final Stats stats = new Stats(0, true);
     private final Inventory inv = new Inventory(16);
     private Game game;
     private Chunk actualChunk;
@@ -28,18 +28,25 @@ public class Player extends Unit
     {
         this.game = game;
         init(type, X, Y, 0.1f,1f,0.25f,SIZE,SIZE);
+        stats = new Stats(0, true);
+        stats.setName("Muit");
         toPlayer();
     }
     
     public void getInput()
     {
+        //if(!chatMode){
             if(Keyboard.isKeyDown(Keyboard.KEY_A))
                 move(-1);
             else if(Keyboard.isKeyDown(Keyboard.KEY_D))
                 move(1);
-        if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
-            if(mapColision)
-            stats.setJumping(true);
+            if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
+                if(mapColision)
+                    stats.setJumping(true);
+        //}
+        //else{
+            
+        //}
     }
     @Override
     public void update()
@@ -64,12 +71,12 @@ public class Player extends Unit
     
     private void move(float magx)
     {
-        x+=getSpeed()*magx;
+        x+=getSpeed() * magx * getDelta();
     }
     
     protected double getGSpeed()
     {
-        if(gSpeed<-5)
+        if(gSpeed<=-5)
             gSpeed=-5;
         else
             gSpeed-=0.2;

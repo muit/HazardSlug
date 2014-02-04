@@ -10,6 +10,8 @@ package com.base.game;
  */
 public class Time 
 {
+    private static final float DAMPING = 15000000;
+    
     private static long curTime;
     private static long lastTime;
     
@@ -18,9 +20,9 @@ public class Time
         return System.nanoTime();
     }
     
-    public static long getDelta()
+    public static float getDelta()
     {
-        return curTime - lastTime;
+        return (curTime - lastTime)/ DAMPING;
     }
     
     public static void update()
