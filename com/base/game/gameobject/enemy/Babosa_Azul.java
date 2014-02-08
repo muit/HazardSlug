@@ -4,15 +4,26 @@
  */
 package com.base.game.gameobject.enemy;
 
-import com.base.game.gameobject.Enemy;
+import com.base.game.EventsMap;
+import com.base.game.gameobject.Npc;
 import com.base.game.gameobject.Unit;
 
 /**
  *
  * @author Miguel
  */
-public class Babosa_Azul extends Enemy
+
+
+public class Babosa_Azul extends Npc
 {
+    private EventsMap event = new EventsMap();
+    
+    private int EVENT_SALPICADURA = 0,
+                EVENT_MORDEDURA   = 1;
+    
+    private int SPELL_SALPICADURA = 0,
+                SPELL_MORDEDURA   = 1;
+    
     
     public Babosa_Azul(float x, float y, int level)
     {
@@ -29,6 +40,8 @@ public class Babosa_Azul extends Enemy
     {
         //When npc enter combat:
         System.out.println("Zarigüella quiere sapatos pa comer!!");
+        
+        event.ScheduleEvent(EVENT_SALPICADURA, 2000);
         //End-------------------
     }
     
@@ -36,7 +49,28 @@ public class Babosa_Azul extends Enemy
     protected void Attack()
     {
         //If npc is in combat:
-        
+        while(true)
+        {
+            int id = event.getEvents();
+            if(id != -1)
+            {
+                switch(id)
+                {
+                case 0:
+                    DoCast(getTarget(),0);
+                    event.RestartEvent(EVENT_SALPICADURA);
+                    break;
+                case 1:
+                    //codigo si evento 1 se ejecuta
+                    break;
+                case 2:
+                    //codigo si evento 2 se ejecuta
+                    break;
+                }
+            }
+            else
+                break;
+        }
         //End-------------------
         DoAttackWhenReady();
     }

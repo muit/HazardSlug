@@ -45,6 +45,10 @@ public class Unit extends GameObject
     {
         return stats;
     }
+    public String getName()
+    {
+        return stats.getName();
+    }
     public boolean isAlive()
     {
         return stats.isAlive();
@@ -52,5 +56,21 @@ public class Unit extends GameObject
     public float getDelta()
     {
         return Time.getDelta();
+    }
+    public void DoCast(Unit target, int id)
+    {
+        //Scripts de spell
+        switch(id)
+        {
+            case 0:
+                System.out.println(target.getName()+" recibio Salpicadura.");
+                break;
+            case 1:
+                System.out.println(target.getName()+" recibio Mordisco.");
+                break;
+            default:
+                System.out.println("Spell: "+id+" no existe.");
+                break;
+        }
     }
 }

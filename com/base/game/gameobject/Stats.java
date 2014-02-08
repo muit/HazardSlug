@@ -39,7 +39,7 @@ public class Stats {
         invSpace = 12;
         speed = 4;
         maxEnergy=10;
-        name= "";
+        name = "";
         health = maxHealth;
         energy = maxEnergy;
         alive = true;
@@ -71,7 +71,10 @@ public class Stats {
     //NAME//////////////////////////////////////////////////////////////////////
     public String getName()
     {
-        return name;
+        if(!name.equals(""))
+            return name;
+        else
+            return "Indefined Entity";
     }
     public void setName(String name)
     {

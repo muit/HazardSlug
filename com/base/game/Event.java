@@ -24,14 +24,14 @@ public class Event {
         this.duration = duration;
         this.enabled = enabled;
         delay = new Delay(duration);
-        delay.end();
+        delay.start();
     }
     
     public void ChangeDuration(int newDuration)
     {
         this.duration = newDuration;
         delay = new Delay(duration);
-        delay.end();
+        delay.start();
     }
     public void setId(int id)
     {
@@ -53,7 +53,7 @@ public class Event {
     {
         enabled = true;
         delay = new Delay(duration);
-        delay.end();
+        delay.start();
     }
     public boolean Over()
     {

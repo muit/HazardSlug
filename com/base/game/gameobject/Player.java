@@ -36,13 +36,20 @@ public class Player extends Unit
     public void getInput()
     {
         //if(!chatMode){
-            if(Keyboard.isKeyDown(Keyboard.KEY_A))
-                move(-1);
-            else if(Keyboard.isKeyDown(Keyboard.KEY_D))
-                move(1);
-            if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
-                if(mapColision)
-                    stats.setJumping(true);
+            if(getStats().isAlive())
+            {
+                if(Keyboard.isKeyDown(Keyboard.KEY_A))
+                    move(-1);
+                else if(Keyboard.isKeyDown(Keyboard.KEY_D))
+                    move(1);
+                if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
+                    if(mapColision)
+                        stats.setJumping(true);
+            }
+            else
+            {
+                
+            }
         //}
         //else{
             

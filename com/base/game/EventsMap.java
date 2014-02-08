@@ -18,25 +18,19 @@ public class EventsMap {
     
     public void ScheduleEvent(int id, int duration)
     {
-        boolean used = false;
         for(int i =0; i<events.size(); i++)
         {
-            Event ev = events.get(i);
-            if(ev.getId() == id)
+            if(events.get(i).getId() == id)
             {
-                used = true;
-                ev.ChangeDuration(duration);
-                ev.Enable(true);
-                break;
+                events.remove(i);
             }
         }
-        if(used==false)
-            events.add(new Event(id, duration, true));
+        events.add(new Event(id, duration, true));
     }
     
     public void RestartEvent(int id)
     {
-        for(int i =0; i<events.size(); i++)
+        for(int i=0; i<events.size(); i++)
         {
             Event ev = events.get(i);
             if(ev.getId() == id)
@@ -95,7 +89,7 @@ public class EventsMap {
             if(ev.Over())
             {
                 int id = ev.getId();
-                events.remove(i);
+                ev.Enable(false);
                 return id;
             }
         }

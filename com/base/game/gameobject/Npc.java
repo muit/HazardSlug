@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *
  * @author Miguel
  */
-public class Enemy extends Unit
+public class Npc extends Unit
 {
     protected Unit target;
     private boolean justEnterCombat;
@@ -27,7 +27,7 @@ public class Enemy extends Unit
     protected int SIZE;
     private boolean meleRangeCorrect;
     
-    public Enemy (int level)
+    public Npc (int level)
     {
         stats = new Stats(level, false);
         target = null;
@@ -140,18 +140,18 @@ public class Enemy extends Unit
     }
     protected void DoAttackWhenReady()
     {
-        if(Util.dist(x, y, target.getX(), target.getY())< MELEE_RANGE)
+        if(hitDelay.over())
         {
-            meleRangeCorrect = true;
-            if(hitDelay.over())
+            if(Util.dist(x, y, target.getX(), target.getY())< MELEE_RANGE)
             {
+                meleRangeCorrect = true;
                 int damage = 1;
                 System.out.println("Pum");
                 getTarget().modifyHealth(damage);
                 resetAttackDelay();
             }
+            else
+                meleRangeCorrect = false;
         }
-        else
-            meleRangeCorrect = false;
     }
 }
