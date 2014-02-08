@@ -117,6 +117,7 @@ public class Chunk {
         point[27] = genPoint(point[26], point[28], space, 32);
         point[29] = genPoint(point[28], point[30], space, 32);
         point[31] = genPoint(point[30], point[32], space, 32);
+        
         for(int i=0; i<32;i++)
             cubes[i][(int)point[i]] = new Block(i+(id-maxid/2)*32, (int)point[i]+map.getFloorAlt(), 4);
     }
