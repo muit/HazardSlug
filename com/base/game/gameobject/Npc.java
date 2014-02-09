@@ -8,6 +8,7 @@ import com.base.engine.GameObject;
 import com.base.engine.Main;
 import com.base.game.Delay;
 import com.base.game.Util;
+import com.base.game.text.Log;
 import java.util.ArrayList;
 
 /**
@@ -26,6 +27,8 @@ public class Npc extends Unit
     protected Delay hitDelay;
     protected int SIZE;
     private boolean meleRangeCorrect;
+    private float positionBeforeCombatX, positionBeforeCombatY;
+    private float goToX, goToY;
     
     public Npc (int level)
     {
@@ -41,11 +44,16 @@ public class Npc extends Unit
     @Override
     public void update()
     {
-        if(target == null || !getTarget().isAlive())
+        if(target == null)
         {
             if(justEnterCombat)
                 justEnterCombat = false;
             look();
+        }
+        else if(!getTarget().isAlive())
+        {
+            if(goToPos(positionBeforeCombatX,positionBeforeCombatY))
+                target=null;
         }
         else
         {
@@ -53,6 +61,8 @@ public class Npc extends Unit
             {
                 justEnterCombat = true;
                 EnterCombat(target);
+                positionBeforeCombatX = x;
+                positionBeforeCombatY = y;
             }
             if(!meleRangeCorrect)
                 chase();
@@ -69,7 +79,7 @@ public class Npc extends Unit
         
         for( Unit go : objects)
         {
-            if(go.isPlayer()&& go != this)
+            if(go.isPlayer()&& go != this && go.isAlive())
             {
                 setTarget(go);
             }
@@ -96,6 +106,29 @@ public class Npc extends Unit
             speedY = -maxSpeed;
         x+=speedX * getDelta();
         y+=speedY * getDelta();
+    }
+    private boolean goToPos(float X, float Y)
+    {
+        float speedX = (X-x);
+        float speedY = (Y-y);
+        
+        float maxSpeed = getStats().getSpeed()*DAMPING;
+        
+        if(speedX > maxSpeed)
+            speedX = maxSpeed;
+        
+        if(speedX < -maxSpeed)
+            speedX = -maxSpeed;
+        
+        if(speedY > maxSpeed)
+            speedY = maxSpeed;
+        
+        if(speedY < -maxSpeed)
+            speedY = -maxSpeed;
+        x+=speedX * getDelta();
+        y+=speedY * getDelta();
+        
+        return x==X && y==Y;
     }
     
     protected void Attack()
@@ -146,7 +179,6 @@ public class Npc extends Unit
             {
                 meleRangeCorrect = true;
                 int damage = 1;
-                System.out.println("Pum");
                 getTarget().modifyHealth(damage);
                 resetAttackDelay();
             }

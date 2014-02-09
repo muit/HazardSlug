@@ -5,8 +5,8 @@
 package com.base.game.gameobject;
 
 import com.base.engine.GameObject;
-import com.base.game.Delay;
 import com.base.game.Time;
+import com.base.game.text.Log;
 
 /**
  *
@@ -34,11 +34,11 @@ public class Unit extends GameObject
     {
         if(stats.modifyHealth(-damage))
         {
-            System.out.println(stats.getName() + " ha muerto.");
+            Log.sendMessageToAll(stats.getName() + " ha muerto.");
         }
         else
         {
-            System.out.println(stats.getName() + " ha sufrido "+damage+" puntos de daño.");
+            Log.sendMessageToAll(stats.getName() + " ha sufrido "+damage+" puntos de daño.");
         }
     }
     public Stats getStats()
@@ -63,13 +63,13 @@ public class Unit extends GameObject
         switch(id)
         {
             case 0:
-                System.out.println(target.getName()+" recibio Salpicadura.");
+                Log.sendMessageToAll(target.getName()+" recibio Salpicadura.");
                 break;
             case 1:
-                System.out.println(target.getName()+" recibio Mordisco.");
+                Log.sendMessageToAll(target.getName()+" recibio Mordisco.");
                 break;
             default:
-                System.out.println("Spell: "+id+" no existe.");
+                Log.sendMessageToAll("Spell: "+id+" no existe.");
                 break;
         }
     }

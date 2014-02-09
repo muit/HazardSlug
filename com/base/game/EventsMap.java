@@ -6,7 +6,6 @@
 
 package com.base.game;
 
-import com.base.game.Event;
 import java.util.ArrayList;
 
 /**

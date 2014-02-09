@@ -4,12 +4,11 @@
  */
 package com.base.game.gameobject;
 
-import com.base.engine.GameObject;
 import com.base.game.Game;
-import com.base.game.Time;
 import com.base.game.gameobject.item.Item;
 import com.base.game.map.Block;
 import com.base.game.map.Chunk;
+import com.base.game.text.Log;
 import org.lwjgl.input.Keyboard;
  
 /**
@@ -18,18 +17,32 @@ import org.lwjgl.input.Keyboard;
  */
 public class Player extends Unit
 {
-    public static final float SIZE = 16;
+    private static int 
+        MOVE_NULL  = 0,
+        MOVE_RIGHT = 1,
+        MOVE_LEFT  = -1;
+    
+    private static final float SIZE = 16;
     protected double gSpeed = 0;
     private final Inventory inv = new Inventory(16);
-    private Game game;
     private Chunk actualChunk;
-    private boolean mapColision = false;
-    public Player(float X, float Y, Game game)
+    private boolean mapColision;
+    private boolean justJump;
+    private boolean inGround;
+    private boolean tempbool;
+    private int movx;
+    private Block groundBlock;
+    
+    public Player(float X, float Y)
     {
-        this.game = game;
         init(type, X, Y, 0.1f,1f,0.25f,SIZE,SIZE);
         stats = new Stats(0, true);
         stats.setName("Muit");
+        mapColision = false;
+        inGround = false;
+        justJump = false;
+        tempbool = false;
+        groundBlock = null;
         toPlayer();
     }
     
@@ -39,16 +52,17 @@ public class Player extends Unit
             if(getStats().isAlive())
             {
                 if(Keyboard.isKeyDown(Keyboard.KEY_A))
-                    move(-1);
+                    movx = -1;
                 else if(Keyboard.isKeyDown(Keyboard.KEY_D))
-                    move(1);
+                    movx = 1;
+                else
+                    movx = 0;
                 if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
-                    if(mapColision)
-                        stats.setJumping(true);
+                    justJump = true;
             }
             else
             {
-                
+                movx = 0;
             }
         //}
         //else{
@@ -58,37 +72,60 @@ public class Player extends Unit
     @Override
     public void update()
     {
-        if(y<=-16)
-        {
-            //die();
-        }
+        move(movx);
+        fisic();
         
         if(y<=-16)//futura mapColision aqui
         {
             y=-16;
-            mapColision = true;
+            inGround = true;
         }
-        mapColision();
+        if(inGround)
+        {
+            
+        }
+        
+        if(groundBlock != null)
+        {
+            y=Math.round(y);
+            if(x-groundBlock.getX()<-1 || x-groundBlock.getX()>1)
+                groundBlock=null;
+            
+            gSpeed=0;
+            
+            if(justJump)
+            {
+                stats.setJumping(true);
+                gSpeed=0.3125;
+                justJump = false;
+                groundBlock = null;
+            }
+            else if(stats.getJumping())
+            {
+                stats.setJumping(false);
+            }
+        }
+        else
+        {
+            if(gSpeed<-0.4375)
+                gSpeed=-0.4375;
+            else
+                gSpeed-=0.0150;
+        }
+        inGround = false;
     }
     
     public void fisic()
     {
-        y+=getGSpeed()/16;
+        y+=gSpeed;
     }
     
     private void move(float magx)
     {
-        x+=getSpeed() * magx * getDelta();
+        if(magx != 0)
+            x+=getSpeed() * magx * getDelta();
     }
     
-    protected double getGSpeed()
-    {
-        if(gSpeed<=-5)
-            gSpeed=-5;
-        else
-            gSpeed-=0.2;
-        return gSpeed;
-    }
     public float getSpeed()
     {
         return stats.getSpeed();
@@ -126,35 +163,26 @@ public class Player extends Unit
     {
         return inv.add(item);
     }
-    public void mapColision()
-    {
-        if(mapColision == true)
-        {
-            if(stats.getJumping())
-            {
-                gSpeed=5;
-                stats.setJumping(false);
-                mapColision = false;
-                fisic();
-            }
-            else
-            {
-                gSpeed=0;
-            }
-        }
-        else
-            fisic();
-    }
+    
     public void setMapColision(boolean mapColision)
     {
         this.mapColision = mapColision;
+    }
+    public void inGround(boolean inGround)
+    {
+        this.inGround = inGround;
     }
     public void setY(int y)
     {
     this.y = y;
     }
+    
     public void setX(int x)
     {
     this.x = x;
+    }
+    public void setGroundBlock(Block groundBlock)
+    {
+        this.groundBlock = groundBlock;
     }
 }

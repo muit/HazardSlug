@@ -27,11 +27,12 @@ public class Block extends Item{
     {
         if(Physics.checkCollision(this, player)!=null)
         {
-            player.setMapColision(true);
             if(this.y==player.getY())
                 player.setY(Math.round(player.getY()+1));
-            else
-                player.setY(Math.round(player.getY()));
+            
+            player.inGround(true);
+            player.setGroundBlock(this);
+            
         }
     }
 }

@@ -38,6 +38,10 @@ public class Main {
     {
         return game.sphereCollide(x, y, radius);
     }
+    public static ArrayList<Unit> getPlayers()
+    {
+        return game.getPlayers();
+    }
     
     private static void getInput()
     {

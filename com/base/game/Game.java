@@ -34,7 +34,7 @@ public class Game
         objects = new ArrayList<>();
         entitys = new ArrayList<>();
         remove = new ArrayList<>();
-        player = new Player(-5, 250, this);
+        player = new Player(-5, 250);
         
         entitys.add(player);
         entitys.add(new Babosa_Azul(1, 235, 1));
@@ -121,5 +121,18 @@ public class Game
                 res.add(go);
         }
         return res;
+    }
+    
+    public ArrayList<Unit> getPlayers()
+    {
+        ArrayList<Unit> players = new ArrayList<>();
+        for (int i=0; i<entitys.size(); i++)
+        {
+            if(entitys.get(i).isPlayer())
+            {
+                players.add(entitys.get(i));
+            }
+        }
+        return players;
     }
 }
