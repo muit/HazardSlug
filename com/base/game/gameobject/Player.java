@@ -4,7 +4,6 @@
  */
 package com.base.game.gameobject;
 
-import com.base.game.Game;
 import com.base.game.gameobject.item.Item;
 import com.base.game.map.Block;
 import com.base.game.map.Chunk;
@@ -17,7 +16,7 @@ import org.lwjgl.input.Keyboard;
  */
 public class Player extends Unit
 {
-    private static int 
+    private static final int 
         MOVE_NULL  = 0,
         MOVE_RIGHT = 1,
         MOVE_LEFT  = -1;
@@ -35,7 +34,7 @@ public class Player extends Unit
     
     public Player(float X, float Y)
     {
-        init(type, X, Y, 0.1f,1f,0.25f,SIZE,SIZE);
+        init(X, Y, 0.1f,1f,0.25f,SIZE,SIZE);
         stats = new Stats(0, true);
         stats.setName("Muit");
         mapColision = false;

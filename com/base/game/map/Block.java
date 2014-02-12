@@ -19,8 +19,7 @@ public class Block extends Item{
     
     public Block(int x, int y, int id)
     {
-        this.id = id;
-        init(db.getItemName(id), x, y, 1.0f, 0.5f, 0, SIZE, SIZE);
+        init(id, x, y, 1.0f, 0.5f, 0, SIZE, SIZE);
     }
     
     public void update(Player player)

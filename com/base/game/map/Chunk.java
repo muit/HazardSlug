@@ -6,7 +6,6 @@
 
 package com.base.game.map;
 
-import com.base.game.Game;
 import com.base.game.Util;
 import com.base.game.gameobject.Player;
 
@@ -119,7 +118,7 @@ public class Chunk {
         point[31] = genPoint(point[30], point[32], space, 32);
         
         for(int i=0; i<32;i++)
-            cubes[i][(int)point[i]] = new Block(i+(id-maxid/2)*32, (int)point[i]+map.getFloorAlt(), 4);
+            cubes[i][(int)point[i]] = new Block(i+(id-maxid/2)*32, (int)point[i]+map.getFloorAlt(), 1);
     }
     public boolean getInit()
     {

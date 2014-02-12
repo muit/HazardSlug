@@ -11,21 +11,26 @@ import java.util.ArrayList;
  * @author Miguel
  */
 public class DataBase {
-    private ArrayList<BaseItem> objects;
-    private ArrayList<BaseNpc> npcs;
+    static private ArrayList<BaseItem> objects;
+    static private ArrayList<BaseNpc> npcs;
+    static boolean defined = false;
     
     public DataBase()
     {
-        objects = new ArrayList<>();
-        npcs = new ArrayList<>();
-        //ITEMS/////////////////////////////////////////////////////////////////
-        objects.add(new BaseItem(0, "Piedra", 0, 10));
-        objects.add(new BaseItem(1, "Piedra encajada", 0, 10));
-        objects.add(new BaseItem(2, "Arena", 0.2, 10));
-        objects.add(new BaseItem(3, "Tierra", 0, 10));
-        //NPCS//////////////////////////////////////////////////////////////////
-        npcs.add(new BaseNpc(0, "Cria de Babosa", 1, 10,5,5,-1,-1,-1,-1));
-        npcs.add(new BaseNpc(1, "Babosa Adulta", 1, 10,5,5,-1,-1,-1,-1));
+        if(!defined)
+        {
+            objects = new ArrayList<>();
+            npcs = new ArrayList<>();
+            //ITEMS/////////////////////////////////////////////////////////////////
+            objects.add(new BaseItem(0, "Rock", 0, 10));
+            objects.add(new BaseItem(1, "Floor Rock", 0, 10));
+            objects.add(new BaseItem(2, "Arena", 0.2, 10));
+            objects.add(new BaseItem(3, "Tierra", 0, 10));
+            //NPCS//////////////////////////////////////////////////////////////////
+            npcs.add(new BaseNpc(0, "Cria de Babosa", 1, 10,5,5,-1,-1,-1,-1));
+            npcs.add(new BaseNpc(1, "Babosa Adulta", 1, 10,5,5,-1,-1,-1,-1));
+            defined = true;
+        }
     }
     
     

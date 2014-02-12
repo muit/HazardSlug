@@ -4,7 +4,6 @@
  */
 package com.base.game.gameobject;
 
-import com.base.engine.GameObject;
 import com.base.engine.Main;
 import com.base.game.Delay;
 import com.base.game.Util;

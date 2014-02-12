@@ -38,6 +38,7 @@ public class Main {
     {
         return game.sphereCollide(x, y, radius);
     }
+    
     public static ArrayList<Unit> getPlayers()
     {
         return game.getPlayers();
@@ -98,6 +99,7 @@ public class Main {
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         glOrtho(0, Display.getWidth(), 0, Display.getHeight(), -1, 1);
+        glEnable(GL_TEXTURE_2D);
         glMatrixMode(GL_MODELVIEW);
         glDisable(GL_DEPTH_TEST);
         

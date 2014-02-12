@@ -11,10 +11,10 @@ package com.base.engine;
 public class Frame 
 {
     private final int lenght;
-    private final Sprite spr;
+    private final ItemSprite spr;
     private int numDisplayed;
     
-    public Frame(Sprite spr, int lenght)
+    public Frame(ItemSprite spr, int lenght)
     {
         this.lenght = lenght;
         this.spr = spr;

@@ -9,12 +9,12 @@ import static org.lwjgl.opengl.GL11.*;
  *
  * @author Miguel
  */
-public class Sprite 
+public class UnitSprite 
 {
     private float r,g,b;
     private float sx,sy;    
     
-    public Sprite(float r, float g, float b, float sx, float sy)
+    public UnitSprite(float r, float g, float b, float sx, float sy)
     {
         this.r = r;
         this.g = g;

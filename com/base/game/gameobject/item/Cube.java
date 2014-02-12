@@ -23,9 +23,8 @@ public class Cube extends Item {
     public Cube(int x, int y, int id, Game game)
     {
         this.player = game.getPlayer();
-        this.id = id;
         this.game = game;
-        init(db.getItemName(id), x, y, 1.0f, 0.5f, 0, SIZE, SIZE);
+        init(id, x, y, 1.0f, 0.5f, 0, SIZE, SIZE);
         this.type = 4;
     }
     

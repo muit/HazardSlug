@@ -14,7 +14,6 @@ public class BaseItem {
     private float gravity;
     private float heavy;
     
-    
     public BaseItem(int id, String name, float gravity, float heavy)
     {
         this.id = id;

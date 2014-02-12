@@ -5,8 +5,12 @@
 package com.base.game.gameobject;
 
 import com.base.engine.GameObject;
+import com.base.engine.UnitSprite;
 import com.base.game.Time;
 import com.base.game.text.Log;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glTranslatef;
 
 /**
  *
@@ -14,8 +18,22 @@ import com.base.game.text.Log;
  */
 public class Unit extends GameObject
 {
+    protected String name;
     private boolean player = false;
     protected Stats stats;
+    protected UnitSprite spr;
+    
+    protected void init(float x, float y, float r, float g, float b, float sx,float sy)
+    {
+        this.name = name;
+        this.type = 3;
+        this.x = x;
+        this.y = y;
+        this.sx = sx;
+        this.sy = sy;
+        spr = new UnitSprite(r,g,b,sx,sy);
+    }
+    
     public boolean isPlayer()
     {
         return player;
@@ -72,5 +90,18 @@ public class Unit extends GameObject
                 Log.sendMessageToAll("Spell: "+id+" no existe.");
                 break;
         }
+    }
+    
+    
+    
+    @Override
+    public void render()
+    {
+        glPushMatrix();
+        {
+            glTranslatef(x*16, y*16, 0);
+            spr.render();
+        }
+        glPopMatrix();
     }
 }

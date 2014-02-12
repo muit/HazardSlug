@@ -11,9 +11,8 @@ import static org.lwjgl.opengl.GL11.*;
  */
 public abstract class GameObject 
 {
-    protected float x,y;
+    protected float x, y, sx, sy;
     protected int type = 0;
-    protected Sprite spr;
     protected boolean remove = false;
     
     public void update()
@@ -22,12 +21,15 @@ public abstract class GameObject
     }
     public void render()
     {
-        glPushMatrix();
-        {
-            glTranslatef(x*16, y*16, 0);
-            spr.render();
-        }
-        glPopMatrix();
+    }
+    
+    public float getSX()
+    {
+        return sx;
+    }
+    public float getSY()
+    {
+        return sy;
     }
     
     public float getX()
@@ -37,14 +39,6 @@ public abstract class GameObject
     public float getY()
     {
         return y;
-    }
-    public float getSX()
-    {
-        return spr.getSX();
-    }
-    public float getSY()
-    {
-        return spr.getSY();
     }
     
     public int getType()
@@ -57,11 +51,12 @@ public abstract class GameObject
         return remove;
     }
     
-    protected void init(int type, float x, float y, float r, float g, float b, float sx,float sy)
+    protected void init(int type, float x, float y, float sx,float sy)
     {
         this.type = type;
         this.x = x;
         this.y = y;
-        this.spr = new Sprite(r,g,b,sx,sy);
+        this.sx = sx;
+        this.sy = sy;
     }
 }
