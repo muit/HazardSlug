@@ -23,13 +23,13 @@ public class Chunk {
     public Chunk()
     {
         this.chunkSizeX = 32;
-        this.chunkSizeY = 200;
+        this.chunkSizeY = 500;
         cubes = new Block[chunkSizeX][chunkSizeY];
     }
     public Chunk(Block cubes[][])
     {
         this.chunkSizeX = 32;
-        this.chunkSizeY = 200;
+        this.chunkSizeY = 500;
         this.cubes = cubes;
     }
     public void update(Player player)
@@ -71,6 +71,11 @@ public class Chunk {
     
     public void generate(Map map, int seed, int id, int maxid)
     {
+        //Perlin Noise Info: http://devmag.org.za/2009/04/25/perlin-noise/
+        //Height Map Info:http://libnoise.sourceforge.net/tutorials/tutorial3.html
+        
+        //Will use md5 to cifrate seed and chunk number to random numbers.
+        
         initialiced = true;
         int space = map.getMaxAlt()-map.getFloorAlt();
         
@@ -118,7 +123,19 @@ public class Chunk {
         point[31] = genPoint(point[30], point[32], space, 32);
         
         for(int i=0; i<32;i++)
-            cubes[i][(int)point[i]] = new Block(i+(id-maxid/2)*32, (int)point[i]+map.getFloorAlt(), 1);
+        {
+            int floory = (int)(point[i]+map.getFloorAlt());
+            int realx = i+(id-maxid/2)*chunkSizeX;
+            cubes[i][floory] = new Block(realx, floory, 1);
+            
+            for(int e = 1; e<1+Util.random(1, 2); e++)
+            {
+                cubes[i][floory-e] = new Block(realx, floory-e, 3);
+            }
+                
+            cubes[i][0] = new Block(i, 0, 10);
+        }
+        
     }
     public boolean getInit()
     {

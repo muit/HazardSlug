@@ -26,7 +26,7 @@ public class Block extends Item{
     {
         if(Physics.checkCollision(this, player)!=null)
         {
-            if(this.y==player.getY())
+            if(y==player.getY())
                 player.setY(Math.round(player.getY()+1));
             
             player.inGround(true);

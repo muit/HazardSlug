@@ -5,6 +5,7 @@
 package com.base.game.gameobject.enemy;
 
 import com.base.game.EventsMap;
+import com.base.game.Util;
 import com.base.game.gameobject.Npc;
 import com.base.game.gameobject.Unit;
 

@@ -4,6 +4,7 @@
  */
 package com.base.game.gameobject;
 
+import com.base.engine.EffectManager;
 import com.base.engine.GameObject;
 import com.base.engine.UnitSprite;
 import com.base.game.Time;
@@ -82,6 +83,7 @@ public class Unit extends GameObject
         {
             case 0:
                 Log.sendMessageToAll(target.getName()+" recibio Salpicadura.");
+                EffectManager.createEffect(1, x, y, target, 0.21f, true);
                 break;
             case 1:
                 Log.sendMessageToAll(target.getName()+" recibio Mordisco.");

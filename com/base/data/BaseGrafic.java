@@ -12,4 +12,10 @@ package com.base.data;
  */
 public class BaseGrafic {
     
+    public BaseGrafic()
+    {
+        
+    }
+    
+    
 }

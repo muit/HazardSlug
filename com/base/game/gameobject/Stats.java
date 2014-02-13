@@ -37,7 +37,7 @@ public class Stats {
         }
         maxHealth = 10;
         invSpace = 12;
-        speed = 4;
+        speed = 0.1f;
         maxEnergy=10;
         name = "";
         health = maxHealth;
@@ -161,7 +161,7 @@ public class Stats {
     }
     public float getSpeed()
     {
-        return speed/16;
+        return speed;
     }
     public void setSpeed(float speed)
     {

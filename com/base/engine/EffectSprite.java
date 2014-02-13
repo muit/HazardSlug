@@ -4,27 +4,30 @@
  */
 package com.base.engine;
 
-import static org.lwjgl.opengl.GL11.*;
+import java.io.IOException;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
+import static org.lwjgl.opengl.GL11.*;
 /**
  *
  * @author Miguel
  */
-public class ItemSprite 
+public class EffectSprite 
 {
     private Texture tex;
     private float sx,sy;
+    private final int id;
     private int frame;
     
-    public ItemSprite(int id, float sx, float sy)
+    public EffectSprite(int id)
     {
-        this.sx = sx;
-        this.sy = sy;
+        this.id = id;
+        this.sx = 16;
+        this.sy = 16;
+        tex = null;
         loadTexture(id);
-        frame = 1;
     }
     
     public void update()
@@ -49,6 +52,7 @@ public class ItemSprite
         }
         glEnd();
     }
+    
     public float getSX()
     {
         return sx;
@@ -65,13 +69,22 @@ public class ItemSprite
     {
         this.sy = sy;
     }
+    
     private void loadTexture(int id)
     {
-        String path = "com/resources/tileset/"+id+".bmp";
+        String path = "com/resources/effect/"+id+".bmp";
         try {
             tex = TextureLoader.getTexture("BMP", ResourceLoader.getResourceAsStream(path));
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             System.out.println("Textura: "+id+" no se pudo cargar.");
         }
+    }
+    public void nextFrame()
+    {
+        frame++;
+    }
+    public void lastFrame()
+    {
+        frame--;
     }
 }

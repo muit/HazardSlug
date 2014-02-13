@@ -32,7 +32,6 @@ public class Item extends GameObject {
     protected void init(int id, float x, float y, float r, float g, float b, float sx,float sy)
     {
         this.id = id;
-        DataBase db = new DataBase();
         this.name = db.getItemName(id);
         this.type = 3;
         this.x = x;

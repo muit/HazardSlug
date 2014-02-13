@@ -9,6 +9,7 @@ import com.base.engine.Camera;
 import com.base.engine.GameObject;
 import com.base.game.gameobject.Player;
 import com.base.game.gameobject.Unit;
+import com.base.game.gameobject.Effect;
 import com.base.game.gameobject.enemy.Babosa_Azul;
 import com.base.game.gameobject.item.Cube;
 import com.base.game.map.Map;
@@ -23,8 +24,10 @@ public class Game
 {
     private final ArrayList<GameObject> objects;
     private final ArrayList<Unit> entitys;
+    private final ArrayList<Effect> effects;
     private final Map map = new Map(3, this);
     private final ArrayList<GameObject> remove;
+    private final ArrayList<Effect> removeffect;
     private final Player player;
     private final Camera cam = new Camera();
     protected DataBase db = new DataBase();
@@ -33,7 +36,10 @@ public class Game
     {
         objects = new ArrayList<>();
         entitys = new ArrayList<>();
+        effects = new ArrayList<>();
         remove = new ArrayList<>();
+        removeffect = new ArrayList<>();
+        
         player = new Player(-5, 250);
         
         entitys.add(player);
@@ -62,6 +68,7 @@ public class Game
                 remove.add(go);
             }
         }
+        
         for(Unit go : entitys)
         {
             if(!go.getRemove())
@@ -71,11 +78,29 @@ public class Game
                 remove.add(go);
             }
         }
+        
+        for(Effect go : effects)
+        {
+            if(!go.getRemove())
+                go.update();
+            else
+            {
+                removeffect.add(go);
+            }
+        }
+        
         for(GameObject go : remove)
         {
             objects.remove(go);
         }
         remove.clear();
+        
+        for(Effect go : removeffect)
+        {
+            effects.remove(go);
+        }
+        removeffect.clear();
+        
         cam.setCamera((int)(player.getX()*16+player.getSX()/2-Display.getWidth()/2),(int)(player.getY()*16+player.getSY()/2-Display.getHeight()/2), Display.getWidth(), Display.getHeight());
     }
     
@@ -85,6 +110,8 @@ public class Game
         for(GameObject go : objects)
             go.render();
         for(Unit go : entitys)
+            go.render();
+        for(Effect go : effects)
             go.render();
     }
     
@@ -96,9 +123,13 @@ public class Game
     }
     private void removeUnit(Unit target)
     {
-        for(Unit go : entitys)
-            if(go == target)
-                entitys.remove(go);
+        if(entitys.contains(target))
+            entitys.remove(target);
+    }
+    private void removeEffect(Effect target)
+    {
+        if(effects.contains(target))
+                effects.remove(target);
     }
     public DataBase db()
     {
@@ -134,5 +165,21 @@ public class Game
             }
         }
         return players;
+    }
+    public void createEffect(int id, float x, float y)
+    {
+        effects.add(new Effect(id, x, y));
+    }
+    public void createEffect(int id, float x, float y, float sx, float sy, float speed)
+    {
+        effects.add(new Effect(id, x, y, sx, sy, speed));
+    }
+    public void createEffect(int id, float x, float y, Unit target, float speed, boolean follow)
+    {
+        effects.add(new Effect(id, x, y, target, speed, follow));
+    }
+    public void deleteEffect(Effect effect)
+    {
+        effects.remove(effect);
     }
 }

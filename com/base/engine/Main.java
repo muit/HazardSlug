@@ -43,6 +43,10 @@ public class Main {
     {
         return game.getPlayers();
     }
+    public static Game getGame()
+    {
+        return game;
+    }
     
     private static void getInput()
     {

@@ -7,7 +7,6 @@ package com.base.game.gameobject;
 import com.base.game.gameobject.item.Item;
 import com.base.game.map.Block;
 import com.base.game.map.Chunk;
-import com.base.game.text.Log;
 import org.lwjgl.input.Keyboard;
  
 /**
@@ -42,6 +41,7 @@ public class Player extends Unit
         justJump = false;
         tempbool = false;
         groundBlock = null;
+        stats.setSpeed(0.20f);
         toPlayer();
     }
     

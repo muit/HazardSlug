@@ -90,7 +90,7 @@ public class Npc extends Unit
         float speedX = (getTarget().getX()-x);
         float speedY = (getTarget().getY()-y);
         
-        float maxSpeed = getStats().getSpeed()*DAMPING;
+        float maxSpeed = stats.getSpeed()*DAMPING;
         
         if(speedX > maxSpeed)
             speedX = maxSpeed;

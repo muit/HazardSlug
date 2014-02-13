@@ -23,7 +23,7 @@ public class Map {
     private GeneratorMidpoint mp = new GeneratorMidpoint();
     public Map(int Size, Game game)
     {
-        ChunkMapSize = 1024*(int)Math.pow(2,Size)+1024;;
+        ChunkMapSize = 1024*(int)Math.pow(2,Size)+1024;
         chunks = new Chunk[ChunkMapSize];
         this.game = game;
     }
