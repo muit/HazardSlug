@@ -5,6 +5,7 @@
 package com.base.data;
 
 import java.util.ArrayList;
+import org.newdawn.slick.opengl.Texture;
 
 /**
  *
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 public class DataBase {
     static private ArrayList<BaseItem> objects;
     static private ArrayList<BaseNpc> npcs;
+    static private ArrayList<BaseEffect> effects;
     static boolean defined = false;
     
     public DataBase()
@@ -21,14 +23,26 @@ public class DataBase {
         {
             objects = new ArrayList<>();
             npcs = new ArrayList<>();
+            effects = new ArrayList<>();
+            
             //ITEMS/////////////////////////////////////////////////////////////////
             objects.add(new BaseItem(0, "Rock", 0, 10));
             objects.add(new BaseItem(1, "Floor Rock", 0, 10));
             objects.add(new BaseItem(2, "Arena", 0.2, 10));
             objects.add(new BaseItem(3, "Tierra", 0, 10));
+            objects.add(new BaseItem(4, "Barro", 0, 10));
+            objects.add(new BaseItem(10, "Sulfuro del Infierno", 0, 10));
             //NPCS//////////////////////////////////////////////////////////////////
             npcs.add(new BaseNpc(0, "Cria de Babosa", 1, 10,5,5,-1,-1,-1,-1));
             npcs.add(new BaseNpc(1, "Babosa Adulta", 1, 10,5,5,-1,-1,-1,-1));
+            //EFFECTS///////////////////////////////////////////////////////////////
+            effects.add(new BaseEffect(0));
+            effects.add(new BaseEffect(1));
+            effects.add(new BaseEffect(2));
+            effects.add(new BaseEffect(3));
+            effects.add(new BaseEffect(4));
+            effects.add(new BaseEffect(5));
+            ////////////////////////////////////////////////////////////////////////
             defined = true;
         }
     }
@@ -59,6 +73,14 @@ public class DataBase {
         else
             return 255;
     }
+    public Texture getItemTexture(int id)
+    {
+        BaseItem bi = getItem(id);
+        if(bi != null)
+            return bi.getTexture();
+        else
+            return null;
+    }
     private BaseItem getItem(int id)
     {
         for(BaseItem bi : objects)
@@ -70,6 +92,7 @@ public class DataBase {
         }
         return null;
     }
+    
     
     
     public String getNpcName(int id)
@@ -123,4 +146,25 @@ public class DataBase {
         }
         return null;
     }
+    
+    public Texture getEffectTexture(int id)
+    {
+        BaseEffect be = getEffect(id);
+        if(be != null)
+            return be.getTexture();
+        else
+            return null;
+    }
+    private BaseEffect getEffect(int id)
+    {
+        for(BaseEffect be : effects)
+        {
+            if(be.getId() == id)
+            {
+                return be;
+            }
+        }
+        return null;
+    }
+    
 }

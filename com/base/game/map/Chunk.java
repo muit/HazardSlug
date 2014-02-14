@@ -128,12 +128,10 @@ public class Chunk {
             int realx = i+(id-maxid/2)*chunkSizeX;
             cubes[i][floory] = new Block(realx, floory, 1);
             
-            for(int e = 1; e<1+Util.random(1, 2); e++)
+            for(int e = 1; e<1+Util.random(15, 35); e++)
             {
                 cubes[i][floory-e] = new Block(realx, floory-e, 3);
             }
-                
-            cubes[i][0] = new Block(i, 0, 10);
         }
         
     }

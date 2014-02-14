@@ -22,9 +22,11 @@ import static org.lwjgl.opengl.GL11.*;
  */
 public class Main {
     private static Game game;
-    
+    private static boolean done;
     public static void main(String[] args)
     {
+        done = false;
+        
         initDisplay();
         initGL();
         initGame();
@@ -75,7 +77,7 @@ public class Main {
     private static void gameLoop()
     {
         Time.init();
-        while(!Display.isCloseRequested())
+        while(!Display.isCloseRequested() && !done)
         {
             Time.update();
             getInput();
@@ -117,5 +119,9 @@ public class Main {
     {
         Display.destroy();
         Keyboard.destroy();
+    }
+    public static void heavyClose()
+    {
+        done = true;
     }
 }

@@ -58,14 +58,15 @@ public class Effect {
         this.y2 = sy;
         this.speed = speed;
         this.target = null;
-        spr = new EffectSprite(id);
-        removeDelay = new Delay((int)(2000*speed));
         removeDelay.start();
     }
     public Effect(int id, float x, float y, Unit target, float speed, boolean follow)
     {
-        if(follow)
+        if(follow){
             mode = Mode.FOLLOW;
+            removeDelay = new Delay(Util.random((int)(1000*(1+speed)), (int)(1000*(1+speed)*(1+speed+0.2f))));
+            removeDelay.start();
+        }
         else
             mode = Mode.GOTO;
         
@@ -77,13 +78,11 @@ public class Effect {
         this.speed = speed;
         this.target = target;
         spr = new EffectSprite(id);
-        removeDelay = new Delay(Util.random((int)(1000*(1+speed)), (int)(1000*(1+speed)*(1+speed+0.2f))));
-        removeDelay.start();
     }
     
     public void update()
     {
-        if(mode != Mode.STATIC && removeDelay.over()){
+        if(mode == Mode.FOLLOW && removeDelay.over()){
             remove = true;
             return;
         }
@@ -143,7 +142,7 @@ public class Effect {
         x+=speedX * getDelta();
         y+=speedY * getDelta();
         
-        return x==x2 && y==y2;
+        return Util.dist(x, y, x2, y2)< 1;
     }
     
     public float getDelta()

@@ -4,6 +4,7 @@
  */
 package com.base.engine;
 
+import com.base.data.DataBase;
 import static org.lwjgl.opengl.GL11.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
@@ -23,7 +24,7 @@ public class ItemSprite
     {
         this.sx = sx;
         this.sy = sy;
-        loadTexture(id);
+        getTexture(id);
         frame = 1;
     }
     
@@ -65,13 +66,16 @@ public class ItemSprite
     {
         this.sy = sy;
     }
-    private void loadTexture(int id)
+    private void getTexture(int id)
     {
-        String path = "com/resources/tileset/"+id+".bmp";
-        try {
-            tex = TextureLoader.getTexture("BMP", ResourceLoader.getResourceAsStream(path));
-        } catch (Exception ex) {
-            System.out.println("Textura: "+id+" no se pudo cargar.");
+        DataBase db = new DataBase();
+        tex = db.getItemTexture(id);
+        
+        //Si el id no existe en la bd se reportara el error:
+        if(tex == null)
+        {
+            System.out.println("Vacio: "+id);
+            Main.heavyClose();
         }
     }
 }
