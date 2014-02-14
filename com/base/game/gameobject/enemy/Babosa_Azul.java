@@ -30,7 +30,7 @@ public class Babosa_Azul extends Npc
     {
         super(level);//0.8f: 1sec*% attack speed
         MELEE_RANGE = (float)1.5;
-        DAMPING = 0.8f;
+        DAMPING = 1.0f;
         SIZE = 16;
         setAttackDelay(0.8f);//0.8f: 1sec*% attack speed
         init(x, y, 0.2f, 0.2f, 1.0f, SIZE, SIZE);

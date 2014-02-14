@@ -106,6 +106,12 @@ public class Main {
         glLoadIdentity();
         glOrtho(0, Display.getWidth(), 0, Display.getHeight(), -1, 1);
         glEnable(GL_TEXTURE_2D);
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        
+        // enable alpha blending
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        
         glMatrixMode(GL_MODELVIEW);
         glDisable(GL_DEPTH_TEST);
         

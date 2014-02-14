@@ -106,6 +106,7 @@ public class Effect {
             default:
                 break;
         }
+        spr.update();
     }
     
     public void render()

@@ -16,15 +16,15 @@ import org.newdawn.slick.util.ResourceLoader;
  */
 public class ItemSprite 
 {
-    private Texture tex;
     private float sx,sy;
     private int frame;
+    private int id;
     
     public ItemSprite(int id, float sx, float sy)
     {
         this.sx = sx;
         this.sy = sy;
-        getTexture(id);
+        this.id = id;
         frame = 1;
     }
     
@@ -35,8 +35,9 @@ public class ItemSprite
     
     public void render()
     {
+        DataBase db = new DataBase();
         Color.white.bind();
-	tex.bind();
+	db.getItemTexture(id).bind();
         glBegin(GL_QUADS);
         {
             glTexCoord2f(0.25f*frame,1);
@@ -65,17 +66,5 @@ public class ItemSprite
     public void setSY(float sy)
     {
         this.sy = sy;
-    }
-    private void getTexture(int id)
-    {
-        DataBase db = new DataBase();
-        tex = db.getItemTexture(id);
-        
-        //Si el id no existe en la bd se reportara el error:
-        if(tex == null)
-        {
-            System.out.println("Vacio: "+id);
-            Main.heavyClose();
-        }
     }
 }

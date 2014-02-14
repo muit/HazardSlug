@@ -4,6 +4,8 @@
  */
 package com.base.engine;
 
+import com.base.data.DataBase;
+import com.base.game.EventsMap;
 import java.io.IOException;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
@@ -16,38 +18,52 @@ import static org.lwjgl.opengl.GL11.*;
  */
 public class EffectSprite 
 {
-    private Texture tex;
     private float sx,sy;
-    private final int id;
+    private int id;
     private int frame;
+    private EventsMap event = new EventsMap();
     
     public EffectSprite(int id)
     {
         this.id = id;
         this.sx = 16;
         this.sy = 16;
-        tex = null;
-        loadTexture(id);
+        frame=0;
+        event.ScheduleEvent(0, 100);
     }
     
     public void update()
     {
         //eventos para frames
+        while(true)
+        {
+            int evId = event.getEvents();
+            if(evId == 0)
+            {
+                frame++;
+                if(frame>=4 || frame<0)
+                    frame=0;
+                event.RestartEvent(0);
+            }
+            else
+                break;
+        }
     }
     
     public void render()
     {
+        DataBase db = new DataBase();
         Color.white.bind();
-	tex.bind();
+	db.getEffectTexture(id).bind();
         glBegin(GL_QUADS);
         {
-            glTexCoord2f(0.25f*frame,1);
+            glTexCoord2f(0.25f*frame+0.25f,1);
             glVertex2f(0,0);
-            glTexCoord2f(0,1);
+            glTexCoord2f(0.25f*frame,1);
             glVertex2f(sx,0);
-            glTexCoord2f(0,0);
-            glVertex2f(sx,sy);
             glTexCoord2f(0.25f*frame,0);
+            glVertex2f(sx,sy);
+            glTexCoord2f(0.25f*frame+0.25f,0);
             glVertex2f(0,sy);
         }
         glEnd();
@@ -68,16 +84,6 @@ public class EffectSprite
     public void setSY(float sy)
     {
         this.sy = sy;
-    }
-    
-    private void loadTexture(int id)
-    {
-        String path = "com/resources/effect/"+id+".bmp";
-        try {
-            tex = TextureLoader.getTexture("BMP", ResourceLoader.getResourceAsStream(path));
-        } catch (IOException ex) {
-            System.out.println("Textura: "+id+" no se pudo cargar.");
-        }
     }
     public void nextFrame()
     {

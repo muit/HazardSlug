@@ -40,13 +40,19 @@ public class BaseItem {
     
     private void loadTexture()
     {
-        String path = "com/resources/tileset/"+id+".bmp";
+        String path = "com/resources/tileset/"+id+".png";
         try {
-            tex = TextureLoader.getTexture("BMP", ResourceLoader.getResourceAsStream(path));
-        } catch (IOException ex) {
-            System.out.println("Error al cargar textura: "+id);
-            Main.heavyClose();
-        }
+                tex = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(path));
+            } catch (IOException ex) {
+                System.out.println("Textura: "+id+" no se pudo cargar.");
+                Main.heavyClose();
+                
+            }
+            if(tex == null)
+            {
+                System.out.println("Textura: "+id+" no se pudo cargar.");
+                Main.heavyClose();
+            }
     }
     
     public int getId()

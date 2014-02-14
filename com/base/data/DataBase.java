@@ -38,10 +38,6 @@ public class DataBase {
             //EFFECTS///////////////////////////////////////////////////////////////
             effects.add(new BaseEffect(0));
             effects.add(new BaseEffect(1));
-            effects.add(new BaseEffect(2));
-            effects.add(new BaseEffect(3));
-            effects.add(new BaseEffect(4));
-            effects.add(new BaseEffect(5));
             ////////////////////////////////////////////////////////////////////////
             defined = true;
         }

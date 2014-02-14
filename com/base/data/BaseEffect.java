@@ -34,10 +34,16 @@ public class BaseEffect {
     {
         if(tex == null)
         {
-            String path = "com/resources/effect/"+id+".bmp";
+            String path = "com/resources/effect/"+id+".png";
             try {
-                tex = TextureLoader.getTexture("BMP", ResourceLoader.getResourceAsStream(path));
+                tex = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(path));
             } catch (IOException ex) {
+                System.out.println("Textura: "+id+" no se pudo cargar.");
+                Main.heavyClose();
+                
+            }
+            if(tex == null)
+            {
                 System.out.println("Textura: "+id+" no se pudo cargar.");
                 Main.heavyClose();
             }
