@@ -86,7 +86,11 @@ public class Movement {
         //OPERATIONS////////////////////////////////////////////////////////////
         vD = v*Time.getDelta();
         
-        if(following)
+        if(!following)
+        {
+            
+        }
+        else
         {
             //1*1 = 1 so we dont need to Sqrt the distance
             double distSqrt = Math.abs(Math.pow(vector.x-target.x, 2)+Math.pow(vector.y-target.y, 2));
