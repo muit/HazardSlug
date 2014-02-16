@@ -13,16 +13,16 @@ import com.base.game.gameobject.Unit;
  * @author Miguel_F
  */
 public class EffectManager {
-    public static void createEffect(int id, float x, float y)
+    public static void createEffect(Unit me, int id, float x, float y)
     {
-        Main.getGame().createEffect(id, x, y);
+        Main.getGame().createEffect(me, id, x, y);
     }
-    public static void createEffect(int id, float x, float y, float sx, float sy, float speed)
+    public static void createEffect(Unit me, int id, float x, float y, float sx, float sy, float speed)
     {
-        Main.getGame().createEffect(id, x, y, sx, sy, speed);
+        Main.getGame().createEffect(me, id, x, y, sx, sy, speed);
     }
-    public static void createEffect(int id, float x, float y, Unit target, float speed, boolean follow)
+    public static void createEffect(Unit me, int id, float x, float y, Unit target, float speed, boolean follow)
     {
-        Main.getGame().createEffect(id, x, y, target, speed, follow);
+        Main.getGame().createEffect(me, id, x, y, target, speed, follow);
     }
 }

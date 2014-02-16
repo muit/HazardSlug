@@ -9,11 +9,14 @@ import com.base.engine.Camera;
 import com.base.engine.GameObject;
 import com.base.game.gameobject.Player;
 import com.base.game.gameobject.Unit;
-import com.base.game.gameobject.Effect;
+import com.base.engine.Effect;
 import com.base.game.gameobject.enemy.Babosa_Azul;
 import com.base.game.gameobject.item.Cube;
 import com.base.game.map.Map;
+
+import java.awt.Rectangle;
 import java.util.ArrayList;
+
 import org.lwjgl.opengl.Display;
 
 /**
@@ -29,6 +32,7 @@ public class Game
     private final ArrayList<GameObject> remove;
     private final ArrayList<Effect> removeffect;
     private final Player player;
+    private final Quadtree quad;
     private final Camera cam = new Camera();
     protected DataBase db = new DataBase();
     
@@ -39,6 +43,8 @@ public class Game
         effects = new ArrayList<>();
         remove = new ArrayList<>();
         removeffect = new ArrayList<>();
+        
+        quad = new Quadtree(0, new Rectangle(0,0,Display.getWidth(),Display.getHeight()));
         
         player = new Player(-5, 250);
         
@@ -59,6 +65,7 @@ public class Game
     public void update()
     {
         map.update((int)player.getX(), Display.getWidth()/16);
+        quad.clear();
         for(GameObject go : objects)
         {
             if(!go.getRemove())
@@ -72,7 +79,9 @@ public class Game
         for(Unit go : entitys)
         {
             if(!go.getRemove())
+            {
                 go.update();
+            }
             else
             {
                 remove.add(go);
@@ -114,18 +123,20 @@ public class Game
         for(Effect go : effects)
             go.render();
     }
-    
+    @SuppressWarnings("unused")
     private void removeObject(GameObject target)
     {
         for(GameObject go : objects)
             if(go == target)
                 objects.remove(go);
     }
-    private void removeUnit(Unit target)
+    @SuppressWarnings("unused")
+	private void removeUnit(Unit target)
     {
         if(entitys.contains(target))
             entitys.remove(target);
     }
+    @SuppressWarnings("unused")
     private void removeEffect(Effect target)
     {
         if(effects.contains(target))
@@ -166,17 +177,17 @@ public class Game
         }
         return players;
     }
-    public void createEffect(int id, float x, float y)
+    public void createEffect(Unit me, int id, float x, float y)
     {
-        effects.add(new Effect(id, x, y));
+        effects.add(new Effect(me, id, x, y));
     }
-    public void createEffect(int id, float x, float y, float sx, float sy, float speed)
+    public void createEffect(Unit me, int id, float x, float y, float sx, float sy, float speed)
     {
-        effects.add(new Effect(id, x, y, sx, sy, speed));
+        effects.add(new Effect(me, id, x, y, sx, sy, speed));
     }
-    public void createEffect(int id, float x, float y, Unit target, float speed, boolean follow)
+    public void createEffect(Unit me, int id, float x, float y, Unit target, float speed, boolean follow)
     {
-        effects.add(new Effect(id, x, y, target, speed, follow));
+        effects.add(new Effect(me, id, x, y, target, speed, follow));
     }
     public void deleteEffect(Effect effect)
     {

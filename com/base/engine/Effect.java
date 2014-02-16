@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 
-package com.base.game.gameobject;
+package com.base.engine;
 
 import com.base.engine.EffectSprite;
 import com.base.game.Delay;
-import com.base.game.EventsMap;
 import com.base.game.Time;
 import com.base.game.Util;
+import com.base.game.gameobject.Unit;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glTranslatef;
@@ -29,26 +29,26 @@ public class Effect {
         STATIC
     };
     
-    private EventsMap events;
     private EffectSprite spr;
-    private Unit target;
+    private Unit me, target;
     private int id;
     private Mode mode;
     private float speed;
-    private float x,y,x0,y0;
+    private float x,y;
     private float x2,y2;
     protected Delay removeDelay = null;
     
-    public Effect(int id, float x, float y)
+    public Effect(Unit me, int id, float x, float y)
     {
         mode = Mode.STATIC;
         this.id = id;
         this.x = x;
         this.y = y;
+        this.me = me;
         this.target = null;
         spr = new EffectSprite(id);
     }
-    public Effect(int id, float x, float y, float sx, float sy, float speed)
+    public Effect(Unit me, int id, float x, float y, float sx, float sy, float speed)
     {
         mode = Mode.GOTO;
         this.id = id;
@@ -57,10 +57,11 @@ public class Effect {
         this.x2 = sx;
         this.y2 = sy;
         this.speed = speed;
+        this.me = me;
         this.target = null;
         removeDelay.start();
     }
-    public Effect(int id, float x, float y, Unit target, float speed, boolean follow)
+    public Effect(Unit me, int id, float x, float y, Unit target, float speed, boolean follow)
     {
         if(follow){
             mode = Mode.FOLLOW;
@@ -76,6 +77,7 @@ public class Effect {
         this.x2 = target.getX();
         this.y2 = target.getY();
         this.speed = speed;
+        this.me = me;
         this.target = target;
         spr = new EffectSprite(id);
     }
@@ -92,7 +94,10 @@ public class Effect {
                 x2=target.getX();
                 y2=target.getY();
                 if(goToPos())
+                {
+                    me.DoCast(target, id+1000);
                     remove = true;
+                }
                 break;
                 
             case GOTO:

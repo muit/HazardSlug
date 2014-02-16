@@ -4,7 +4,6 @@
  */
 package com.base.engine;
 
-import static org.lwjgl.opengl.GL11.*;
 /**
  *
  * @author Miguel
@@ -31,7 +30,14 @@ public abstract class GameObject
     {
         return sy;
     }
-    
+    public float getWidth()
+    {
+        return sx;
+    }
+    public float getHeight()
+    {
+        return sy;
+    }
     public float getX()
     {
         return x;

@@ -6,11 +6,7 @@ package com.base.engine;
 
 import com.base.data.DataBase;
 import com.base.game.EventsMap;
-import java.io.IOException;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
 import static org.lwjgl.opengl.GL11.*;
 /**
  *
@@ -54,7 +50,7 @@ public class EffectSprite
     {
         DataBase db = new DataBase();
         Color.white.bind();
-	db.getEffectTexture(id).bind();
+        db.getEffectTexture(id).bind();
         glBegin(GL_QUADS);
         {
             glTexCoord2f(0.25f*frame+0.25f,1);

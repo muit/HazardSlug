@@ -174,7 +174,7 @@ public class Npc extends Unit
     {
         if(hitDelay.over())
         {
-            if(Util.dist(x, y, target.getX(), target.getY())< MELEE_RANGE)
+            if(Util.distSqrt(x, y, target.getX(), target.getY())< Math.pow(MELEE_RANGE, 2))
             {
                 meleRangeCorrect = true;
                 int damage = 1;

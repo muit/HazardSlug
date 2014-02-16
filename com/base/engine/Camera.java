@@ -28,4 +28,8 @@ public class Camera {
     {
         return x;
     }
+    public int getY()
+    {
+        return y;
+    }
 }

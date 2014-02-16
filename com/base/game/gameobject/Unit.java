@@ -81,12 +81,16 @@ public class Unit extends GameObject
         //Scripts de spell
         switch(id)
         {
-            case 0:
-                Log.sendMessageToAll(target.getName()+" recibio Salpicadura.");
-                EffectManager.createEffect(1, x, y, target, 0.21f, true);
+            case 0: //Salpicadura
+                EffectManager.createEffect(this, id, x, y, target, 0.21f, true);
                 break;
             case 1:
-                Log.sendMessageToAll(target.getName()+" recibio Mordisco.");
+                Log.sendMessageToAll(target.getName()+" recibió Mordisco.");
+                break;
+            
+            //On hit(id+1000): 
+            case 1000://Salpicadura 
+                Log.sendMessageToAll(target.getName()+" recibió Salpicadura.");
                 break;
             default:
                 Log.sendMessageToAll("Spell: "+id+" no existe.");

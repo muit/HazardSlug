@@ -27,6 +27,12 @@ public class Util {
         double y = y2 - y1;
         return (float)Math.sqrt((x*x)-y*y);
     }
+    public static float distSqrt(float x1, float y1, float x2, float y2)
+    {
+        double x = x2 - x1;
+        double y = y2 - y1;
+        return (float)(x*x-y*y);
+    }
     
     public static int encriptChunkId(int chunkId)
     {
