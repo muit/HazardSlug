@@ -37,18 +37,18 @@ public class Movement {
     {
         moveHStatus = MOVE_NONE;
         flying = false;
-        G = 0.2f; 
+        G = -0.2f; 
     }
     public void setFly(boolean enable)
     {
         flying = enable;
     }
     
-    public void moveHorizontal(int value)//hola
+    public void moveHorizontal(int value)
     {
         moveHStatus = value;
     }
-    public void moveVertical(int value)//hola
+    public void moveVertical(int value)
     {
         moveVStatus = value;
     }
@@ -85,12 +85,11 @@ public class Movement {
     {
         //OPERATIONS////////////////////////////////////////////////////////////
         vD = v*Time.getDelta();
-        
-        if(!following)
+        if(flying)
         {
-            
+            vector.y += vD*Time.getDelta()+(G*Math.pow(Time.getDelta(), 2))/2;
         }
-        else
+        else if(following)
         {
             //1*1 = 1 so we dont need to Sqrt the distance
             double distSqrt = Math.abs(Math.pow(vector.x-target.x, 2)+Math.pow(vector.y-target.y, 2));

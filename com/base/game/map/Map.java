@@ -56,7 +56,7 @@ public class Map {
     }
     public void render(float playerx, float playerWidth)
     {
-        for(int i =(int) ((playerx + 0.5 - playerWidth/16/2) /32 + ChunkMapSize/2-1); i<=(int) ((playerx + 0.5 + playerWidth/16/2) /32 + ChunkMapSize/2+1);i++)
+        for(int i =(int) ((playerx + 0.5 - playerWidth/8)/32 + ChunkMapSize/2-1); i<=(int) ((playerx + 0.5 + playerWidth/8)/32 + ChunkMapSize/2+1);i++)
             if(chunks[i]!=null && chunks[i].getInit())
                 chunks[i].render();
     }
