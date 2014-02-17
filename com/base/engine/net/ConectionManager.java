@@ -78,7 +78,7 @@ public final class ConectionManager {
         return in.readLine();
         }catch(IOException e)
         {
-            System.err.println("CouldnÂ´t read net data.");
+            System.err.println("Couldn´t read net data.");
             return null;
         }
     }
@@ -101,11 +101,11 @@ public final class ConectionManager {
         } 
         catch(IOException e)
         {
-            System.err.println("CouldnÂ´t read net data.");
+            System.err.println("Couldn´t read net data.");
         }
         catch (NoSuchAlgorithmException ex) 
         {
-            System.err.println("CouldnÂ´t hash password.");
+            System.err.println("Couldn´t hash password.");
         }
         return false;
     }

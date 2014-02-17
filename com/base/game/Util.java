@@ -4,7 +4,12 @@
  */
 package com.base.game;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import com.base.engine.GameObject;
+import com.base.game.map.GeneratorMidpoint;
 
 /**
  *
@@ -25,13 +30,13 @@ public class Util {
     {
         double x = x2 - x1;
         double y = y2 - y1;
-        return (float)Math.sqrt((x*x)-y*y);
+        return (float)Math.sqrt(x*x+y*y);
     }
     public static float distSqrt(float x1, float y1, float x2, float y2)
     {
         double x = x2 - x1;
         double y = y2 - y1;
-        return (float)(x*x-y*y);
+        return (float)(x*x+y*y);
     }
     
     public static int encriptChunkId(int chunkId)
@@ -48,5 +53,23 @@ public class Util {
         
         //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         return chunkId;
+    }
+    public String encript(String hash, String content)
+    {
+    	try{
+	    	MessageDigest md = MessageDigest.getInstance(hash);
+	        md.update(content.getBytes("UTF-8")); // Change this to "UTF-16" if needed
+	        byte[] digest = md.digest();
+	    	return digest.toString();
+    	}
+    	catch (NoSuchAlgorithmException ex) 
+        {
+            System.err.println("Couldn´t hash password.");
+        } 
+    	catch (UnsupportedEncodingException e) 
+        {
+        	System.err.println("Couldn´t hash password(2).");
+		}
+    	return null;
     }
 }

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.base.game.gameobject.enemy;
+package com.base.game.gameobject.npc;
 
 import com.base.game.EventsMap;
 import com.base.game.Util;

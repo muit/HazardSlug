@@ -7,7 +7,7 @@ package com.base.game.gameobject;
 import com.base.engine.Main;
 import com.base.game.Delay;
 import com.base.game.Util;
-import com.base.game.text.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -27,7 +27,6 @@ public class Npc extends Unit
     protected int SIZE;
     private boolean meleRangeCorrect;
     private float positionBeforeCombatX, positionBeforeCombatY;
-    private float goToX, goToY;
     
     public Npc (int level)
     {
@@ -87,46 +86,24 @@ public class Npc extends Unit
     
     protected void chase()
     {
-        float speedX = (getTarget().getX()-x);
-        float speedY = (getTarget().getY()-y);
-        
-        float maxSpeed = stats.getSpeed()*DAMPING;
-        
-        if(speedX > maxSpeed)
-            speedX = maxSpeed;
-        
-        if(speedX < -maxSpeed)
-            speedX = -maxSpeed;
-        
-        if(speedY > maxSpeed)
-            speedY = maxSpeed;
-        
-        if(speedY < -maxSpeed)
-            speedY = -maxSpeed;
-        x+=speedX * getDelta();
-        y+=speedY * getDelta();
+    	float speed = getStats().getSpeed() * getDelta();
+    	
+    	// arctg(m)  m->v2/v1 (v1, v2)->(x-x2), (y-y2)
+    	double alpha = Math.PI + Math.atan2(-(getTarget().getY()-y), -(getTarget().getX()-x));
+    	
+    	x += speed * Math.cos(alpha);
+    	y += speed * Math.sin(alpha);
+    		
     }
     private boolean goToPos(float X, float Y)
     {
-        float speedX = (X-x);
-        float speedY = (Y-y);
-        
-        float maxSpeed = getStats().getSpeed()*DAMPING;
-        
-        if(speedX > maxSpeed)
-            speedX = maxSpeed;
-        
-        if(speedX < -maxSpeed)
-            speedX = -maxSpeed;
-        
-        if(speedY > maxSpeed)
-            speedY = maxSpeed;
-        
-        if(speedY < -maxSpeed)
-            speedY = -maxSpeed;
-        x+=speedX * getDelta();
-        y+=speedY * getDelta();
-        
+    	float speed = getStats().getSpeed() * getDelta();
+    	
+    	// arctg(m)  m->v2/v1 (v1, v2)->(x-x2), (y-y2)
+    	double alpha = Math.PI + Math.atan2(-(Y-y), -(X-x));
+    	
+    	x += speed * Math.cos(alpha);
+    	y += speed * Math.sin(alpha);
         return x==X && y==Y;
     }
     

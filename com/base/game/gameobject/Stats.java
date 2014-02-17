@@ -21,6 +21,7 @@ public class Stats {
     private boolean jumping;
     private boolean leveable;
     private boolean alive;
+    private float gravity;
     
     public Stats(int xp, boolean leveable)
     {
@@ -44,6 +45,7 @@ public class Stats {
         energy = maxEnergy;
         alive = true;
         jumping=false;
+        gravity = -0.0105f;
     }
     //XP////////////////////////////////////////////////////////////////////////
     public void addXp(int plus)
@@ -166,5 +168,14 @@ public class Stats {
     public void setSpeed(float speed)
     {
         this.speed = speed;
+    }
+    //OTHER///////////////////////////////////////////////////////////////////////
+    public boolean getLeveable()
+    {
+    	return leveable;
+    }
+    public float getGravity() 
+    {
+    	return gravity;
     }
 }

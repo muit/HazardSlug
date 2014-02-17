@@ -10,8 +10,9 @@ import com.base.engine.GameObject;
 import com.base.game.gameobject.Player;
 import com.base.game.gameobject.Unit;
 import com.base.engine.Effect;
-import com.base.game.gameobject.enemy.Babosa_Azul;
 import com.base.game.gameobject.item.Cube;
+import com.base.game.gameobject.npc.Babosa_Azul;
+import com.base.game.map.Block;
 import com.base.game.map.Map;
 
 import java.awt.Rectangle;
@@ -163,6 +164,10 @@ public class Game
                 res.add(go);
         }
         return res;
+    }
+    public ArrayList<Block> sphereMapCollide(float x, float y, float radius)
+    {
+        return map.sphereMapCollide(x, y, radius);
     }
     
     public ArrayList<Unit> getPlayers()

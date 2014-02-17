@@ -7,6 +7,7 @@
 package com.base.game.map;
 
 import com.base.game.Game;
+
 import java.util.ArrayList;
 
 /**
@@ -20,7 +21,7 @@ public class Map {
     private int floorAlt = 200;
     private Game game;
     private ArrayList<Chunk> chunkIdsLoaded = new ArrayList<>();
-    private GeneratorMidpoint mp = new GeneratorMidpoint();
+    
     public Map(int Size, Game game)
     {
         ChunkMapSize = 1024*(int)Math.pow(2,Size)+1024;
@@ -41,7 +42,7 @@ public class Map {
     {
         chunkIdsLoaded.clear();
         game.getPlayer().setMapColision(false);
-        for(int i =(int) ((playerx + 0.5 - playerWidth/16/2) /32 + ChunkMapSize/2-1); i<=(int) ((playerx + 0.5 + playerWidth/16/2) /32 + ChunkMapSize/2+1);i++)
+        for(int i =(int) ((playerx + 0.5 - playerWidth/32) /32 + ChunkMapSize/2-1); i<=(int) ((playerx + 0.5 + playerWidth/32) /32 + ChunkMapSize/2+1);i++)
             if(chunks[i]!=null && chunks[i].getInit())
             {
                 chunkIdsLoaded.add(chunks[i]);
@@ -56,9 +57,8 @@ public class Map {
     }
     public void render(float playerx, float playerWidth)
     {
-        for(int i =(int) ((playerx + 0.5 - playerWidth/8)/32 + ChunkMapSize/2-1); i<=(int) ((playerx + 0.5 + playerWidth/8)/32 + ChunkMapSize/2+1);i++)
-            if(chunks[i]!=null && chunks[i].getInit())
-                chunks[i].render();
+        for(int i =0; i < chunkIdsLoaded.size(); i++)
+            chunkIdsLoaded.get(i).render();
     }
     
     public Chunk getChunk(int id)
@@ -79,6 +79,16 @@ public class Map {
     public int getFloorAlt()
     {
         return floorAlt;
+    }
+    //**Acabar***********************************************************************
+    public ArrayList<Block> sphereMapCollide(float x, float y, float radius)
+    {
+    	for(int i =0; i < chunkIdsLoaded.size(); i++)
+    	{
+    		
+    		
+    	}
+        return null;
     }
 }
 

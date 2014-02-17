@@ -9,6 +9,7 @@ package com.base.engine;
 import org.lwjgl.util.vector.Vector2f;
 
 import com.base.game.Time;
+import com.base.game.Util;
 /**
  *
  * @author Miguel_F
@@ -23,10 +24,10 @@ public class Movement {
     private int moveVStatus;
     @SuppressWarnings("unused")
 	private final int 
-            MOVE_RIGHT = 2,
-            MOVE_LEFT = 1,
-            MOVE_UP = 2,
-            MOVE_DOWN = 1,
+            MOVE_RIGHT = 1,
+            MOVE_LEFT = -1,
+            MOVE_UP = 1,
+            MOVE_DOWN = -1,
             MOVE_NONE = 0;
             
     
@@ -87,21 +88,30 @@ public class Movement {
         vD = v*Time.getDelta();
         if(flying)
         {
-            vector.y += vD*Time.getDelta()+(G*Math.pow(Time.getDelta(), 2))/2;
+        	vector.x += vD*moveHStatus;
+            vector.y += vD*moveVStatus;
         }
         else if(following)
         {
             //1*1 = 1 so we dont need to Sqrt the distance
-            double distSqrt = Math.abs(Math.pow(vector.x-target.x, 2)+Math.pow(vector.y-target.y, 2));
+            double distSqrt = Util.distSqrt(vector.x, vector.y, target.x, target.y);
             if(distSqrt<=1)
             {
                 following = false;
             }
             else
             {
-                vector.x += vD;
-                vector.y += vD;
+            	// arctg(m)  m->v2/v1 (v1, v2)->(x-x2), (y-y2)
+            	double alpha = Math.PI + Math.atan2(-(target.y-vector.y), -(target.x-vector.x));
+            	
+            	vector.x += vD * Math.cos(alpha);
+            	vector.y += vD * Math.sin(alpha);
             }
+        }
+        else
+        {
+        	vector.x += vD*moveHStatus;
+        	vector.y += vD+(G*Math.pow(Time.getDelta(), 2))/2;
         }
         ////////////////////////////////////////////////////////////////////////
     }

@@ -11,6 +11,7 @@ import com.base.game.Delay;
 import com.base.game.Time;
 import com.base.game.Util;
 import com.base.game.gameobject.Unit;
+
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glTranslatef;
@@ -129,26 +130,14 @@ public class Effect {
     }
     private boolean goToPos()
     {
-        float speedX = (x2-x);
-        float speedY = (y2-y);
-        
-        float maxSpeed = speed;
-        
-        if(speedX > maxSpeed)
-            speedX = maxSpeed;
-        
-        if(speedX < -maxSpeed)
-            speedX = -maxSpeed;
-        
-        if(speedY > maxSpeed)
-            speedY = maxSpeed;
-        
-        if(speedY < -maxSpeed)
-            speedY = -maxSpeed;
-        x+=speedX * getDelta();
-        y+=speedY * getDelta();
-        
-        return Util.dist(x, y, x2, y2)< 1;
+    	float speedFinal = speed * getDelta();
+    	// arctg(m)  m->v2/v1 (v1, v2)->(x-x2), (y-y2)
+    	double alpha = Math.PI + Math.atan2(-(target.y-y), -(target.x-x));
+    	
+    	x += speedFinal * Math.cos(alpha);
+    	y += speedFinal * Math.sin(alpha);
+    	
+        return Util.distSqrt(x, y, x2, y2)< 1;
     }
     
     public float getDelta()

@@ -4,9 +4,10 @@
  */
 package com.base.game.gameobject;
 
+import com.base.game.Time;
 import com.base.game.gameobject.item.Item;
 import com.base.game.map.Block;
-import com.base.game.map.Chunk;
+
 import org.lwjgl.input.Keyboard;
  
 /**
@@ -15,7 +16,8 @@ import org.lwjgl.input.Keyboard;
  */
 public class Player extends Unit
 {
-    private static final int 
+    @SuppressWarnings("unused")
+	private static final int 
         MOVE_NULL  = 0,
         MOVE_RIGHT = 1,
         MOVE_LEFT  = -1;
@@ -23,11 +25,9 @@ public class Player extends Unit
     private static final float SIZE = 16;
     protected double gSpeed = 0;
     private final Inventory inv = new Inventory(16);
-    private Chunk actualChunk;
-    private boolean mapColision;
     private boolean justJump;
+	private boolean mapColision;
     private boolean inGround;
-    private boolean tempbool;
     private int movx;
     private Block groundBlock;
     
@@ -36,10 +36,9 @@ public class Player extends Unit
         init(X, Y, 0.1f,1f,0.25f,SIZE,SIZE);
         stats = new Stats(0, true);
         stats.setName("Muit");
-        mapColision = false;
         inGround = false;
         justJump = false;
-        tempbool = false;
+        mapColision = false;
         groundBlock = null;
         stats.setSpeed(0.20f);
         toPlayer();
@@ -95,7 +94,7 @@ public class Player extends Unit
             if(justJump)
             {
                 stats.setJumping(true);
-                gSpeed=0.3125;
+                gSpeed=0.28;
                 justJump = false;
                 groundBlock = null;
             }
@@ -106,10 +105,12 @@ public class Player extends Unit
         }
         else
         {
-            if(gSpeed<-0.4375)
-                gSpeed=-0.4375;
-            else
-                gSpeed-=0.0150;
+        	if(gSpeed <= -0.4375)
+        		gSpeed=-0.4375;
+        	else
+        		gSpeed += stats.getGravity()*Time.getDelta();
+        	
+        	y += gSpeed;
         }
         inGround = false;
     }
