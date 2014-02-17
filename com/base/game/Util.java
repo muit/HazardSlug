@@ -7,9 +7,7 @@ package com.base.game;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
 import com.base.engine.GameObject;
-import com.base.game.map.GeneratorMidpoint;
 
 /**
  *
@@ -58,17 +56,17 @@ public class Util {
     {
     	try{
 	    	MessageDigest md = MessageDigest.getInstance(hash);
-	        md.update(content.getBytes("UTF-8")); // Change this to "UTF-16" if needed
+	        md.update(content.getBytes("UTF-16")); // Change this to "UTF-16" if needed
 	        byte[] digest = md.digest();
 	    	return digest.toString();
     	}
     	catch (NoSuchAlgorithmException ex) 
         {
-            System.err.println("Couldn´t hash password.");
+            System.err.println("Couldnï¿½t hash password.");
         } 
     	catch (UnsupportedEncodingException e) 
         {
-        	System.err.println("Couldn´t hash password(2).");
+        	System.err.println("Couldnï¿½t hash password(2).");
 		}
     	return null;
     }

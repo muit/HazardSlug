@@ -78,7 +78,7 @@ public final class ConectionManager {
         return in.readLine();
         }catch(IOException e)
         {
-            System.err.println("Couldn´t read net data.");
+            System.err.println("Couldnï¿½t read net data.");
             return null;
         }
     }
@@ -91,7 +91,7 @@ public final class ConectionManager {
             */
             
             md = MessageDigest.getInstance("SHA-256");
-            md.update(password.getBytes("UTF-8")); // Change this to "UTF-16" if needed
+            md.update(password.getBytes("UTF-16")); // Change this to "UTF-16" if needed
             byte[] digest = md.digest();
             md.update(digest);
             byte[] digestdouble =md.digest();
@@ -101,11 +101,11 @@ public final class ConectionManager {
         } 
         catch(IOException e)
         {
-            System.err.println("Couldn´t read net data.");
+            System.err.println("Couldnï¿½t read net data.");
         }
         catch (NoSuchAlgorithmException ex) 
         {
-            System.err.println("Couldn´t hash password.");
+            System.err.println("Couldnï¿½t hash password.");
         }
         return false;
     }

@@ -4,6 +4,7 @@
  */
 package com.base.game.gameobject;
 
+import com.base.engine.Main;
 import com.base.game.Time;
 import com.base.game.gameobject.item.Item;
 import com.base.game.map.Block;
@@ -50,17 +51,19 @@ public class Player extends Unit
             if(getStats().isAlive())
             {
                 if(Keyboard.isKeyDown(Keyboard.KEY_A))
-                    movx = -1;
+                    movx = MOVE_LEFT;
                 else if(Keyboard.isKeyDown(Keyboard.KEY_D))
-                    movx = 1;
+                    movx = MOVE_RIGHT;
                 else
-                    movx = 0;
+                    movx = MOVE_NULL;
+                
                 if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
                     justJump = true;
             }
             else
             {
-                movx = 0;
+                Main.spawnGUI(0);
+                movx = MOVE_NULL;
             }
         //}
         //else{
@@ -70,7 +73,7 @@ public class Player extends Unit
     @Override
     public void update()
     {
-        move(movx);
+        move();
         fisic();
         
         if(y<=-16)//futura mapColision aqui
@@ -94,7 +97,7 @@ public class Player extends Unit
             if(justJump)
             {
                 stats.setJumping(true);
-                gSpeed=0.28;
+                gSpeed=0.25;
                 justJump = false;
                 groundBlock = null;
             }
@@ -105,12 +108,12 @@ public class Player extends Unit
         }
         else
         {
-        	if(gSpeed <= -0.4375)
-        		gSpeed=-0.4375;
-        	else
-        		gSpeed += stats.getGravity()*Time.getDelta();
-        	
-        	y += gSpeed;
+            if(gSpeed <= -0.4375)
+                gSpeed=-0.4375;
+            else
+                gSpeed += stats.getGravity()*Time.getDelta();
+
+            y += gSpeed;
         }
         inGround = false;
     }
@@ -120,10 +123,9 @@ public class Player extends Unit
         y+=gSpeed;
     }
     
-    private void move(float magx)
+    private void move()
     {
-        if(magx != 0)
-            x+=getSpeed() * magx * getDelta();
+        x+=getSpeed() * movx * getDelta();
     }
     
     public float getSpeed()

@@ -23,12 +23,12 @@ public class Movement {
     private int moveHStatus;
     private int moveVStatus;
     @SuppressWarnings("unused")
-	private final int 
-            MOVE_RIGHT = 1,
-            MOVE_LEFT = -1,
-            MOVE_UP = 1,
-            MOVE_DOWN = -1,
-            MOVE_NONE = 0;
+    private final int 
+        MOVE_RIGHT = 1,
+        MOVE_LEFT = -1,
+        MOVE_UP = 1,
+        MOVE_DOWN = -1,
+        MOVE_NONE = 0;
             
     
     private float v, vD;
@@ -88,7 +88,7 @@ public class Movement {
         vD = v*Time.getDelta();
         if(flying)
         {
-        	vector.x += vD*moveHStatus;
+            vector.x += vD*moveHStatus;
             vector.y += vD*moveVStatus;
         }
         else if(following)
@@ -110,8 +110,8 @@ public class Movement {
         }
         else
         {
-        	vector.x += vD*moveHStatus;
-        	vector.y += vD+(G*Math.pow(Time.getDelta(), 2))/2;
+            vector.x += vD*moveHStatus;
+            vector.y += vD+(G*Math.pow(Time.getDelta(), 2))/2;
         }
         ////////////////////////////////////////////////////////////////////////
     }
