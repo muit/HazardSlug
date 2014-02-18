@@ -4,7 +4,7 @@
  */
 package com.base.engine;
 
-import com.base.GUI.GUI;
+//import com.base.GUI.*;
 import com.base.game.Game;
 import com.base.game.Time;
 import com.base.game.gameobject.Unit;
@@ -133,6 +133,6 @@ public class Main {
     }
     public static void spawnGUI(int id)
     {
-        GUI.spawnGUI(id);
+        //GUI.spawnGUI(id);
     }
 }

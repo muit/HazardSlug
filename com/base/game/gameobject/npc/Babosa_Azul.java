@@ -5,7 +5,6 @@
 package com.base.game.gameobject.npc;
 
 import com.base.game.EventsMap;
-import com.base.game.Util;
 import com.base.game.gameobject.Npc;
 import com.base.game.gameobject.Unit;
 
@@ -19,10 +18,12 @@ public class Babosa_Azul extends Npc
 {
     private EventsMap event = new EventsMap();
     
-    private int EVENT_SALPICADURA = 0,
+    @SuppressWarnings("unused")
+	private int EVENT_SALPICADURA = 0,
                 EVENT_MORDEDURA   = 1;
     
-    private int SPELL_SALPICADURA = 0,
+    @SuppressWarnings("unused")
+	private int SPELL_SALPICADURA = 0,
                 SPELL_MORDEDURA   = 1;
     
     
@@ -40,7 +41,7 @@ public class Babosa_Azul extends Npc
     protected void EnterCombat(Unit who)
     {
         //When npc enter combat:
-        System.out.println("ZarigÃ¼ella quiere sapatos pa comer!!");
+        System.out.println("Zarigüella quiere sapatos para comer!!");
         
         event.ScheduleEvent(EVENT_SALPICADURA, 2000);
         //End-------------------
@@ -58,7 +59,7 @@ public class Babosa_Azul extends Npc
                 switch(id)
                 {
                 case 0:
-                    DoCast(getTarget(),0);
+                    DoCast(getTarget(),SPELL_SALPICADURA);
                     event.RestartEvent(EVENT_SALPICADURA);
                     break;
                 case 1:

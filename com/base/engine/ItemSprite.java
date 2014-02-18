@@ -35,7 +35,7 @@ public class ItemSprite
     {
         DataBase db = new DataBase();
         Color.white.bind();
-	db.getItemTexture(id).bind();
+        db.getItemTexture(id).bind();
         glBegin(GL_QUADS);
         {
             glTexCoord2f(0.25f*frame,1);
