@@ -19,19 +19,28 @@ import static org.lwjgl.opengl.GL11.glTranslatef;
  */
 public class Unit extends GameObject
 {
+	protected float modX;
+    protected float modY;
+	protected static final int 
+	    MOVE_NULL  = 0,
+	    MOVE_RIGHT = 1,
+	    MOVE_LEFT  = -1;
+	protected int id;
     protected String name;
     private boolean player = false;
     protected Stats stats;
     protected UnitSprite spr;
+    protected int movx;
     
-    protected void init(float x, float y, float r, float g, float b, float sx,float sy)
+    protected void init(int id, float x, float y, float sx,float sy)
     {
+    	this.id = id;
         this.type = 3;
         this.x = x;
         this.y = y;
         this.sx = sx;
         this.sy = sy;
-        spr = new UnitSprite(r,g,b,sx,sy);
+        spr = new UnitSprite(id,sx,sy);
     }
     
     public boolean isPlayer()
@@ -56,7 +65,7 @@ public class Unit extends GameObject
         }
         else
         {
-            Log.sendMessageToAll(stats.getName() + " ha sufrido "+damage+" puntos de daño.");
+            Log.sendMessageToAll(stats.getName() + " ha sufrido "+damage+" puntos de daï¿½o.");
         }
     }
     public Stats getStats()
@@ -84,12 +93,12 @@ public class Unit extends GameObject
                 EffectManager.createEffect(this, id, x, y, target, 0.21f, true);
                 break;
             case 1:
-                Log.sendMessageToAll(target.getName()+" recibió Mordisco.");
+                Log.sendMessageToAll(target.getName()+" recibiï¿½ Mordisco.");
                 break;
             
             //On hit(id+1000): 
             case 1000://Salpicadura 
-                Log.sendMessageToAll(target.getName()+" recibió Salpicadura.");
+                Log.sendMessageToAll(target.getName()+" recibiï¿½ Salpicadura.");
                 break;
             default:
                 Log.sendMessageToAll("Spell: "+id+" no existe.");
@@ -97,7 +106,10 @@ public class Unit extends GameObject
         }
     }
     
-    
+    public void update()
+    {
+    	spr.render();
+    }
     
     @Override
     public void render()
@@ -108,5 +120,21 @@ public class Unit extends GameObject
             spr.render();
         }
         glPopMatrix();
+    }
+    
+    protected void move()
+    {
+        x+=getSpeed() * movx * getDelta();
+        if(movx == MOVE_LEFT)
+        	spr.setAnimation(1);
+        else if(movx == MOVE_RIGHT)
+        	spr.setAnimation(0);
+        else
+        	spr.setAnimationEnabled(false);
+    }
+    
+    public float getSpeed()
+    {
+        return stats.getSpeed();
     }
 }

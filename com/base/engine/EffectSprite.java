@@ -6,7 +6,9 @@ package com.base.engine;
 
 import com.base.data.DataBase;
 import com.base.game.EventsMap;
+
 import org.newdawn.slick.Color;
+
 import static org.lwjgl.opengl.GL11.*;
 /**
  *
@@ -17,6 +19,7 @@ public class EffectSprite
     private float sx,sy;
     private int id;
     private int frame;
+    DataBase db;
     private EventsMap event = new EventsMap();
     
     public EffectSprite(int id)
@@ -25,7 +28,8 @@ public class EffectSprite
         this.sx = 16;
         this.sy = 16;
         frame=0;
-        event.ScheduleEvent(0, 100);
+        db  = new DataBase();
+        event.ScheduleEvent(0, 200);
     }
     
     public void update()
@@ -48,12 +52,11 @@ public class EffectSprite
     
     public void render()
     {
-        DataBase db = new DataBase();
         Color.white.bind();
         db.getEffectTexture(id).bind();
         glBegin(GL_QUADS);
         {
-            glTexCoord2f(0.25f*frame+0.25f,1);
+        	glTexCoord2f(0.25f*frame+0.25f,1);
             glVertex2f(0,0);
             glTexCoord2f(0.25f*frame,1);
             glVertex2f(sx,0);

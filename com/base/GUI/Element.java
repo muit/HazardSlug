@@ -23,11 +23,13 @@ public class Element {
 	protected float x, y, sx, sy;
 	protected Texture tex;
 	protected int frame;	
+	protected int elementId;
 	
-	public Element(float x, float y)
+	public Element(float x, float y, int elementId)
 	{
 		this.x = x;
 		this.y = y;
+		this.elementId = elementId;
 		frame = 0;
 	}
 	
@@ -61,7 +63,7 @@ public class Element {
         return tex;
     }
 	
-	protected void update()
+	public void update()
 	{
 		
 	}
@@ -70,7 +72,7 @@ public class Element {
 	{
 		glPushMatrix();
         {
-            glTranslatef(x*16, y*16, 0);
+            glTranslatef(x, y, 0);
             
             Color.white.bind();
             tex.bind();
@@ -111,5 +113,13 @@ public class Element {
 	protected void setFrame(int frame)
 	{
 		this.frame = frame;
+	}
+	protected void doAction()
+	{
+		
+	}
+	public int getElementId()
+	{
+		return elementId;
 	}
 }

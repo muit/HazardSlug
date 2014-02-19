@@ -29,19 +29,17 @@ public class Babosa_Azul extends Npc
     
     public Babosa_Azul(float x, float y, int level)
     {
-        super(level);//0.8f: 1sec*% attack speed
+        super(0, level, x, y, 1.25f, 1.25f);//0.8f: 1sec*% attack speed
         MELEE_RANGE = (float)1.5;
         DAMPING = 1.0f;
-        SIZE = 16;
         setAttackDelay(0.8f);//0.8f: 1sec*% attack speed
-        init(x, y, 0.2f, 0.2f, 1.0f, SIZE, SIZE);
     }
     
     @Override
     protected void EnterCombat(Unit who)
     {
         //When npc enter combat:
-        System.out.println("Zarigüella quiere sapatos para comer!!");
+        System.out.println("Zarigï¿½ella quiere sapatos para comer!!");
         
         event.ScheduleEvent(EVENT_SALPICADURA, 2000);
         //End-------------------

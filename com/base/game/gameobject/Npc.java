@@ -28,8 +28,10 @@ public class Npc extends Unit
     private boolean meleRangeCorrect;
     private float positionBeforeCombatX, positionBeforeCombatY;
     
-    public Npc (int level)
+    public Npc (int id, int level, float x, float y, float modX, float modY)
     {
+    	SIZE = 16;
+    	init(id, x, y, SIZE*modX,SIZE*modY);
         stats = new Stats(level, false);
         target = null;
         meleRangeCorrect = false;
@@ -69,6 +71,7 @@ public class Npc extends Unit
         }
         if(stats.getHealth()<=0)
             JustDied(target);
+        spr.update();
     }
     
     protected void look()
@@ -93,6 +96,11 @@ public class Npc extends Unit
     	
     	x += speed * Math.cos(alpha);
     	y += speed * Math.sin(alpha);
+    	
+    	if(alpha>Math.PI/2 && alpha<Math.PI+Math.PI/2)
+        	spr.setAnimation(1);
+        else 
+        	spr.setAnimation(0);
     		
     }
     private boolean goToPos(float X, float Y)

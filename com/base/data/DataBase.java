@@ -142,15 +142,15 @@ public class DataBase {
         }
         return null;
     }
-    
-    public Texture getEffectTexture(int id)
+    public Texture getNpcTexture(int id)
     {
-        BaseEffect be = getEffect(id);
-        if(be != null)
-            return be.getTexture();
+        BaseNpc bu = getNpc(id);
+        if(bu != null)
+            return bu.getTexture();
         else
             return null;
     }
+    
     private BaseEffect getEffect(int id)
     {
         for(BaseEffect be : effects)
@@ -161,6 +161,15 @@ public class DataBase {
             }
         }
         return null;
+    }
+    
+    public Texture getEffectTexture(int id)
+    {
+        BaseEffect be = getEffect(id);
+        if(be != null)
+            return be.getTexture();
+        else
+            return null;
     }
     
 }

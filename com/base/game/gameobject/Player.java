@@ -17,11 +17,6 @@ import org.lwjgl.input.Keyboard;
  */
 public class Player extends Unit
 {
-    @SuppressWarnings("unused")
-	private static final int 
-        MOVE_NULL  = 0,
-        MOVE_RIGHT = 1,
-        MOVE_LEFT  = -1;
     
     private static final float SIZE = 16;
     protected double gSpeed = 0;
@@ -29,12 +24,13 @@ public class Player extends Unit
     private boolean justJump;
 	private boolean mapColision;
     private boolean inGround;
-    private int movx;
     private Block groundBlock;
     
     public Player(float X, float Y)
     {
-        init(X, Y, 0.1f,1f,0.25f,SIZE,SIZE);
+    	modX = 1.5f;
+    	modY = 1.5f;
+        init(0, X, Y, SIZE*modX,SIZE*modY);
         stats = new Stats(0, true);
         stats.setName("Muit");
         inGround = false;
@@ -47,28 +43,39 @@ public class Player extends Unit
     
     public void getInput()
     {
-        //if(!chatMode){
-            if(getStats().isAlive())
-            {
-                if(Keyboard.isKeyDown(Keyboard.KEY_A))
-                    movx = MOVE_LEFT;
-                else if(Keyboard.isKeyDown(Keyboard.KEY_D))
-                    movx = MOVE_RIGHT;
-                else
-                    movx = MOVE_NULL;
-                
-                if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
-                    justJump = true;
-            }
-            else
-            {
-                Main.spawnGUI(0);
-                movx = MOVE_NULL;
-            }
-        //}
-        //else{
-            
-        //}
+    	while (Keyboard.next()) 
+    	{
+	        //if(!chatMode){
+	            if(getStats().isAlive())
+	            {
+	                if(Keyboard.isKeyDown(Keyboard.KEY_A))
+	                {
+	                    movx = MOVE_LEFT;
+	                    spr.setAnimation(1);
+	                }
+	                else if(Keyboard.isKeyDown(Keyboard.KEY_D))
+	                {
+	                    movx = MOVE_RIGHT;
+	                    spr.setAnimation(0);
+	                }
+	                else
+	                {
+	                    movx = MOVE_NULL;
+	                }
+	                
+	                if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
+	                    justJump = true;
+	            }
+	            else
+	            {
+	                Main.spawnGUI(0);
+	                movx = MOVE_NULL;
+	            }
+	        //}
+	        //else{
+	            
+	        //}  
+	    }
     }
     @Override
     public void update()
@@ -116,6 +123,7 @@ public class Player extends Unit
             y += gSpeed;
         }
         inGround = false;
+        spr.update();
     }
     
     public void fisic()
@@ -123,15 +131,8 @@ public class Player extends Unit
         y+=gSpeed;
     }
     
-    private void move()
-    {
-        x+=getSpeed() * movx * getDelta();
-    }
     
-    public float getSpeed()
-    {
-        return stats.getSpeed();
-    }
+    
     public int getLevel()
     {
         return stats.getLevel();

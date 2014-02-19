@@ -4,18 +4,21 @@ package com.base.GUI;
 
 public class Button extends Element{
 	private boolean used;
-	
-	public Button(float x, float y)
+	private String text;
+	private Menu menu;
+	public Button(Menu menu, float x, float y, int elementId, String text)
 	{
-		super(x,y);
+		super(x,y, elementId);
 		loadTexture("button");
 		used = false;
+		this.text = text;
+		this.menu = menu;
 	}
 	
-	@Override
-	protected void update()
+	
+	public void click()
 	{
-		/*if (click inside && !used)
+		if (!used)
 		{
 			setFrame(1);
 			doAction();
@@ -25,10 +28,12 @@ public class Button extends Element{
 		{
 			setFrame(0);
 			used = false;
-		}*/
+		}
 	}
-	private void doAction()
+	
+	@Override
+	protected void doAction()
 	{
-		
+		menu.buttonDoAction(this);
 	}
 }

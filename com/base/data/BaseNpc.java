@@ -4,12 +4,21 @@
  */
 package com.base.data;
 
+import java.io.IOException;
+
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.ResourceLoader;
+
+import com.base.engine.Main;
+
 /**
  *
  * @author Miguel
  */
 public class BaseNpc {
     private int id;
+    private Texture tex = null;
     private String name;
     private int relation;//0-friendly, 1-pasive enemy, 2-active enemy
     private int live;
@@ -91,5 +100,26 @@ public class BaseNpc {
     public float getAttackSpeed()
     {
         return attackSpeed;
+    }
+    
+    public Texture getTexture()
+    {
+        if(tex == null)
+        {
+            String path = "com/resources/npc/"+id+".png";
+            try {
+                tex = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(path));
+            } catch (IOException ex) {
+                System.out.println("Textura(npc): "+id+" no se pudo cargar.");
+                Main.heavyClose();
+                
+            }
+            if(tex == null)
+            {
+                System.out.println("Textura(npc): "+id+" no se pudo cargar.");
+                Main.heavyClose();
+            }
+        }
+        return tex;
     }
 }
