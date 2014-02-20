@@ -39,7 +39,7 @@ public class Babosa_Azul extends Npc
     protected void EnterCombat(Unit who)
     {
         //When npc enter combat:
-        System.out.println("Zarig�ella quiere sapatos para comer!!");
+        System.out.println("Zarigüella quiere sapatos para comer!!");
         
         event.ScheduleEvent(EVENT_SALPICADURA, 2000);
         //End-------------------
