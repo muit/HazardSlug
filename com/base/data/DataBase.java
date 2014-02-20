@@ -26,12 +26,14 @@ public class DataBase {
             effects = new ArrayList<>();
             
             //ITEMS/////////////////////////////////////////////////////////////////
-            objects.add(new BaseItem(0, "Rock", 0, 10));
-            objects.add(new BaseItem(1, "Floor Rock", 0, 10));
+            objects.add(new BaseItem(0, "Rock", 0, 30));
+            objects.add(new BaseItem(1, "Floor Rock", 0, 25));
             objects.add(new BaseItem(2, "Arena", 0.2, 10));
-            objects.add(new BaseItem(3, "Tierra", 0, 10));
+            objects.add(new BaseItem(3, "Tierra", 0, 15));
             objects.add(new BaseItem(4, "Barro", 0, 10));
-            objects.add(new BaseItem(10, "Sulfuro del Infierno", 0, 10));
+            objects.add(new BaseItem(10, "Sulfuro del Infierno", 0, 100000));
+            objects.add(new BaseItem(44, "Azulita", 0, 100));
+            objects.add(new BaseItem(45, "Eter", 0, 1));
             //NPCS//////////////////////////////////////////////////////////////////
             npcs.add(new BaseNpc(0, "Cria de Babosa", 1, 10,5,5,-1,-1,-1,-1));
             npcs.add(new BaseNpc(1, "Babosa Adulta", 1, 10,5,5,-1,-1,-1,-1));

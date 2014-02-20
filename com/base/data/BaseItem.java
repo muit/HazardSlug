@@ -43,14 +43,17 @@ public class BaseItem {
         String path = "com/resources/tileset/"+id+".png";
         try {
                 tex = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(path));
+            } catch (RuntimeException ex) {
+                System.out.println("Textura: "+path+" no se pudo cargar.");
+                Main.heavyClose();   
             } catch (IOException ex) {
-                System.out.println("Textura: "+id+" no se pudo cargar.");
+                System.out.println("Textura(2): "+id+" no se pudo cargar.");
                 Main.heavyClose();
-                
             }
+    
             if(tex == null)
             {
-                System.out.println("Textura: "+id+" no se pudo cargar.");
+                System.out.println("Textura(3): "+id+" no se pudo cargar.");
                 Main.heavyClose();
             }
     }

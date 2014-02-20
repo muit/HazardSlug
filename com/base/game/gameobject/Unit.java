@@ -92,14 +92,21 @@ public class Unit extends GameObject
             case 0: //Salpicadura
                 EffectManager.createEffect(this, id, x, y, target, 0.21f, true);
                 break;
-            case 1:
+            case 1: //Mordisco
                 Log.sendMessageToAll(target.getName()+" recibió Mordisco.");
                 break;
+            case 2: //Escupitajo
+            	//EffectManager.createEffect(this, id, x, y, target, 0.21f, true);
+            	break;
             
-            //On hit(id+1000): 
-            case 1000://Salpicadura 
+            //On Effect Hit(id+1000): 
+            case 1000: //Salpicadura 
                 Log.sendMessageToAll(target.getName()+" recibió Salpicadura.");
                 break;
+            case 1002: //Escupitajo
+            	Log.sendMessageToAll(target.getName()+" recibió Escupitajo.");
+            	break;
+            	
             default:
                 Log.sendMessageToAll("Spell: "+id+" no existe.");
                 break;
