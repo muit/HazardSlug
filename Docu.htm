@@ -132,7 +132,6 @@ Error message and password prompt
 </p><p><li>Base de Datos</li>
 </p><p><li>Bloques</li>
 </p><p><li>Contenidos</li>
-</p><p><li>Draft of 'Base de Datos'</li>
 </p><p><li>Eventos</li>
 </p><p><li>Funcionamiento</li>
 </p><p><li>HazardSlug</li>
@@ -1811,7 +1810,7 @@ Error message and password prompt
 <pre>HazardSlug
 [!is[system]sort[modified]limit[1]]</pre>
 </div>
-<div modified="20140208012952791" title="$:/HistoryList" type="application/json">
+<div modified="20140225085430342" title="$:/HistoryList" type="application/json">
 <pre>[
     {
         &quot;title&quot;: &quot;Draft of 'GettingStarted'&quot;
@@ -2388,6 +2387,91 @@ Error message and password prompt
     },
     {
         &quot;title&quot;: &quot;Eventos&quot;
+    },
+    {
+        &quot;title&quot;: &quot;Base de Datos&quot;,
+        &quot;fromPageRect&quot;: {
+            &quot;top&quot;: 228,
+            &quot;left&quot;: 124,
+            &quot;width&quot;: 96.1611328125,
+            &quot;right&quot;: 220.1611328125,
+            &quot;bottom&quot;: 246,
+            &quot;height&quot;: 18
+        }
+    },
+    {
+        &quot;title&quot;: &quot;Draft of 'Base de Datos'&quot;
+    },
+    {
+        &quot;title&quot;: &quot;Base de Datos&quot;
+    },
+    {
+        &quot;title&quot;: &quot;Funcionamiento&quot;,
+        &quot;fromPageRect&quot;: {
+            &quot;top&quot;: 222,
+            &quot;left&quot;: 124,
+            &quot;width&quot;: 101.52734375,
+            &quot;right&quot;: 225.52734375,
+            &quot;bottom&quot;: 240,
+            &quot;height&quot;: 18
+        }
+    },
+    {
+        &quot;title&quot;: &quot;Scripts&quot;,
+        &quot;fromPageRect&quot;: {
+            &quot;top&quot;: 176,
+            &quot;left&quot;: 124,
+            &quot;width&quot;: 98.7451171875,
+            &quot;right&quot;: 222.7451171875,
+            &quot;bottom&quot;: 194,
+            &quot;height&quot;: 18
+        }
+    },
+    {
+        &quot;title&quot;: &quot;Scripts&quot;,
+        &quot;fromPageRect&quot;: {
+            &quot;top&quot;: 382,
+            &quot;left&quot;: 124,
+            &quot;width&quot;: 98.7451171875,
+            &quot;right&quot;: 222.7451171875,
+            &quot;bottom&quot;: 400,
+            &quot;height&quot;: 18
+        }
+    },
+    {
+        &quot;title&quot;: &quot;Draft of 'Scripts'&quot;
+    },
+    {
+        &quot;title&quot;: &quot;Scripts&quot;
+    },
+    {
+        &quot;title&quot;: &quot;Eventos&quot;,
+        &quot;fromPageRect&quot;: {
+            &quot;top&quot;: 414,
+            &quot;left&quot;: 124,
+            &quot;width&quot;: 49.7451171875,
+            &quot;right&quot;: 173.7451171875,
+            &quot;bottom&quot;: 432,
+            &quot;height&quot;: 18
+        }
+    },
+    {
+        &quot;title&quot;: &quot;Draft of 'Eventos'&quot;
+    },
+    {
+        &quot;title&quot;: &quot;Eventos&quot;
+    },
+    {
+        &quot;title&quot;: &quot;Draft of 'Scripts'&quot;
+    },
+    {
+        &quot;title&quot;: &quot;Scripts&quot;
+    },
+    {
+        &quot;title&quot;: &quot;Draft of 'Scripts'&quot;
+    },
+    {
+        &quot;title&quot;: &quot;Scripts&quot;
     }
 ]</pre>
 </div>
@@ -2418,7 +2502,7 @@ Error message and password prompt
 <div title="$:/state/tab/sidebar-{1743827719}">
 <pre>$:/core/ui/SideBar/More</pre>
 </div>
-<div list="HazardSlug [[Draft of 'Base de Datos']] Funcionamiento Eventos Scripts" title="$:/StoryList">
+<div list="HazardSlug Funcionamiento Eventos Scripts" title="$:/StoryList">
 <pre></pre>
 </div>
 <div dependents="$:/themes/tiddlywiki/vanilla" description="A clean theme that emphasises individual tiddlers" name="Snow White" plugin-type="theme" title="$:/themes/tiddlywiki/snowwhite" type="application/json" version="5.0.7-beta">
@@ -2483,18 +2567,20 @@ Error message and password prompt
     &quot;medium&quot;: &quot;#bbbbbb&quot;
 }</pre>
 </div>
-<div created="20140201004614021" modified="20140201224707468" title="Base de Datos">
+<div created="20140201004614021" modified="20140225084027553" title="Base de Datos">
 <pre>Aqui se hallan descritos los detalles del funcionamiento de la base de datos interna de HazardSlug.
 
 ''Como funciona?''
 La base de datos esta impresa en el codigo y se carga en arrays al iniciar el juego.
-
+Para reducir la carga y mejorar el rendimiento las texturas correspondientes se cargan al iniciar la db.
 
 ''Tipos de datos''
 
 &gt;''Items:'' Es la base de datos de items, tipos de bloques y objetos. Aqui se almacenan todos los datos de dichos items asi como sus propiedades, texturas, animaciones, etc.
 
-&gt;''Npcs:'' Es la base de datos de los npcs, los cuales incluyen tanto enemigos como jugadores, es decir todonpc de tipo Unit. Aqui se guardan sus configuraciones, distancias de actuación, daños, vidaa, etc. 
+&gt;''Npcs:'' Es la base de datos de los npcs, los cuales incluyen tanto enemigos como jugadores, es decir todonpc de tipo Unit. Aqui se guardan sus configuraciones, distancias de actuación, daños, vidaa, etc.
+ 
+&gt;''Efectos:'' Contienen todos los efectos y cualidades de los mismos, ademas de sus texturas.
 
 ```
 npcs.add(new BaseNpc(1, &quot;Babosa Adulta&quot;, 1, 10,5,5,-1,-1,-1,-1));
@@ -2523,24 +2609,7 @@ npcs.add(new BaseNpc(1, &quot;Babosa Adulta&quot;, 1, 10,5,5,-1,-1,-1,-1));
 &gt;* ''[[Items]]''
 &gt;* ''[[Otros]]''</pre>
 </div>
-<div created="20140201004614021" draft.of="Base de Datos" draft.title="Base de Datos" modified="20140208010947617" title="Draft of 'Base de Datos'">
-<pre>Aqui se hallan descritos los detalles del funcionamiento de la base de datos interna de HazardSlug.
-
-''Como funciona?''
-La base de datos esta impresa en el codigo y se carga en arrays al iniciar el juego.
-
-
-''Tipos de datos''
-
-&gt;''Items:'' Es la base de datos de items, tipos de bloques y objetos. Aqui se almacenan todos los datos de dichos items asi como sus propiedades, texturas, animaciones, etc.
-
-&gt;''Npcs:'' Es la base de datos de los npcs, los cuales incluyen tanto enemigos como jugadores, es decir todonpc de tipo Unit. Aqui se guardan sus configuraciones, distancias de actuación, daños, vidaa, etc. 
-
-```
-npcs.add(new BaseNpc(1, &quot;Babosa Adulta&quot;, 1, 10,5,5,-1,-1,-1,-1));
-```</pre>
-</div>
-<div created="20140208010725650" modified="20140208012952791" title="Eventos">
+<div created="20140208010725650" modified="20140225085048550" title="Eventos">
 <pre>Los eventos son sistemas de delay preparados para funcionar con ids y enviar una respuesta positiva si ha superado el tiempo estipulado en dicho evento.
 
 
@@ -2619,8 +2688,17 @@ while(true)
 |8||||||||
 |9||||||||</pre>
 </div>
-<div created="20140201004529383" modified="20140201004558259" title="Scripts">
-<pre>Aqui se encuentra toda la informacion y ayuda para el desarrollo de scripts de nivel alto.</pre>
+<div created="20140201004529383" modified="20140225085430320" title="Scripts">
+<pre>Aqui se encuentra toda la informacion y ayuda para el desarrollo de scripts de nivel alto.
+Tipos de scrips:
+
+&gt;''Scripts de npc:'' Automatiza y especifica el funcionamiento de un npc en concreto.
+&gt;''Scripts de item:'' Permite el funcionamiento de items. Ej: portales.
+&gt;''Scripts de Spells:'' Estan definidos en Unit.java, cada spell lo contiene un case con id dentro de un switch. Se usa para los efectos de cada habilidad, su daño, o funcionamiento. Son comunes a todos los npcs y players, los cuales podran ejecutar la habilidad con:
+ 
+```
+doCast(target, id);
+```</pre>
 </div>
 <div created="20140201005507305" modified="20140201005509488" title="SiteSubtitle">
 <pre>Documentation.</pre>
