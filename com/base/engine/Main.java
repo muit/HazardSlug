@@ -5,16 +5,22 @@
 package com.base.engine;
 
 //import com.base.GUI.*;
+import com.base.GUI.Menu;
 import com.base.game.Game;
 import com.base.game.Time;
 import com.base.game.gameobject.Unit;
+import com.base.game.map.Block;
+
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+
 import static org.lwjgl.opengl.GL11.*;
 
 /**
@@ -23,14 +29,15 @@ import static org.lwjgl.opengl.GL11.*;
  */
 public class Main {
     private static Game game;
-    private static boolean done;
+    private static Menu menu;
+    private static boolean done, menuEnabled;
     public static void main(String[] args)
     {
         done = false;
         
         initDisplay();
         initGL();
-        initGame();
+        initMenu();
         
         gameLoop();
         
@@ -40,6 +47,10 @@ public class Main {
     public static ArrayList<Unit> sphereCollide(float x, float y, float radius)
     {
         return game.sphereCollide(x, y, radius);
+    }
+    public static ArrayList<Block> sphereMapCollide(float x, float y, float radius)
+    {
+        return game.sphereMapCollide(x, y, radius);
     }
     
     public static ArrayList<Unit> getPlayers()
@@ -53,13 +64,15 @@ public class Main {
     
     private static void getInput()
     {
-        game.getInput();
-        if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
-        {
-            cleanUp();
-            System.exit(1);
+    	if(menuEnabled)
+    	{
+    		menu.getInput();
         }
-            
+    	else
+    	{
+            game.getInput();
+    	}
+        
     }
     private static void update()
     {
@@ -75,6 +88,20 @@ public class Main {
         Display.update();
         Display.sync(60);
     }
+    private static void updateMenu()
+    {
+        menu.update();
+    }
+    private static void renderMenu()
+    {
+    	glClear(GL_COLOR_BUFFER_BIT);
+        glLoadIdentity();
+        //Draw/////////////////////
+        menu.render();
+        ///////////////////////////
+        Display.update();
+        Display.sync(40);
+    }
     private static void gameLoop()
     {
         Time.init();
@@ -82,12 +109,18 @@ public class Main {
         {
             Time.update();
             getInput();
-            update();
-            render();
+            if(menuEnabled)
+            {
+            	updateMenu();
+            	renderMenu();
+            }
+            else
+            {
+	            update();
+	            render();
+            }
         }
     }
-    
-    
     
     private static void initDisplay()
     {
@@ -95,6 +128,7 @@ public class Main {
             Display.setDisplayMode(new DisplayMode(800,600));
             Display.create();
             Keyboard.create();
+            Mouse.create();
             Display.setVSyncEnabled(true);
         } catch (LWJGLException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -122,10 +156,16 @@ public class Main {
     {
         game = new Game();
     }
-    private static void cleanUp()
+    private static void initMenu()
+    {
+    	menu = new Menu();
+    	menuEnabled = true;
+    }
+    public static void cleanUp()
     {
         Display.destroy();
         Keyboard.destroy();
+        Mouse.destroy();
     }
     public static void heavyClose()
     {
@@ -134,5 +174,19 @@ public class Main {
     public static void spawnGUI(int id)
     {
         //GUI.spawnGUI(id);
+    }
+    public static void setMenuEnabled(boolean enabled)
+    {
+    	menuEnabled = enabled;
+    }
+    public static void startGame()
+    {
+    	menuEnabled = false;
+        initGame();
+    }
+    public static void exitGame()
+    {
+    	menuEnabled = true;
+    	initMenu();
     }
 }

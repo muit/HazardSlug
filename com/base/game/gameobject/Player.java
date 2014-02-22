@@ -4,6 +4,8 @@
  */
 package com.base.game.gameobject;
 
+import java.util.ArrayList;
+
 import com.base.engine.Main;
 import com.base.game.Time;
 import com.base.game.gameobject.item.Item;
@@ -25,7 +27,7 @@ public class Player extends Unit
 	private boolean mapColision;
     private boolean inGround;
     private Block groundBlock;
-    
+    private ArrayList<Block> nearMapBlocks;
     public Player(float X, float Y)
     {
     	modX = 1.5f;
@@ -37,6 +39,7 @@ public class Player extends Unit
         justJump = false;
         mapColision = false;
         groundBlock = null;
+        nearMapBlocks = new ArrayList<>();
         stats.setSpeed(0.20f);
         toPlayer();
     }
@@ -82,7 +85,9 @@ public class Player extends Unit
     {
         move();
         fisic();
-        
+        ArrayList<Block> nearMapBlocks = Main.sphereMapCollide(x, y, 7);
+        for(Block bl : nearMapBlocks)
+        	bl.updateSpr();
         if(y<=-16)//futura mapColision aqui
         {
             y=-16;

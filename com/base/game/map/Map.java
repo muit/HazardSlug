@@ -7,6 +7,8 @@
 package com.base.game.map;
 
 import com.base.game.Game;
+import com.base.game.Util;
+import com.base.game.gameobject.Unit;
 
 import java.util.ArrayList;
 
@@ -46,6 +48,7 @@ public class Map {
             if(chunks[i]!=null && chunks[i].getInit())
             {
                 chunkIdsLoaded.add(chunks[i]);
+                System.out.println(i);
                 chunks[i].update(game.getPlayer());
             }
             else
@@ -83,12 +86,26 @@ public class Map {
     //**Acabar***********************************************************************
     public ArrayList<Block> sphereMapCollide(float x, float y, float radius)
     {
+    	ArrayList<Block> allBlocks = new ArrayList<>();
+    	
     	for(int i =0; i < chunkIdsLoaded.size(); i++)
     	{
+    		ArrayList<Block> chunk = new ArrayList<>();
     		
-    		
+    		chunk = chunkIdsLoaded.get(i).sphereMapCollide(x, y, radius);
+    		for(int e = 0; e < chunk.size(); e++)
+    		{
+    			allBlocks.add(chunk.get(e));
+    		}
+    		chunk = null;
     	}
-        return null;
+    	ArrayList<Block> res = new ArrayList<>();
+        for(Block bl : allBlocks)
+        {
+            if(bl!=null && Util.dist(bl.getX(), bl.getY(), x, y) <= radius)
+                res.add(bl);
+        }
+        return res;
     }
 }
 

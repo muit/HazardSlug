@@ -6,10 +6,9 @@ public class Button extends Element{
 	private boolean used;
 	private String text;
 	private Menu menu;
-	public Button(Menu menu, float x, float y, int elementId, String text)
+	public Button(Menu menu, float x, float y, float sx, float sy, int elementId, String text)
 	{
-		super(x,y, elementId);
-		loadTexture("button");
+		super(x,y, sx, sy, elementId);
 		used = false;
 		this.text = text;
 		this.menu = menu;
@@ -20,7 +19,6 @@ public class Button extends Element{
 	{
 		if (!used)
 		{
-			setFrame(1);
 			doAction();
 			used = true;
 		}

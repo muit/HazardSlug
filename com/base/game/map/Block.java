@@ -34,4 +34,8 @@ public class Block extends Item{
             
         }
     }
+    public void updateSpr()
+    {
+    	spr.update();
+    }
 }

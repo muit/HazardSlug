@@ -5,7 +5,10 @@
 package com.base.engine;
 
 import com.base.data.DataBase;
+import com.base.game.EventsMap;
+
 import static org.lwjgl.opengl.GL11.*;
+
 import org.newdawn.slick.Color;
 
 /**
@@ -17,34 +20,50 @@ public class ItemSprite
     private float sx,sy;
     private int frame;
     private int id;
+    private EventsMap event = new EventsMap(); 
+    private DataBase db;
     
     public ItemSprite(int id, float sx, float sy)
     {
         this.sx = sx;
         this.sy = sy;
         this.id = id;
-        frame = 1;
+        db = new DataBase();
+        frame = 0;
+        event.ScheduleEvent(0, 200);
     }
     
     public void update()
     {
-        //eventos para frames
+    	//eventos para frames
+        while(true)
+        {
+            int evId = event.getEvents();
+            if(evId == 0)
+            {
+            	frame++;
+        		if(frame>=4 || frame<0)
+                    frame=0;
+                event.RestartEvent(0);
+            }
+            else
+                break;
+        }
     }
     
     public void render()
     {
-        DataBase db = new DataBase();
         Color.white.bind();
         db.getItemTexture(id).bind();
         glBegin(GL_QUADS);
         {
-            glTexCoord2f(0.25f*frame,1);
+        	glTexCoord2f(0.25f*frame+0.25f, 1);
             glVertex2f(0,0);
-            glTexCoord2f(0,1);
+            glTexCoord2f(0.25f*frame, 1);
             glVertex2f(sx,0);
-            glTexCoord2f(0,0);
+            glTexCoord2f(0.25f*frame, 0);
             glVertex2f(sx,sy);
-            glTexCoord2f(0.25f*frame,0);
+            glTexCoord2f(0.25f*frame+0.25f, 0);
             glVertex2f(0,sy);
         }
         glEnd();

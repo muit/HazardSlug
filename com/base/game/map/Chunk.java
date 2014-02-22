@@ -6,6 +6,8 @@
 
 package com.base.game.map;
 
+import java.util.ArrayList;
+
 import com.base.game.Util;
 import com.base.game.gameobject.Player;
 
@@ -173,5 +175,13 @@ public class Chunk {
     public int getChunkSizeY()
     {
         return chunkSizeY;
+    }
+    public ArrayList<Block> sphereMapCollide(float x, float y, float radius)
+    {
+    	ArrayList<Block> blocks = new ArrayList<>();
+    	for(int i=0;i<cubes.length;i++)
+    		for(int e=0; e < cubes[i].length; e++)
+    			blocks.add(cubes[i][e]);
+    	return blocks;
     }
 }

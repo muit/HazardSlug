@@ -7,6 +7,7 @@ package com.base.game;
 import com.base.data.DataBase;
 import com.base.engine.Camera;
 import com.base.engine.GameObject;
+import com.base.engine.Main;
 import com.base.game.gameobject.Player;
 import com.base.game.gameobject.Unit;
 import com.base.engine.Effect;
@@ -18,6 +19,7 @@ import com.base.game.map.Map;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 /**
@@ -33,8 +35,7 @@ public class Game
     private final ArrayList<GameObject> remove;
     private final ArrayList<Effect> removeffect;
     private final Player player;
-    private final Quadtree quad;
-    private final Camera cam = new Camera();
+    //private final Quadtree quad;
     protected DataBase db = new DataBase();
     
     public Game()
@@ -45,7 +46,7 @@ public class Game
         remove = new ArrayList<>();
         removeffect = new ArrayList<>();
         
-        quad = new Quadtree(0, new Rectangle(0,0,Display.getWidth(),Display.getHeight()));
+        //quad = new Quadtree(0, new Rectangle(0,0,Display.getWidth(),Display.getHeight()));
         
         player = new Player(-5, 250);
         
@@ -60,13 +61,17 @@ public class Game
     
     public void getInput()
     {  
+    	if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+        {
+            Main.exitGame();
+        }
         player.getInput();
     }
     
     public void update()
     {
         map.update((int)player.getX(), Display.getWidth()/16);
-        quad.clear();
+        //quad.clear();
         for(GameObject go : objects)
         {
             if(!go.getRemove())
@@ -111,7 +116,7 @@ public class Game
         }
         removeffect.clear();
         
-        cam.setCamera((int)(player.getX()*16+player.getSX()/2-Display.getWidth()/2),(int)(player.getY()*16+player.getSY()/2-Display.getHeight()/2), Display.getWidth(), Display.getHeight());
+        Camera.setCamera((int)(player.getX()*16+player.getSX()/2-Display.getWidth()/2),(int)(player.getY()*16+player.getSY()/2-Display.getHeight()/2), Display.getWidth(), Display.getHeight());
     }
     
     public void render()

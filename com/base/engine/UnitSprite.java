@@ -22,7 +22,7 @@ public class UnitSprite
     private int animation;
     private boolean animEnabled;
     private EventsMap event = new EventsMap(); 
-    DataBase db;
+    private DataBase db;
     
     public UnitSprite(int id, float sx, float sy)
     {
@@ -33,7 +33,7 @@ public class UnitSprite
         animEnabled = false;
         frame=0;
         animation = 0;
-        event.ScheduleEvent(0, 200);
+        event.ScheduleEvent(0, 300);
     }
     
     public void update()

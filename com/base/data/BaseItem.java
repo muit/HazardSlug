@@ -44,7 +44,7 @@ public class BaseItem {
         try {
                 tex = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(path));
             } catch (RuntimeException ex) {
-                System.out.println("Textura: "+path+" no se pudo cargar.");
+                System.out.println("Textura: "+ex);
                 Main.heavyClose();   
             } catch (IOException ex) {
                 System.out.println("Textura(2): "+id+" no se pudo cargar.");

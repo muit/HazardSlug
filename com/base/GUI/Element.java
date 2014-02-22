@@ -25,10 +25,12 @@ public class Element {
 	protected int frame;	
 	protected int elementId;
 	
-	public Element(float x, float y, int elementId)
+	public Element(float x, float y, float sx, float sy, int elementId)
 	{
 		this.x = x;
 		this.y = y;
+		this.sx = sx;
+		this.sy = sy;
 		this.elementId = elementId;
 		frame = 0;
 	}
@@ -70,6 +72,7 @@ public class Element {
 	
 	public void render()
 	{
+		/*
 		glPushMatrix();
         {
             glTranslatef(x, y, 0);
@@ -90,7 +93,7 @@ public class Element {
             }
             glEnd();
         }
-        glPopMatrix();
+        glPopMatrix();*/
 	}
 	
 	public float getX()
