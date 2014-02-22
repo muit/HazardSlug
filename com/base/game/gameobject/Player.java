@@ -85,7 +85,7 @@ public class Player extends Unit
     {
         move();
         fisic();
-        ArrayList<Block> nearMapBlocks = Main.sphereMapCollide(x, y, 7);
+        ArrayList<Block> nearMapBlocks = Main.sphereMapCollide(x, y, 5);
         for(Block bl : nearMapBlocks)
         	bl.updateSpr();
         if(y<=-16)//futura mapColision aqui

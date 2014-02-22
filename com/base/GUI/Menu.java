@@ -8,6 +8,7 @@ package com.base.GUI;
 
 import java.util.ArrayList;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
@@ -154,7 +155,11 @@ public class Menu {
     }
     public void getInput()
     {
-    	
+    	if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+        {
+    		Main.cleanUp();
+    		System.exit(1);
+        }
     }
     public void addPortal(int x, int y)
     {
