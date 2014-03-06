@@ -21,20 +21,22 @@ import com.base.game.map.Block;
  * @author Miguel_F
  */
 public class Menu {
-    private ArrayList<Element> elements;
-    private ArrayList<Block> scene;
+    private final ArrayList<Element> elements;
+    private final ArrayList<Block> scene;
+    private final ArrayList<Text> texts;
     
-	private int status;
-	
-	private final static int ST_INTRO = 0,
-		ST_INTRO_MENU = 1,
-		ST_MAIN_MENU = 2,
-		ST_GAME_MENU = 3;
+    private int status;
+
+    private final static int ST_INTRO = 0,
+            ST_INTRO_MENU = 1,
+            ST_MAIN_MENU = 2,
+            ST_GAME_MENU = 3;
 	
     public Menu()
     {
     	elements = new ArrayList<>();
     	scene = new ArrayList<>();
+        texts = new ArrayList<>();
     	setStatus(ST_MAIN_MENU);
     }
     
@@ -43,6 +45,7 @@ public class Menu {
     	status = id;
     	elements.clear();
     	scene.clear();
+        texts.clear();
     	switch(status)
     	{
     		case ST_INTRO:
@@ -56,6 +59,7 @@ public class Menu {
     			elements.add(new Button(this, 0, 0, 2, 2, 1,""));
     			break;
     		case ST_MAIN_MENU:
+                        texts.add(new Text("Hola Mundo", 3, 3));
     			for(int i = 0; i<50; i++)
     				scene.add(new Block(i, 0, 3));
     			for(int i = 0; i<50; i++)
@@ -146,12 +150,14 @@ public class Menu {
     
     public void render()
     {
-    	for(int i = 0; i<scene.size(); i++)
-    		scene.get(i).render();
-    	for(int i = 0; i<elements.size(); i++)
-    	{
-    		elements.get(i).render();
-    	}
+    	for(Block bl : scene)
+            bl.render();
+        
+        for (Element el : elements)
+            el.render();
+        
+        for(Text tx : texts)
+            tx.render();
     }
     public void getInput()
     {
