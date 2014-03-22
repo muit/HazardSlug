@@ -6,6 +6,7 @@
 
 package com.base.GUI;
 
+import static com.base.GUI.Text.CENTER;
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
@@ -59,7 +60,7 @@ public class Menu {
     			elements.add(new Button(this, 0, 0, 2, 2, 1,""));
     			break;
     		case ST_MAIN_MENU:
-                        texts.add(new Text("Hola Mundo", 3, 3));
+                        texts.add(new Text("Hola Mundo", 3, 3, CENTER));
     			for(int i = 0; i<50; i++)
     				scene.add(new Block(i, 0, 3));
     			for(int i = 0; i<50; i++)
