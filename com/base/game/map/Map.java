@@ -9,6 +9,7 @@ package com.base.game.map;
 import com.base.game.Game;
 import com.base.game.Util;
 import com.base.game.gameobject.Unit;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ import java.util.ArrayList;
  *
  * @author Miguel_F
  */
-public class Map {
+public class Map implements Serializable {
     private Chunk chunks[];
     private int ChunkMapSize;
     private int maxAlt = 240;

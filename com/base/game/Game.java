@@ -31,7 +31,8 @@ public class Game
     private final ArrayList<GameObject> objects;
     private final ArrayList<Unit> entitys;
     private final ArrayList<Effect> effects;
-    private final Map map = new Map(3, this);
+    private final MapManager mapMg;
+    private final Map map;
     private final ArrayList<GameObject> remove;
     private final ArrayList<Effect> removeffect;
     private final Player player;
@@ -40,6 +41,9 @@ public class Game
     
     public Game()
     {
+        mapMg = new MapManager(3, this);
+        map = mapMg.getMap();
+        
         objects = new ArrayList<>();
         entitys = new ArrayList<>();
         effects = new ArrayList<>();
