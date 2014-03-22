@@ -16,7 +16,6 @@ import com.base.game.gameobject.npc.Babosa_Azul;
 import com.base.game.map.Block;
 import com.base.game.map.Map;
 
-import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;

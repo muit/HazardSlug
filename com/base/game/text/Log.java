@@ -19,6 +19,7 @@ public class Log {
     
     public static void sendMessageToAll(String message)
     {
+        //CRASH: Main.getPlayers(); NullPointerException
         ArrayList<Unit> players = Main.getPlayers();
         for(int i=0; i<players.size(); i++)
         {
@@ -41,5 +42,9 @@ public class Log {
         //Temporal:---
         System.out.println("(" + player.getName() + "): " + message);
         //------------
+    }
+    public static void consoleMessage(String message)
+    {
+        System.out.println(message);
     }
 }

@@ -16,14 +16,14 @@ import com.base.game.gameobject.Unit;
 
 public class Babosa_Azul extends Npc
 {
-    private EventsMap event = new EventsMap();
+    private final EventsMap event = new EventsMap();
     
     @SuppressWarnings("unused")
-	private int EVENT_SALPICADURA = 0,
+	private final int EVENT_SALPICADURA = 0,
                 EVENT_MORDEDURA   = 1;
     
     @SuppressWarnings("unused")
-	private int SPELL_SALPICADURA = 0,
+	private final int SPELL_SALPICADURA = 0,
                 SPELL_MORDEDURA   = 1;
     
     

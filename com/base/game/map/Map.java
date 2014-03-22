@@ -8,7 +8,6 @@ package com.base.game.map;
 
 import com.base.game.Game;
 import com.base.game.Util;
-import com.base.game.gameobject.Unit;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -18,12 +17,12 @@ import java.util.ArrayList;
  * @author Miguel_F
  */
 public class Map implements Serializable {
-    private Chunk chunks[];
-    private int ChunkMapSize;
-    private int maxAlt = 240;
-    private int floorAlt = 200;
-    private Game game;
-    private ArrayList<Chunk> chunkIdsLoaded = new ArrayList<>();
+    private final Chunk chunks[];
+    private final int ChunkMapSize;
+    private final int maxAlt = 240;
+    private final int floorAlt = 200;
+    private final Game game;
+    private final ArrayList<Chunk> chunkIdsLoaded = new ArrayList<>();
     
     public Map(int Size, Game game)
     {
@@ -49,7 +48,6 @@ public class Map implements Serializable {
             if(chunks[i]!=null && chunks[i].getInit())
             {
                 chunkIdsLoaded.add(chunks[i]);
-                System.out.println(i);
                 chunks[i].update(game.getPlayer());
             }
             else

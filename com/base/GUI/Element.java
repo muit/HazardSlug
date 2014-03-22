@@ -60,17 +60,17 @@ public class Element {
         }
         
         sx = tex.getWidth();
-		sy = tex.getHeight();
+	sy = tex.getHeight();
 		
         return tex;
     }
 	
-	public void update()
+	protected void update()
 	{
 		
 	}
 	
-	public void render()
+	protected void render()
 	{
 		/*
 		glPushMatrix();
@@ -98,31 +98,31 @@ public class Element {
 	
 	public float getX()
 	{
-		return x;
+            return x;
 	}
 	public float getY()
 	{
-		return y;
+            return y;
 	}
 	public float getSX()
 	{
-		return sx;
+            return sx;
 	}
 	public float getSY()
 	{
-		return sy;
+            return sy;
 	}
 	
 	protected void setFrame(int frame)
 	{
-		this.frame = frame;
+            this.frame = frame;
 	}
 	protected void doAction()
 	{
-		
+	    
 	}
 	public int getElementId()
 	{
-		return elementId;
+            return elementId;
 	}
 }
