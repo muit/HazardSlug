@@ -30,7 +30,8 @@ public class DataBase {
             objects.add(new BaseItem(1, "Floor Rock", 0, 25));
             objects.add(new BaseItem(2, "Arena", 0.2, 10));
             objects.add(new BaseItem(3, "Tierra", 0, 15));
-            objects.add(new BaseItem(4, "Barro", 0, 10));
+            objects.add(new BaseItem(4, "Tierra con Hierba", 0, 10));
+            objects.add(new BaseItem(5, "Madera", 0, 10));
             objects.add(new BaseItem(10, "Sulfuro del Infierno", 0, 100000));
             objects.add(new BaseItem(44, "Azulita", 0, 100));
             objects.add(new BaseItem(45, "Eter", 0, 1));
