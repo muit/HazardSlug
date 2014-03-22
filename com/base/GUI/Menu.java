@@ -7,6 +7,8 @@
 package com.base.GUI;
 
 import static com.base.GUI.Text.CENTER;
+import static com.base.GUI.Text.LEFT;
+import static com.base.GUI.Text.RIGHT;
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
@@ -16,6 +18,7 @@ import org.lwjgl.opengl.Display;
 import com.base.engine.Camera;
 import com.base.engine.Main;
 import com.base.game.map.Block;
+import org.newdawn.slick.Color;
 
 /**
  *
@@ -60,7 +63,6 @@ public class Menu {
     			elements.add(new Button(this, 0, 0, 2, 2, 1,""));
     			break;
     		case ST_MAIN_MENU:
-                        texts.add(new Text("Hola Mundo", 3, 3, CENTER));
     			for(int i = 0; i<50; i++)
     				scene.add(new Block(i, 0, 3));
     			for(int i = 0; i<50; i++)
@@ -70,12 +72,22 @@ public class Menu {
     			for(int i = 0; i<50; i++)
     				scene.add(new Block(i, 3, 1));
     			//Nueva Partida / Cargar///////////////////////////////////////////
-    			elements.add(new Button(this, 0, 4, 3, 3, 0, "Nueva Partida"));
-    			addPortal(0,4);
+                        texts.add(new Text("Nueva Partida", 2, 7, LEFT, Color.red));
+    			elements.add(new Button(this, 2, 4, 3, 3, 0, "Nueva Partida"));
+    			addPortal(2,4);
     			///////////////////////////////////////////////////////////////////
-    			//Salir
-    			elements.add(new Button(this, 10, 4, 3, 3, 1, "Nueva Partida"));
-    			addPortal(10,4);
+                        
+                        //Salir////////////////////////////////////////////////////////////
+                        texts.add(new Text("Opciones", 22, 7, LEFT, Color.red));
+    			//elements.add(new Button(this, 22, 4, 3, 3, 1, "Opciones"));
+    			addPortal(22,4);
+    			///////////////////////////////////////////////////////////////////
+                        
+    			//Salir////////////////////////////////////////////////////////////
+                        texts.add(new Text("Salir", 42, 7, LEFT, Color.red));
+    			elements.add(new Button(this, 42, 4, 3, 3, 1, "Salir"));
+    			addPortal(42,4);
+    			///////////////////////////////////////////////////////////////////
     			break;
     		case ST_GAME_MENU:
     			break;
