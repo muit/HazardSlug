@@ -20,31 +20,39 @@ import com.base.engine.Main;
 
 
 public class Element {
-	protected float x, y, sx, sy;
-	protected Texture tex;
-	protected int frame;	
-	protected int elementId;
-	
-	public Element(float x, float y, float sx, float sy, int elementId)
-	{
-		this.x = x;
-		this.y = y;
-		this.sx = sx;
-		this.sy = sy;
-		this.elementId = elementId;
-		frame = 0;
-	}
-	
-	protected void loadTexture(String name)
-	{
-		tex = getTexture(name);
-	}
-	
-	public Texture getTexture(String name)
+    protected float x, y, sx, sy;
+    protected Texture tex;
+    protected int frame;
+    private int GUIType; //0-Menu / 1-GUI
+    public static final int 
+            TYPE_MENU=0, 
+            TYPE_GUI = 1;
+
+    protected Menu menu;
+    protected GUI gui;
+
+    public Element(float x, float y, float sx, float sy, int GUIType)
+    {
+            this.x = x;
+            this.y = y;
+            this.sx = sx;
+            this.sy = sy;
+            frame = 0;
+            this.GUIType = GUIType;
+            gui = null;
+            menu = null;
+    }
+
+    protected void loadTexture(String name)
+    {
+            tex = getTexture(name);
+    }
+
+    public Texture getTexture(String name)
     {
         if(tex == null)
         {
-            String path = "com/resources/effect/"+name+".png";
+            String path = "com/resources/gui/"+name+".png";
             try {
                 tex = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(path));
             } catch (IOException ex) {
@@ -65,64 +73,42 @@ public class Element {
         return tex;
     }
 	
-	protected void update()
-	{
-		
-	}
-	
-	protected void render()
-	{
-		/*
-		glPushMatrix();
-        {
-            glTranslatef(x, y, 0);
-            
-            Color.white.bind();
-            tex.bind();
-            
-            glBegin(GL_QUADS);
-            {
-                glTexCoord2f(0.25f+0.25f*frame,1);
-                glVertex2f(0,0);
-                glTexCoord2f(0.25f*frame,1);
-                glVertex2f(sx,0);
-                glTexCoord2f(0.25f*frame,0);
-                glVertex2f(sx,sy);
-                glTexCoord2f(0.25f+0.25f*frame,0);
-                glVertex2f(0,sy);
-            }
-            glEnd();
-        }
-        glPopMatrix();*/
-	}
-	
-	public float getX()
-	{
-            return x;
-	}
-	public float getY()
-	{
-            return y;
-	}
-	public float getSX()
-	{
-            return sx;
-	}
-	public float getSY()
-	{
-            return sy;
-	}
-	
-	protected void setFrame(int frame)
-	{
-            this.frame = frame;
-	}
-	protected void doAction()
-	{
-	    
-	}
-	public int getElementId()
-	{
-            return elementId;
-	}
+    protected void update()
+    {
+
+    }
+
+    protected void render()
+    {
+    }
+
+    public float getX()
+    {
+        return x;
+    }
+    public float getY()
+    {
+        return y;
+    }
+    public float getSX()
+    {
+        return sx;
+    }
+    public float getSY()
+    {
+        return sy;
+    }
+
+    protected void setFrame(int frame)
+    {
+        this.frame = frame;
+    }
+    protected void doAction()
+    {
+
+    }
+    public int getGUIType()
+    {
+        return GUIType;
+    } 
 }

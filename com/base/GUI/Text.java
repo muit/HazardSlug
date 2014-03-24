@@ -75,6 +75,9 @@ public class Text extends Thread{
     {
         this.text = text;
     }
+    public void update()
+    {
+    }
     public void render()
     {
         col.bind();

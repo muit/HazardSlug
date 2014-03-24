@@ -12,7 +12,6 @@ import static com.base.GUI.Text.RIGHT;
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
 import com.base.engine.Camera;
@@ -131,6 +130,7 @@ public class Menu {
                     for(int i = 0; i<40; i++)
                         scene.add(new Block(5+i, 9+e, 5));
                 
+                elements.add(new Box(this, 10, 9, 0));
                 //Volver///////////////////////////////////////////////////////////
                 texts.add(new Text("Volver", 2+2, 7, CENTER, Color.red));
                 elements.add(new Button(this, 2, 4, 3, 3, 0, "Volver"));
@@ -144,6 +144,14 @@ public class Menu {
     	}
     }
     
+    public void boxDoAction(Box box)
+    {
+        switch(status)
+    	{
+            default:
+                break;
+    	}
+    }
     public void buttonDoAction(Button focus)
     {
     	//Button Actions depending on menu status
@@ -201,32 +209,26 @@ public class Menu {
     	}
     }
     
+    public void mouseOverBox(Box focus)
+    {
+        
+    }
     public void mouseOverButton(Button focus)
     {
         
     }
     
+    
     public void update()
     {
-    	for(int i = 0; i<scene.size(); i++)
-            scene.get(i).updateSpr();
-    	for(int i = 0; i<elements.size(); i++)
-            elements.get(i).update();
-        /*
-    	if(Mouse.isButtonDown(0))
-    	{
-            int mouseX = Mouse.getX()/16;
-            int mouseY = Mouse.getY()/16;
-            
-            for(int i = 0; i<elements.size(); i++)
-            {
-                Button btn = (Button)elements.get(i);
-                if(mouseX >= btn.getX() && mouseX <= btn.getX()+btn.getSX())
-                    if(mouseY >= btn.getY() && mouseY <= btn.getY()+btn.getSY())
-                        btn.click();
-            }
-    	}
-        */
+    	for(Block bl : scene)
+            bl.updateSpr();
+    	for(Element el : elements)
+            el.update();
+        
+        for(Text tx : texts)
+            tx.update();
+        
     	Camera.setCamera(0*16, 0*16, Display.getWidth(), Display.getHeight());
     }
     
