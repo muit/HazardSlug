@@ -23,8 +23,9 @@ import org.newdawn.slick.Color;
  *
  * @author Miguel_F
  */
-public class Menu {
+public final class Menu {
     private final ArrayList<Element> elements;
+    private final ArrayList<Box> boxes;
     private final ArrayList<Block> scene;
     private final ArrayList<Text> texts;
     
@@ -40,6 +41,7 @@ public class Menu {
     public Menu()
     {
     	elements = new ArrayList<>();
+        boxes = new ArrayList<>();
     	scene = new ArrayList<>();
         texts = new ArrayList<>();
     	setStatus(ST_MAIN_MENU);
@@ -49,6 +51,7 @@ public class Menu {
     {
     	status = id;
     	elements.clear();
+        boxes.clear();
     	scene.clear();
         texts.clear();
     	switch(status)
@@ -221,15 +224,19 @@ public class Menu {
     
     public void update()
     {
-    	for(Block bl : scene)
+        Camera.setCamera(0*16, 0*16, Display.getWidth(), Display.getHeight());
+        
+    	for(int i=0; i<elements.size(); i++)
+            elements.get(i).update();
+        
+        for(Block bl : scene)
             bl.updateSpr();
-    	for(Element el : elements)
-            el.update();
+        
+        for (Box box : boxes)
+            box.update();
         
         for(Text tx : texts)
             tx.update();
-        
-    	Camera.setCamera(0*16, 0*16, Display.getWidth(), Display.getHeight());
     }
     
     public void render()
@@ -239,6 +246,9 @@ public class Menu {
         
         for (Element el : elements)
             el.render();
+        
+        for (Box box : boxes)
+            box.render();
         
         for(Text tx : texts)
             tx.render();

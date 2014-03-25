@@ -1,20 +1,19 @@
 package com.base.GUI;
 
-import com.base.game.text.Log;
-import org.lwjgl.input.Cursor;
 import org.lwjgl.input.Mouse;
 
 
 
 public class Button extends Element{
     private boolean clickUsed, mouseInUsed, mouseOutUsed;
-    private String text;
+    private final String text;
     private Menu menu;
-    private int id;
+    private final int id;
     public Button(Menu menu, float x, float y, float sx, float sy, int id, String text)
     {
-        super(x,y, sx, sy, TYPE_MENU);
+        super(x,y, sx, sy);
         this.menu = menu;
+        this.gui = null;
         clickUsed = false;
         mouseInUsed = false;
         mouseOutUsed = true;
@@ -24,8 +23,9 @@ public class Button extends Element{
 
     public Button(GUI gui, float x, float y, float sx, float sy, int id, String text)
     {
-        super(x,y, sx, sy, TYPE_GUI);
+        super(x,y, sx, sy);
         this.gui = gui;
+        this.menu = null;
         clickUsed = false;
         mouseInUsed = false;
         mouseOutUsed = true;
@@ -50,9 +50,9 @@ public class Button extends Element{
     @Override
     protected void doAction()
     {
-        if(getGUIType()==TYPE_MENU)
+        if(menu != null)
             menu.buttonDoAction(this);
-        else if(getGUIType()==TYPE_GUI)
+        else if(gui != null)
             gui.buttonDoAction(this);
     }
 
@@ -71,9 +71,9 @@ public class Button extends Element{
                 if(!mouseInUsed)
                 {
                     mouseIN();
-                    if(getGUIType()==TYPE_MENU)
+                    if(menu != null)
                         menu.mouseOverButton(this);
-                    else if(getGUIType()==TYPE_GUI)
+                    else if(gui != null)
                         gui.mouseOverButton(this);
                     mouseInUsed=true;
                 }

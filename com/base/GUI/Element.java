@@ -23,22 +23,17 @@ public class Element {
     protected float x, y, sx, sy;
     protected Texture tex;
     protected int frame;
-    private int GUIType; //0-Menu / 1-GUI
-    public static final int 
-            TYPE_MENU=0, 
-            TYPE_GUI = 1;
 
     protected Menu menu;
     protected GUI gui;
 
-    public Element(float x, float y, float sx, float sy, int GUIType)
+    public Element(float x, float y, float sx, float sy)
     {
             this.x = x;
             this.y = y;
             this.sx = sx;
             this.sy = sy;
             frame = 0;
-            this.GUIType = GUIType;
             gui = null;
             menu = null;
     }
@@ -107,8 +102,4 @@ public class Element {
     {
 
     }
-    public int getGUIType()
-    {
-        return GUIType;
-    } 
 }

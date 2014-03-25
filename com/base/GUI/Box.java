@@ -23,8 +23,9 @@ public class Box extends Element{
     
     public Box(Menu menu, float x, float y, int id)
     {
-        super(x,y, 0.5f, 0.5f, TYPE_MENU);
+        super(x,y, 0.5f, 0.5f);
         this.menu = menu;
+        this.gui = null;
         this.id = id;
         clickUsed = false;
         mouseInUsed = false;
@@ -33,8 +34,9 @@ public class Box extends Element{
     }
     public Box(GUI gui, float x, float y, int id)
     {
-        super(x,y, 0.5f, 0.5f, TYPE_GUI);
+        super(x,y, 0.5f, 0.5f);
         this.gui = gui;
+        this.menu = null;
         this.id = id;
         clickUsed = false;
         mouseInUsed = false;
@@ -53,7 +55,7 @@ public class Box extends Element{
         
 	glPushMatrix();
         {
-            glTranslatef(x, y, 0);
+            glTranslatef(x*16, y*16, 0);
             
             Color.white.bind();
             tex.bind();
@@ -92,9 +94,9 @@ public class Box extends Element{
     @Override
     protected void doAction()
     {
-        if(getGUIType()==TYPE_MENU)
+        if(menu != null)
             menu.boxDoAction(this);
-        else if(getGUIType()==TYPE_GUI)
+        else if(gui != null)
             gui.boxDoAction(this);
     }
 
@@ -113,9 +115,9 @@ public class Box extends Element{
                 if(!mouseInUsed)
                 {
                     boxIN();
-                    if(getGUIType()==TYPE_MENU)
+                    if(menu != null)
                         menu.mouseOverBox(this);
-                    else if(getGUIType()==TYPE_GUI)
+                    else if(gui != null)
                         gui.mouseOverBox(this);
                     mouseInUsed=true;
                 }
