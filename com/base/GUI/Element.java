@@ -1,17 +1,8 @@
 package com.base.GUI;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glTexCoord2f;
-import static org.lwjgl.opengl.GL11.glTranslatef;
-import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import java.io.IOException;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
@@ -24,18 +15,25 @@ public class Element {
     protected Texture tex;
     protected int frame;
 
-    protected Menu menu;
-    protected GUI gui;
+    protected Menu menu = null;
+    protected GUI gui = null;
 
-    public Element(float x, float y, float sx, float sy)
+    public Element(float x, float y, Menu menu)
     {
             this.x = x;
             this.y = y;
-            this.sx = sx;
-            this.sy = sy;
             frame = 0;
-            gui = null;
-            menu = null;
+            this.gui = null;
+            this.menu = menu;
+    }
+    
+    public Element(float x, float y, GUI gui)
+    {
+            this.x = x;
+            this.y = y;
+            frame = 0;
+            this.gui = gui;
+            this.menu = null;
     }
 
     protected void loadTexture(String name)
@@ -61,10 +59,10 @@ public class Element {
                 Main.heavyClose();
             }
         }
-        
+        /*
         sx = tex.getWidth();
 	sy = tex.getHeight();
-		
+        */
         return tex;
     }
 	
@@ -93,12 +91,20 @@ public class Element {
     {
         return sy;
     }
-
+    
+    public void setSX(float sx)
+    {
+        this.sx = sx;
+    }
+    public void setSY(float sy)
+    {
+        this.sy = sy;
+    }
     protected void setFrame(int frame)
     {
         this.frame = frame;
     }
-    protected void doAction()
+    protected void doAction(String action)
     {
 
     }

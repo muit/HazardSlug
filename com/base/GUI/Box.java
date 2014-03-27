@@ -6,7 +6,6 @@
 
 package com.base.GUI;
 
-import com.base.game.text.Log;
 import org.lwjgl.input.Mouse;
 import static org.lwjgl.opengl.GL11.*;
 import org.newdawn.slick.Color;
@@ -21,23 +20,21 @@ public class Box extends Element{
     private int id;
     private int frame;
     
-    public Box(Menu menu, float x, float y, int id)
+    public Box(Menu menu, float x, float y, boolean state, int id)
     {
-        super(x,y, 0.5f, 0.5f);
-        this.menu = menu;
-        this.gui = null;
+        super(x,y, menu);
         this.id = id;
+        this.state = state;
         clickUsed = false;
         mouseInUsed = false;
         mouseOutUsed = true;
         loadTexture("box");
     }
-    public Box(GUI gui, float x, float y, int id)
+    public Box(GUI gui, float x, float y, boolean state, int id)
     {
-        super(x,y, 0.5f, 0.5f);
-        this.gui = gui;
-        this.menu = null;
+        super(x,y, gui);
         this.id = id;
+        this.state = state;
         clickUsed = false;
         mouseInUsed = false;
         mouseOutUsed = true;
@@ -47,12 +44,13 @@ public class Box extends Element{
     @Override
     protected void render()
     {
-        //ERROR: No se ejecuta Update ni Render
         if(state)
             frame = 0;
         else
             frame = 1;
         
+        sx = tex.getImageWidth()/2;
+        sy = tex.getImageHeight();
 	glPushMatrix();
         {
             glTranslatef(x*16, y*16, 0);
@@ -92,12 +90,19 @@ public class Box extends Element{
     }
 
     @Override
-    protected void doAction()
+    protected void doAction(String action)
     {
-        if(menu != null)
-            menu.boxDoAction(this);
-        else if(gui != null)
-            gui.boxDoAction(this);
+        switch(action)
+        {
+            case "click":
+                if(menu != null)
+                    menu.boxDoAction(this);
+                else if(gui != null)
+                    gui.boxDoAction(this);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -139,7 +144,7 @@ public class Box extends Element{
     }
     private void boxOUT()
     {
-        System.out.println("pin "+state);
+        System.out.println("OUT "+state);
     }
     
     public void setState(boolean state)

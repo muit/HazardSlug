@@ -7,13 +7,12 @@ import org.lwjgl.input.Mouse;
 public class Button extends Element{
     private boolean clickUsed, mouseInUsed, mouseOutUsed;
     private final String text;
-    private Menu menu;
     private final int id;
     public Button(Menu menu, float x, float y, float sx, float sy, int id, String text)
     {
-        super(x,y, sx, sy);
-        this.menu = menu;
-        this.gui = null;
+        super(x,y, menu);
+        setSX(sx);
+        setSY(sy);
         clickUsed = false;
         mouseInUsed = false;
         mouseOutUsed = true;
@@ -23,9 +22,7 @@ public class Button extends Element{
 
     public Button(GUI gui, float x, float y, float sx, float sy, int id, String text)
     {
-        super(x,y, sx, sy);
-        this.gui = gui;
-        this.menu = null;
+        super(x,y, gui);
         clickUsed = false;
         mouseInUsed = false;
         mouseOutUsed = true;
@@ -37,23 +34,29 @@ public class Button extends Element{
     {
         if (!clickUsed)
         {
-            doAction();
+            doAction("click");
             clickUsed = true;
         }
         else if(clickUsed)
         {
-            setFrame(0);
             clickUsed = false;
         }
     }
 
     @Override
-    protected void doAction()
+    protected void doAction(String action)
     {
-        if(menu != null)
-            menu.buttonDoAction(this);
-        else if(gui != null)
-            gui.buttonDoAction(this);
+        switch(action)
+        {
+            case "click":
+                if(menu != null)
+                    menu.buttonDoAction(this);
+                else if(gui != null)
+                    gui.buttonDoAction(this);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

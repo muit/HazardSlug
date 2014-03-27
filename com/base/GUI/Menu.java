@@ -17,6 +17,7 @@ import org.lwjgl.opengl.Display;
 import com.base.engine.Camera;
 import com.base.engine.Main;
 import com.base.game.map.Block;
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 
 /**
@@ -25,7 +26,6 @@ import org.newdawn.slick.Color;
  */
 public final class Menu {
     private final ArrayList<Element> elements;
-    private final ArrayList<Box> boxes;
     private final ArrayList<Block> scene;
     private final ArrayList<Text> texts;
     
@@ -41,31 +41,28 @@ public final class Menu {
     public Menu()
     {
     	elements = new ArrayList<>();
-        boxes = new ArrayList<>();
     	scene = new ArrayList<>();
         texts = new ArrayList<>();
-    	setStatus(ST_MAIN_MENU);
+    	setStatus(ST_INTRO);
     }
     
     public void setStatus(int id)
     {
     	status = id;
     	elements.clear();
-        boxes.clear();
     	scene.clear();
         texts.clear();
     	switch(status)
     	{
             case ST_INTRO:
-                //Button 1
-                elements.add(new Button(this, 0, 0, 2, 2, 0,""));
+                setStatus(ST_INTRO_MENU);
                 break;
             case ST_INTRO_MENU:
-                //Button 1
-                elements.add(new Button(this, 0, 10, 2, 2, 0,"Nueva Partida"));
-                //Button 2
-                elements.add(new Button(this, 0, 0, 2, 2, 1,""));
+                //Button Inicio
+                texts.add(new Text("Pulsar una tecla para continuar.", Display.getWidth()/32, 7, CENTER, Color.red));
+                elements.add(new Button(this, 0, 0, Display.getWidth()/16, Display.getHeight()/16, 0,""));
                 break;
+                
             case ST_MAIN_MENU:
                 for(int i = 0; i<50; i++)
                     scene.add(new Block(i, 0, 3));
@@ -99,6 +96,7 @@ public final class Menu {
                 addPortal(42,4);
                 ///////////////////////////////////////////////////////////////////
                 break;
+                
             case ST_LOAD_MENU:
                 for(int i = 0; i<50; i++)
                     scene.add(new Block(i, 0, 3));
@@ -119,6 +117,7 @@ public final class Menu {
                 addPortal(2,4);
                 ///////////////////////////////////////////////////////////////////
                 break;
+                
             case ST_OPTIONS_MENU:
                 for(int i = 0; i<50; i++)
                     scene.add(new Block(i, 0, 3));
@@ -133,9 +132,10 @@ public final class Menu {
                     for(int i = 0; i<40; i++)
                         scene.add(new Block(5+i, 9+e, 5));
                 
-                elements.add(new Box(this, 10, 9, 0));
+                
                 //Volver///////////////////////////////////////////////////////////
                 texts.add(new Text("Volver", 2+2, 7, CENTER, Color.red));
+                elements.add(new Box(this, 10, 9, true, 0));
                 elements.add(new Button(this, 2, 4, 3, 3, 0, "Volver"));
                 addPortal(2,4);
                 ///////////////////////////////////////////////////////////////////
@@ -161,10 +161,13 @@ public final class Menu {
     	switch(status)
     	{
             case ST_INTRO:
-                System.out.println("Cambio de estado");
-                setStatus(ST_INTRO_MENU);
                 break;
             case ST_INTRO_MENU:
+                if(focus.getElementId()==0)
+                {
+                    setStatus(ST_MAIN_MENU);
+                    Mouse.setCursorPosition(Display.getWidth()/2, Display.getHeight()/2);
+                }
                 break;
             case ST_MAIN_MENU:
                 if(focus.getElementId()==0)
@@ -183,7 +186,7 @@ public final class Menu {
                 {
                     //Button 3
                     System.out.println("Opciones");
-                    setStatus(ST_LOAD_MENU);
+                    setStatus(ST_OPTIONS_MENU);
                 }
                 else if(focus.getElementId()==3)
                 {
@@ -196,12 +199,14 @@ public final class Menu {
             case ST_LOAD_MENU:
                 if(focus.getElementId()==0)
                 {
+                    System.out.println("Inicio");
                     setStatus(ST_MAIN_MENU);
                 }
                 break;
             case ST_OPTIONS_MENU:
                 if(focus.getElementId()==0)
                 {
+                    System.out.println("Inicio");
                     setStatus(ST_MAIN_MENU);
                 }
                 break;
@@ -224,19 +229,16 @@ public final class Menu {
     
     public void update()
     {
-        Camera.setCamera(0*16, 0*16, Display.getWidth(), Display.getHeight());
-        
-    	for(int i=0; i<elements.size(); i++)
-            elements.get(i).update();
-        
         for(Block bl : scene)
             bl.updateSpr();
         
-        for (Box box : boxes)
-            box.update();
+        for(int i=0; i<elements.size(); i++)
+            elements.get(i).update();
         
         for(Text tx : texts)
             tx.update();
+        
+        Camera.setCamera(0*16, 0*16, Display.getWidth(), Display.getHeight());
     }
     
     public void render()
@@ -246,9 +248,6 @@ public final class Menu {
         
         for (Element el : elements)
             el.render();
-        
-        for (Box box : boxes)
-            box.render();
         
         for(Text tx : texts)
             tx.render();
@@ -260,6 +259,11 @@ public final class Menu {
             case ST_INTRO:
                 break;
             case ST_INTRO_MENU:
+                if(Keyboard.getEventKeyState())
+                {
+                    setStatus(ST_MAIN_MENU);
+                    Mouse.setCursorPosition(Display.getWidth()/2, Display.getHeight()/2);
+                }
                 break;
             case ST_MAIN_MENU:
                 if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
@@ -287,6 +291,7 @@ public final class Menu {
     	}
     	
     }
+    
     public void addPortal(int x, int y)
     {
     	scene.add(new Block(x, y, 44));
