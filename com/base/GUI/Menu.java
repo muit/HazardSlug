@@ -31,6 +31,7 @@ public final class Menu {
     private final ArrayList<Text> texts;
     
     private int status;
+    private final String version = "Beta 0.1.26";
 
     public final static int ST_INTRO = 0,
             ST_INTRO_MENU = 1,
@@ -71,6 +72,8 @@ public final class Menu {
                 break;
                 
             case ST_MAIN_MENU:
+                texts.add(new Text(version, 0, 0, LEFT, 12, Color.white));
+                
                 for(int i = 0; i<50; i++)
                     scene.add(new Block(i, 0, 3));
                 for(int i = 0; i<50; i++)
@@ -105,6 +108,8 @@ public final class Menu {
                 break;
                 
             case ST_LOAD_MENU:
+                texts.add(new Text(version, 0, 0, LEFT, 12, Color.white));
+                
                 for(int i = 0; i<50; i++)
                     scene.add(new Block(i, 0, 3));
                 for(int i = 0; i<50; i++)
@@ -126,6 +131,8 @@ public final class Menu {
                 break;
                 
             case ST_OPTIONS_MENU:
+                texts.add(new Text(version, 0, 0, LEFT, 12, Color.white));
+                
                 for(int i = 0; i<50; i++)
                     scene.add(new Block(i, 0, 3));
                 for(int i = 0; i<50; i++)
