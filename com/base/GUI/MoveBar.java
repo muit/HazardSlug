@@ -24,12 +24,14 @@ import org.newdawn.slick.opengl.Texture;
 public class MoveBar extends Element{
     private final float cofValue;
     private final Texture barTex;
+    private final int id;
     
-    public MoveBar(Menu menu, float x, float y, float sx, float sy, float cofValue)
+    public MoveBar(Menu menu, float x, float y, float sx, float sy, float cofValue, int id)
     {
         super(x, y, menu);
         setSX(sx*16);
         setSY(sy*16);
+        this.id = id;
         this.cofValue = cofValue;
         barTex = getTexture("bar");
         loadTexture("barBG");
@@ -88,5 +90,9 @@ public class MoveBar extends Element{
             glEnd();
         }
         glPopMatrix();
+    }
+    public int getElementId()
+    {
+        return id;
     }
 }

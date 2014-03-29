@@ -76,17 +76,8 @@ public class Box extends Element{
     
     public void click()
     {
-        if (!clickUsed)
-        {
-            if(!blocked)
-                state = !state;
-            
-            clickUsed = true;
-        }
-        else if(clickUsed)
-        {
-            clickUsed = false;
-        }
+        if(!blocked)
+            state = !state;
     }
 
     @Override
@@ -111,11 +102,21 @@ public class Box extends Element{
         int mouseX = Mouse.getX()/16;
         int mouseY = Mouse.getY()/16;
 
-        if(mouseX >= getX() && mouseX <= getX()+getSX())
-            if(mouseY >= getY() && mouseY <= getY()+getSY())
+        if(mouseX >= getX() && mouseX <= getX()+getSX()/16-1)
+            if(mouseY >= getY() && mouseY <= getY()+getSY()/16-1)
             {
-                if(Mouse.isButtonDown(0))
-                    click();
+                while (Mouse.next()){
+                    if (Mouse.getEventButtonState()) {
+                        if (Mouse.getEventButton() == 0 && !clickUsed) {
+                            click();
+                            clickUsed = true;
+                        }
+                    }else {
+                        if (Mouse.getEventButton() == 0) {
+                            clickUsed = false;
+                        }
+                    }
+                }
 
                 if(!mouseInUsed)
                 {

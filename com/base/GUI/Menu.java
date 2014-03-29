@@ -137,6 +137,7 @@ public final class Menu {
                 texts.add(new Text("Volver", 2+2, 7, CENTER, Color.red));
                 elements.add(new Box(this, 10, 9, true, 0));
                 elements.add(new Button(this, 2, 4, 3, 3, 0, "Volver"));
+                elements.add(new MoveBar(this, 12, 9, 5, 1, 0, 0));
                 addPortal(2,4);
                 ///////////////////////////////////////////////////////////////////
                 break;
