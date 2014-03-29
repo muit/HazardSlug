@@ -38,32 +38,36 @@ public class Element {
 
     protected void loadTexture(String name)
     {
-            tex = getTexture(name);
+        tex = getTexture(name);
     }
 
     public Texture getTexture(String name)
     {
-        if(tex == null)
+        Texture tex;
+        String path = "com/resources/gui/"+name+".png";
+        try 
         {
-            String path = "com/resources/gui/"+name+".png";
-            try {
-                tex = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(path));
-            } catch (IOException ex) {
-                System.out.println("Textura: "+name+" no se pudo cargar.");
-                Main.heavyClose();
-                
-            }
+            tex = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(path));
+            
             if(tex == null)
             {
                 System.out.println("Textura: "+name+" no se pudo cargar.");
                 Main.heavyClose();
             }
+            return tex;
+        } 
+        catch (IOException ex) 
+        {
+            System.out.println("Textura: "+name+" no se pudo cargar.");
+            Main.heavyClose();
         }
         /*
         sx = tex.getWidth();
 	sy = tex.getHeight();
         */
-        return tex;
+        
+        
+        return null;
     }
 	
     protected void update()

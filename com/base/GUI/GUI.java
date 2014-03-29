@@ -50,6 +50,15 @@ public class GUI {
                 break;
     	}
     }
+    public void moveBarDoAction(MoveBar focus)
+    {
+        switch(status)
+    	{
+            default:
+                break;
+    	}
+    }
+    
     public void mouseOverBox(Box focus)
     {
         switch(status)
@@ -59,6 +68,14 @@ public class GUI {
     	}
     }
     public void mouseOverButton(Button focus)
+    {
+        switch(status)
+    	{
+            default:
+                break;
+    	}
+    }
+    public void mouseOverMoveBar(MoveBar focus)
     {
         switch(status)
     	{

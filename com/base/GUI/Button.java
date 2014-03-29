@@ -5,7 +5,7 @@ import org.lwjgl.input.Mouse;
 
 
 public class Button extends Element{
-    private boolean clickUsed, mouseInUsed, mouseOutUsed;
+    private boolean mouseInUsed, mouseOutUsed;
     private final String text;
     private final int id;
     public Button(Menu menu, float x, float y, float sx, float sy, int id, String text)
@@ -13,7 +13,6 @@ public class Button extends Element{
         super(x,y, menu);
         setSX(sx);
         setSY(sy);
-        clickUsed = false;
         mouseInUsed = false;
         mouseOutUsed = true;
         this.text = text;
@@ -23,7 +22,6 @@ public class Button extends Element{
     public Button(GUI gui, float x, float y, float sx, float sy, int id, String text)
     {
         super(x,y, gui);
-        clickUsed = false;
         mouseInUsed = false;
         mouseOutUsed = true;
         this.text = text;
@@ -62,13 +60,11 @@ public class Button extends Element{
             {
                 while (Mouse.next()){
                     if (Mouse.getEventButtonState()) {
-                        if (Mouse.getEventButton() == 0 && !clickUsed) {
+                        if (Mouse.getEventButton() == 0) {
                             click();
-                            clickUsed = true;
                         }
                     }else {
                         if (Mouse.getEventButton() == 0) {
-                            clickUsed = false;
                         }
                     }
                 }

@@ -107,13 +107,11 @@ public class Box extends Element{
             {
                 while (Mouse.next()){
                     if (Mouse.getEventButtonState()) {
-                        if (Mouse.getEventButton() == 0 && !clickUsed) {
+                        if (Mouse.getEventButton() == 0) {
                             click();
-                            clickUsed = true;
                         }
                     }else {
                         if (Mouse.getEventButton() == 0) {
-                            clickUsed = false;
                         }
                     }
                 }

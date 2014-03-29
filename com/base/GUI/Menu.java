@@ -217,16 +217,40 @@ public final class Menu {
                 break;
     	}
     }
+    public void moveBarDoAction(MoveBar focus)
+    {
+        switch(status)
+    	{
+            default:
+                break;
+    	}
+    }
+    
     
     public void mouseOverBox(Box focus)
     {
-        
+        switch(status)
+    	{
+            default:
+                break;
+    	}
     }
     public void mouseOverButton(Button focus)
     {
-        
+        switch(status)
+    	{
+            default:
+                break;
+    	}
     }
-    
+    public void mouseOverMoveBar(MoveBar focus)
+    {
+        switch(status)
+    	{
+            default:
+                break;
+    	}
+    }
     
     public void update()
     {
@@ -241,7 +265,6 @@ public final class Menu {
         
         Camera.setCamera(0*16, 0*16, Display.getWidth(), Display.getHeight());
     }
-    
     public void render()
     {
     	for(Block bl : scene)
@@ -253,6 +276,7 @@ public final class Menu {
         for(Text tx : texts)
             tx.render();
     }
+    
     public void getInput()
     {
         switch(status)
@@ -260,11 +284,17 @@ public final class Menu {
             case ST_INTRO:
                 break;
             case ST_INTRO_MENU:
-                if(Keyboard.getEventKeyState())
+                if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+                {
+                    Main.cleanUp();
+                    System.exit(1);
+                }
+                else if(Keyboard.getEventKeyState())
                 {
                     setStatus(ST_MAIN_MENU);
                     Mouse.setCursorPosition(Display.getWidth()/2, Display.getHeight()/2);
                 }
+                
                 break;
             case ST_MAIN_MENU:
                 if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
