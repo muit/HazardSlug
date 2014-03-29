@@ -149,7 +149,7 @@ public class Game
     private void removeEffect(Effect target)
     {
         if(effects.contains(target))
-                effects.remove(target);
+            effects.remove(target);
     }
     public DataBase db()
     {

@@ -139,11 +139,9 @@ public class Box extends Element{
     }
     private void boxIN()
     {
-        System.out.println("IN "+state);
     }
     private void boxOUT()
     {
-        System.out.println("OUT "+state);
     }
     
     public void setState(boolean state)

@@ -16,6 +16,7 @@ import org.lwjgl.opengl.Display;
 
 import com.base.engine.Camera;
 import com.base.engine.Main;
+import com.base.game.Config;
 import com.base.game.map.Block;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
@@ -31,7 +32,7 @@ public final class Menu {
     
     private int status;
 
-    private final static int ST_INTRO = 0,
+    public final static int ST_INTRO = 0,
             ST_INTRO_MENU = 1,
             ST_MAIN_MENU = 2,
             ST_LOAD_MENU = 3,
@@ -45,7 +46,13 @@ public final class Menu {
         texts = new ArrayList<>();
     	setStatus(ST_INTRO);
     }
-    
+    public Menu(int Status)
+    {
+    	elements = new ArrayList<>();
+    	scene = new ArrayList<>();
+        texts = new ArrayList<>();
+    	setStatus(Status);
+    }
     public void setStatus(int id)
     {
     	status = id;
@@ -135,9 +142,25 @@ public final class Menu {
                 
                 //Volver///////////////////////////////////////////////////////////
                 texts.add(new Text("Volver", 2+2, 7, CENTER, Color.red));
-                elements.add(new Box(this, 10, 9, true, 0));
                 elements.add(new Button(this, 2, 4, 3, 3, 0, "Volver"));
-                elements.add(new MoveBar(this, 12, 9, 5, 1, 0, 0));
+                
+                //VSync_Enabled
+                texts.add(new Text("VSync activado:", 14, 30, RIGHT, 18, Color.white));
+                elements.add(new Box(this, 15, 30, Config.getVSyncEnabled(), 0));
+                //Fps
+                texts.add(new Text("Fps:", 14, 28, RIGHT, 18, Color.white));
+                elements.add(new MoveBar(this, 15, 28, 5, 1, (float)(Config.getFPS()-40)/210, 0));//Max 250 Fps, Min 40 Fps
+                
+                //Separator
+                texts.add(new Text("----------------------------------------------------------------------------------------------------------", 5, 26, LEFT, 20, Color.white));
+                
+                //Sound_Enabled
+                texts.add(new Text("Sonido activado:", 14, 24, RIGHT, 18, Color.white));
+                elements.add(new Box(this, 15, 24, Config.getSoundEnabled(), 1));
+                
+                //Sound_Level
+                texts.add(new Text("Volumen:", 14, 22, RIGHT, 18, Color.white));
+                elements.add(new MoveBar(this, 15, 22, 5, 1, Config.getSoundValue()/100, 1));
                 addPortal(2,4);
                 ///////////////////////////////////////////////////////////////////
                 break;
@@ -148,10 +171,20 @@ public final class Menu {
     	}
     }
     
-    public void boxDoAction(Box box)
+    public void boxDoAction(Box focus)
     {
         switch(status)
     	{
+            case ST_MAIN_MENU:
+                if(focus.getElementId()==0)
+                {
+                    Config.setVSyncEnabled(!Config.getVSyncEnabled());
+                }
+                else if(focus.getElementId()==1)
+                {
+                    Config.setSoundEnabled(!Config.getSoundEnabled());
+                }
+                break;
             default:
                 break;
     	}

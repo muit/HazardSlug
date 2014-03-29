@@ -6,6 +6,8 @@ package com.base.engine;
 
 //import com.base.GUI.*;
 import com.base.GUI.Menu;
+import static com.base.GUI.Menu.ST_MAIN_MENU;
+import com.base.game.Config;
 import com.base.game.Game;
 import com.base.game.Time;
 import com.base.game.gameobject.Unit;
@@ -86,7 +88,7 @@ public class Main {
         game.render();
         ///////////////////////////
         Display.update();
-        Display.sync(60);
+        Display.sync(Config.getFPS());
     }
     private static void updateMenu()
     {
@@ -129,7 +131,7 @@ public class Main {
             Display.create();
             Keyboard.create();
             Mouse.create();
-            Display.setVSyncEnabled(true);
+            Display.setVSyncEnabled(Config.getVSyncEnabled());
         } catch (LWJGLException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -155,10 +157,16 @@ public class Main {
     private static void initGame()
     {
         game = new Game();
+        menuEnabled = false;
     }
     private static void initMenu()
     {
     	menu = new Menu();
+    	menuEnabled = true;
+    }
+    private static void initMenu(int Status)
+    {
+    	menu = new Menu(Status);
     	menuEnabled = true;
     }
     public static void cleanUp()
@@ -181,12 +189,10 @@ public class Main {
     }
     public static void startGame()
     {
-    	menuEnabled = false;
         initGame();
     }
     public static void exitGame()
     {
-    	menuEnabled = true;
-    	initMenu();
+    	initMenu(ST_MAIN_MENU);
     }
 }

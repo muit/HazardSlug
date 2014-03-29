@@ -50,7 +50,6 @@ public class MoveBar extends Element{
             float mouseInBarX = (float)(Mouse.getX() - getX()*16)/16;
             
             cofValue = mouseInBarX/(getSX()/16);
-            System.out.println(cofValue);
         }
     }
 
@@ -116,11 +115,9 @@ public class MoveBar extends Element{
     }
     private void IN()
     {
-        System.out.println("IN");
     }
     private void OUT()
     {
-        System.out.println("OUT");
     }
     
     @Override

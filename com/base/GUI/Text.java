@@ -86,6 +86,55 @@ public class Text extends Thread{
         font = new TrueTypeFont(awtFont, false);
     }
     
+    public Text(String text, float x, float y, int size, int format)
+    {
+        this.text = text;
+        this.x=x;
+        this.y=y;
+        this.format = format;
+        this.col = Color.white;
+        // load a default java font
+        Font awtFont = new Font("Times New Roman", Font.BOLD, size);
+        font = new TrueTypeFont(awtFont, false);
+    }
+    public Text(String text, float x, float y, int format, int size, String fontName)
+    {
+        this.text = text;
+        this.x=x;
+        this.y=y;
+        this.format = format;
+        this.col = Color.white;
+        // load a default java font
+        Font awtFont = new Font(fontName, Font.BOLD, size);
+        font = new TrueTypeFont(awtFont, false);
+    }
+    public Text(String text, float x, float y, int format, int size, Color col)
+    {
+        this.text = text;
+        this.x=x;
+        this.y=y;
+        this.format = format;
+        this.col = col;
+        // load a default java font
+        Font awtFont = new Font("Times New Roman", Font.BOLD, size);
+        font = new TrueTypeFont(awtFont, false);
+    }
+    public Text(String text, float x, float y, int format, int size, String fontName, Color col)
+    {
+        this.text = text;
+        this.x=x;
+        this.y=y;
+        this.format = format;
+        this.col = col;
+        // load a default java font
+        Font awtFont = new Font(fontName, Font.BOLD, size);
+        font = new TrueTypeFont(awtFont, false);
+    }
+    
+    
+    
+    
+    
     public void setX(float x)
     {
         this.x = x;

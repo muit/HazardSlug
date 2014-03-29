@@ -154,82 +154,79 @@ public class TrueTypeFont {
 	}
 
 	private void createSet( char[] customCharsArray ) {
-		// If there are custom chars then I expand the font texture twice		
-		if	(customCharsArray != null && customCharsArray.length > 0) {
-			textureWidth *= 2;
-		}
-		
-		// In any case this should be done in other way. Texture with size 512x512
-		// can maintain only 256 characters with resolution of 32x32. The texture
-		// size should be calculated dynamicaly by looking at character sizes. 
-		
-		try {
-			
-			BufferedImage imgTemp = new BufferedImage(textureWidth, textureHeight, BufferedImage.TYPE_INT_ARGB);
-			Graphics2D g = (Graphics2D) imgTemp.getGraphics();
+            // If there are custom chars then I expand the font texture twice		
+            if (customCharsArray != null && customCharsArray.length > 0) {
+                textureWidth *= 2;
+            }
 
-			g.setColor(new Color(0,0,0,1));
-			g.fillRect(0,0,textureWidth,textureHeight);
-			
-			int rowHeight = 0;
-			int positionX = 0;
-			int positionY = 0;
-			
-			int customCharsLength = ( customCharsArray != null ) ? customCharsArray.length : 0; 
+            // In any case this should be done in other way. Texture with size 512x512
+            // can maintain only 256 characters with resolution of 32x32. The texture
+            // size should be calculated dynamicaly by looking at character sizes. 
 
-			for (int i = 0; i < 256 + customCharsLength; i++) {
-				
-				// get 0-255 characters and then custom characters
-				char ch = ( i < 256 ) ? (char) i : customCharsArray[i-256];
-				
-				BufferedImage fontImage = getFontImage(ch);
+            try {
 
-				IntObject newIntObject = new IntObject();
+                BufferedImage imgTemp = new BufferedImage(textureWidth, textureHeight, BufferedImage.TYPE_INT_ARGB);
+                Graphics2D g = (Graphics2D) imgTemp.getGraphics();
 
-				newIntObject.width = fontImage.getWidth();
-				newIntObject.height = fontImage.getHeight();
+                g.setColor(new Color(0,0,0,1));
+                g.fillRect(0,0,textureWidth,textureHeight);
 
-				if (positionX + newIntObject.width >= textureWidth) {
-					positionX = 0;
-					positionY += rowHeight;
-					rowHeight = 0;
-				}
+                int rowHeight = 0;
+                int positionX = 0;
+                int positionY = 0;
 
-				newIntObject.storedX = positionX;
-				newIntObject.storedY = positionY;
+                int customCharsLength = ( customCharsArray != null ) ? customCharsArray.length : 0; 
 
-				if (newIntObject.height > fontHeight) {
-					fontHeight = newIntObject.height;
-				}
+                for (int i = 0; i < 256 + customCharsLength; i++) {
 
-				if (newIntObject.height > rowHeight) {
-					rowHeight = newIntObject.height;
-				}
+                    // get 0-255 characters and then custom characters
+                    char ch = ( i < 256 ) ? (char) i : customCharsArray[i-256];
 
-				// Draw it here
-				g.drawImage(fontImage, positionX, positionY, null);
+                    BufferedImage fontImage = getFontImage(ch);
 
-				positionX += newIntObject.width;
+                    IntObject newIntObject = new IntObject();
 
-				if( i < 256 ) { // standard characters
-					charArray[i] = newIntObject;
-				} else { // custom characters
-					customChars.put( new Character( ch ), newIntObject );
-				}
+                    newIntObject.width = fontImage.getWidth();
+                    newIntObject.height = fontImage.getHeight();
 
-				fontImage = null;
-			}
+                    if (positionX + newIntObject.width >= textureWidth) {
+                        positionX = 0;
+                        positionY += rowHeight;
+                        rowHeight = 0;
+                    }
 
-			fontTextureID = loadImage(imgTemp);
-			
+                    newIntObject.storedX = positionX;
+                    newIntObject.storedY = positionY;
 
+                    if (newIntObject.height > fontHeight) {
+                        fontHeight = newIntObject.height;
+                    }
 
-					//.getTexture(font.toString(), imgTemp);
+                    if (newIntObject.height > rowHeight) {
+                        rowHeight = newIntObject.height;
+                    }
 
-		} catch (Exception e) {
-			System.err.println("Failed to create font.");
-			e.printStackTrace();
-		}
+                    // Draw it here
+                    g.drawImage(fontImage, positionX, positionY, null);
+
+                    positionX += newIntObject.width;
+
+                    if( i < 256 ) { // standard characters
+                        charArray[i] = newIntObject;
+                    } else { // custom characters
+                        customChars.put( new Character( ch ), newIntObject );
+                    }
+
+                    fontImage = null;
+                }
+
+                fontTextureID = loadImage(imgTemp);
+                //.getTexture(font.toString(), imgTemp);
+
+            } catch (Exception e) {
+                System.err.println("Failed to create font.");
+                e.printStackTrace();
+            }
 	}
 	
 	private void drawQuad(float drawX, float drawY, float drawX2, float drawY2,
