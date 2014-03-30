@@ -50,35 +50,19 @@ public class DataBase {
     
     public String getItemName(int id)
     {
-        BaseItem bi = getItem(id);
-        if(bi != null)
-            return bi.getName();
-        else
-            return "Error(id:"+id+")";
+        return getItem(id).getName();
     }
     public float getItemGravity(int id)
     {
-        BaseItem bi = getItem(id);
-        if(bi != null)
-            return bi.getGravity();
-        else
-            return 255;
+        return getItem(id).getGravity();
     }
     public float getItemHeavy(int id)
     {
-        BaseItem bi = getItem(id);
-        if(bi != null)
-            return bi.getHeavy();
-        else
-            return 255;
+        return getItem(id).getHeavy();
     }
     public Texture getItemTexture(int id)
     {
-        BaseItem bi = getItem(id);
-        if(bi != null)
-            return bi.getTexture();
-        else
-            return null;
+        return getItem(id).getTexture();
     }
     private BaseItem getItem(int id)
     {
@@ -96,43 +80,27 @@ public class DataBase {
     
     public String getNpcName(int id)
     {
-        BaseNpc npc = getNpc(id);
-        if(npc != null)
-            return npc.getName();
-        else
-            return "Error(id:"+id+")";
+        return getNpc(id).getName();
     }
     public int getNpcRelation(int id)
     {
-        BaseNpc npc = getNpc(id);
-        if(npc != null)
-            return npc.getRelation();
-        else
-            return 255;
+        return getNpc(id).getRelation();
     }
     public int getNpcLive(int id)
     {
-        BaseNpc npc = getNpc(id);
-        if(npc != null)
-            return npc.getLive();
-        else
-            return 255;
+        return getNpc(id).getLive();
     }
     public int getNpcDamage(int id)
     {
-        BaseNpc npc = getNpc(id);
-        if(npc != null)
-            return npc.getDamage();
-        else
-            return 255;
+        return getNpc(id).getDamage();
     }
     public int getNpcArmor(int id)
     {
-        BaseNpc npc = getNpc(id);
-        if(npc != null)
-            return npc.getArmor();
-        else
-            return 255;
+        return getNpc(id).getArmor();
+    }
+    public Texture getNpcTexture(int id)
+    {
+        return getNpc(id).getTexture();
     }
     private BaseNpc getNpc(int id)
     {
@@ -144,14 +112,6 @@ public class DataBase {
             }
         }
         return null;
-    }
-    public Texture getNpcTexture(int id)
-    {
-        BaseNpc bu = getNpc(id);
-        if(bu != null)
-            return bu.getTexture();
-        else
-            return null;
     }
     
     private BaseEffect getEffect(int id)
@@ -168,11 +128,7 @@ public class DataBase {
     
     public Texture getEffectTexture(int id)
     {
-        BaseEffect be = getEffect(id);
-        if(be != null)
-            return be.getTexture();
-        else
-            return null;
+        return getEffect(id).getTexture();
     }
     
 }

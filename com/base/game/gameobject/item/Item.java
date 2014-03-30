@@ -6,7 +6,6 @@ package com.base.game.gameobject.item;
 
 import com.base.data.DataBase;
 import com.base.engine.GameObject;
-import com.base.engine.Physics;
 import com.base.engine.ItemSprite;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
