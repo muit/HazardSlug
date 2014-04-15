@@ -11,6 +11,7 @@ import com.base.engine.Main;
 import com.base.game.gameobject.Player;
 import com.base.game.gameobject.Unit;
 import com.base.engine.Effect;
+import com.base.engine.Hour;
 import com.base.game.gameobject.item.Cube;
 import com.base.game.gameobject.npc.Babosa_Azul;
 import com.base.game.map.Block;
@@ -73,6 +74,8 @@ public class Game
     
     public void update()
     {
+        Hour.update();
+        
         map.update((int)player.getX(), Display.getWidth()/16);
         //quad.clear();
         for(GameObject go : objects)

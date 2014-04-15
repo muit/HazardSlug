@@ -45,16 +45,16 @@ public class BaseItem {
                 tex = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(path));
             } catch (RuntimeException ex) {
                 System.out.println("Textura: "+ex);
-                Main.heavyClose();   
+                Main.Close();   
             } catch (IOException ex) {
                 System.out.println("Textura(2): "+id+" no se pudo cargar.");
-                Main.heavyClose();
+                Main.Close();
             }
     
             if(tex == null)
             {
                 System.out.println("Textura(3): "+id+" no se pudo cargar.");
-                Main.heavyClose();
+                Main.Close();
             }
     }
     

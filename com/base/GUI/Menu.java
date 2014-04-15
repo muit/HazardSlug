@@ -30,40 +30,53 @@ public final class Menu {
     private final ArrayList<Block> scene;
     private final ArrayList<Text> texts;
     
-    private int status;
-    private final String version = "Beta 0.1.26";
-
-    public final static int ST_INTRO = 0,
-            ST_INTRO_MENU = 1,
-            ST_MAIN_MENU = 2,
-            ST_LOAD_MENU = 3,
-            ST_OPTIONS_MENU = 4,
-            ST_GAME_MENU = 5;
+    private State status;
+    private final String version = "Beta 0.1.27";
+    private String err_message = null;
+    public static enum State {
+        ST_INTRO,
+        ST_INTRO_MENU,
+        ST_MAIN_MENU,
+        ST_LOAD_MENU,
+        ST_OPTIONS_MENU,
+        ST_GAME_MENU,
+        ST_ERROR_PAGE
+    };
 	
     public Menu()
     {
     	elements = new ArrayList<>();
     	scene = new ArrayList<>();
         texts = new ArrayList<>();
-    	setStatus(ST_INTRO);
+    	setStatus(State.ST_INTRO);
     }
-    public Menu(int Status)
+    public Menu(State st)
     {
     	elements = new ArrayList<>();
     	scene = new ArrayList<>();
         texts = new ArrayList<>();
-    	setStatus(Status);
+    	setStatus(st);
     }
-    public void setStatus(int id)
+    
+    public Menu(State st, String err_message)
     {
-    	status = id;
+    	elements = new ArrayList<>();
+    	scene = new ArrayList<>();
+        texts = new ArrayList<>();
+        this.err_message = err_message;
+    	setStatus(st);
+    }
+    
+    public void setStatus(State st)
+    {
+    	status = st;
     	elements.clear();
     	scene.clear();
         texts.clear();
     	switch(status)
     	{
             case ST_INTRO:
-                setStatus(ST_INTRO_MENU);
+                setStatus(State.ST_INTRO_MENU);
                 break;
             case ST_INTRO_MENU:
                 //Button Inicio
@@ -173,6 +186,14 @@ public final class Menu {
                 break;
             case ST_GAME_MENU:
                 break;
+            case ST_ERROR_PAGE:
+                for(int i = -2; i<(int)Display.getHeight()/16+2; i++)
+                    for(int e = -2; e<(int)Display.getWidth()/16+2; e++)
+                        scene.add(new Block(e, i, 5));
+                
+                texts.add(new Text("Error:", Display.getWidth()/32, Display.getHeight()/32+6, CENTER, 18, Color.white));
+                texts.add(new Text(err_message, Display.getWidth()/32, Display.getHeight()/32+4, CENTER, 16, Color.white));
+                break;
             default:
                 break;
     	}
@@ -206,8 +227,8 @@ public final class Menu {
             case ST_INTRO_MENU:
                 if(focus.getElementId()==0)
                 {
-                    setStatus(ST_MAIN_MENU);
-                    Mouse.setCursorPosition(Display.getWidth()/2, Display.getHeight()/2);
+                    setStatus(State.ST_MAIN_MENU);
+                    //Mouse.setCursorPosition(Display.getWidth()/2, Display.getHeight()/2);
                 }
                 break;
             case ST_MAIN_MENU:
@@ -221,13 +242,13 @@ public final class Menu {
                 {
                     //Button 2
                     System.out.println("Cargar Partida");
-                    setStatus(ST_LOAD_MENU);
+                    setStatus(State.ST_LOAD_MENU);
                 }
                 else if(focus.getElementId()==2)
                 {
                     //Button 3
                     System.out.println("Opciones");
-                    setStatus(ST_OPTIONS_MENU);
+                    setStatus(State.ST_OPTIONS_MENU);
                 }
                 else if(focus.getElementId()==3)
                 {
@@ -241,14 +262,14 @@ public final class Menu {
                 if(focus.getElementId()==0)
                 {
                     System.out.println("Inicio");
-                    setStatus(ST_MAIN_MENU);
+                    setStatus(State.ST_MAIN_MENU);
                 }
                 break;
             case ST_OPTIONS_MENU:
                 if(focus.getElementId()==0)
                 {
                     System.out.println("Inicio");
-                    setStatus(ST_MAIN_MENU);
+                    setStatus(State.ST_MAIN_MENU);
                 }
                 break;
             case ST_GAME_MENU:
@@ -324,35 +345,25 @@ public final class Menu {
             case ST_INTRO:
                 break;
             case ST_INTRO_MENU:
-                if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+                if(Keyboard.getEventKeyState())
                 {
-                    Main.cleanUp();
-                    System.exit(1);
-                }
-                else if(Keyboard.getEventKeyState())
-                {
-                    setStatus(ST_MAIN_MENU);
+                    setStatus(State.ST_MAIN_MENU);
                     Mouse.setCursorPosition(Display.getWidth()/2, Display.getHeight()/2);
                 }
                 
                 break;
             case ST_MAIN_MENU:
-                if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
-                {
-                    Main.cleanUp();
-                    System.exit(1);
-                }
                 break;
             case ST_LOAD_MENU:
                 if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
                 {
-                    setStatus(ST_MAIN_MENU);
+                    setStatus(State.ST_MAIN_MENU);
                 }
                 break;
             case ST_OPTIONS_MENU:
                 if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
                 {
-                    setStatus(ST_MAIN_MENU);
+                    setStatus(State.ST_MAIN_MENU);
                 }
                 break;
             case ST_GAME_MENU:

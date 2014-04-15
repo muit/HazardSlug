@@ -6,12 +6,16 @@ package com.base.engine;
 
 //import com.base.GUI.*;
 import com.base.GUI.Menu;
-import static com.base.GUI.Menu.ST_MAIN_MENU;
+import com.base.GUI.Menu.State;
+import static com.base.GUI.Menu.State.ST_MAIN_MENU;
 import com.base.game.Config;
 import com.base.game.Game;
 import com.base.game.Time;
 import com.base.game.gameobject.Unit;
 import com.base.game.map.Block;
+import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryMXBean;
+import java.lang.management.MemoryUsage;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -35,13 +39,21 @@ public class Main {
     private static boolean done, menuEnabled;
     public static void main(String[] args)
     {
+        
+        MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
         done = false;
         
         initDisplay();
         initGL();
         initMenu();
         
-        gameLoop();
+        
+        try{
+            gameLoop();
+        }
+        catch(StackOverflowError e){
+            initMenu(State.ST_ERROR_PAGE, e+"");
+        }
         
         cleanUp();
     }
@@ -74,7 +86,6 @@ public class Main {
     	{
             game.getInput();
     	}
-        
     }
     private static void update()
     {
@@ -82,7 +93,7 @@ public class Main {
     }
     private static void render()
     {
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glLoadIdentity();
         //Draw/////////////////////
         game.render();
@@ -96,7 +107,7 @@ public class Main {
     }
     private static void renderMenu()
     {
-    	glClear(GL_COLOR_BUFFER_BIT);
+    	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glLoadIdentity();
         //Draw/////////////////////
         menu.render();
@@ -107,20 +118,36 @@ public class Main {
     private static void gameLoop()
     {
         Time.init();
-        while(!Display.isCloseRequested() && !done)
-        {
-            Time.update();
-            getInput();
-            if(menuEnabled)
+        
+        MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
+        try{
+            while(!Display.isCloseRequested() && !done)
             {
-            	updateMenu();
-            	renderMenu();
+                if(menuEnabled)
+                { 
+                    Time.update();
+                    menu.getInput();
+                    updateMenu();
+                    renderMenu();
+                    if(!menuEnabled)
+                        menu = null;
+                }
+                else
+                {
+                    Time.update();
+                    game.getInput();
+                    update();
+                    render();
+                    if(menuEnabled)
+                        game = null;
+                }
             }
-            else
-            {
-	            update();
-	            render();
-            }
+        }catch(OutOfMemoryError e){
+            //Security To Error
+            MemoryUsage heapUsage = memoryBean.getHeapMemoryUsage();
+            long maxMemory = heapUsage.getMax() / (1024*1024);//(1024*1024) = Mb
+            long usedMemory = heapUsage.getUsed() / (1024*1024);
+            initMenu(State.ST_ERROR_PAGE, e+" : Memory Used: " + usedMemory + "Mb/" + maxMemory + "Mb");
         }
     }
     
@@ -144,15 +171,21 @@ public class Main {
         glOrtho(0, Display.getWidth(), 0, Display.getHeight(), -1, 1);
         glEnable(GL_TEXTURE_2D);
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        
+
+        glShadeModel(GL_SMOOTH);
+
         // enable alpha blending
+        glEnable(GL_ALPHA);
         glEnable(GL_BLEND);
+        glEnable(GL_DEPTH);
+        glDepthFunc(GL_EQUAL);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        
+
         glMatrixMode(GL_MODELVIEW);
-        glDisable(GL_DEPTH_TEST);
-        
-        glClearColor(0, 0, 0, 0);
+
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        glClearDepth(1.0f);
+        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     }
     private static void initGame()
     {
@@ -164,20 +197,28 @@ public class Main {
     	menu = new Menu();
     	menuEnabled = true;
     }
-    private static void initMenu(int Status)
+    private static void initMenu(State st)
     {
-    	menu = new Menu(Status);
+    	menu = new Menu(st);
+    	menuEnabled = true;
+    }
+    private static void initMenu(State st, String err_message)
+    {
+    	menu = new Menu(st, err_message);
     	menuEnabled = true;
     }
     public static void cleanUp()
     {
+        menu = null;
+        game = null;
         Display.destroy();
         Keyboard.destroy();
         Mouse.destroy();
     }
-    public static void heavyClose()
+    public static void Close()
     {
         done = true;
+        cleanUp();
     }
     public static void spawnGUI(int id)
     {

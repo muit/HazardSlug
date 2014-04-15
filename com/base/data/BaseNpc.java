@@ -111,13 +111,13 @@ public class BaseNpc {
                 tex = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(path));
             } catch (IOException ex) {
                 System.out.println("Textura(npc): "+id+" no se pudo cargar.");
-                Main.heavyClose();
+                Main.Close();
                 
             }
             if(tex == null)
             {
                 System.out.println("Textura(npc): "+id+" no se pudo cargar.");
-                Main.heavyClose();
+                Main.Close();
             }
         }
         return tex;

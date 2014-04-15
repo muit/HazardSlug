@@ -52,14 +52,14 @@ public class Element {
             if(tex == null)
             {
                 System.out.println("Textura: "+name+" no se pudo cargar.");
-                Main.heavyClose();
+                Main.Close();
             }
             return tex;
         } 
         catch (IOException ex) 
         {
             System.out.println("Textura: "+name+" no se pudo cargar.");
-            Main.heavyClose();
+            Main.Close();
         }
         /*
         sx = tex.getWidth();
