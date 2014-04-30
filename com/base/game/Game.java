@@ -5,6 +5,7 @@
 package com.base.game;
 
 import com.base.data.DataBase;
+import com.base.engine.Background;
 import com.base.engine.Camera;
 import com.base.engine.GameObject;
 import com.base.engine.Main;
@@ -41,6 +42,7 @@ public class Game
     
     public Game()
     {
+        Hour.reset();
         mapMg = new MapManager(3, this);
         map = mapMg.getMap();
         
@@ -127,6 +129,7 @@ public class Game
     
     public void render()
     {
+        Background.renderBG();
         map.render((int)player.getX(), Display.getWidth()/16);
         for(GameObject go : objects)
             go.render();
@@ -134,6 +137,7 @@ public class Game
             go.render();
         for(Effect go : effects)
             go.render();
+        Background.renderDarkness();
     }
     @SuppressWarnings("unused")
     private void removeObject(GameObject target)

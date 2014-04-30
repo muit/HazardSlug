@@ -13,16 +13,15 @@ import com.base.game.Event;
  * @author Miguel_F
  */
 public class Hour {
-    public static final int 
-            msecXMin = 2000;
+    public static int msecXMin = 1500;
     
     private static int minute = 0;
     private static Event delay = new Event(0, msecXMin, true);
-    private static int hour = 0, minutes = 0;
+    private static int hour = 7, minutes = 0;
     public static void reset()
     {
         delay = new Event(0, msecXMin, true);
-        hour = 0;
+        hour = 7;
         minutes = 0;
         minute = 0;
     }
@@ -71,5 +70,14 @@ public class Hour {
             return ""+minutes;
         else
             return "0"+minutes;
+    }
+    public static int getTotalMinutes()
+    {
+        return minutes+hour*60;
+    }
+    public static void setInterval(int interval)
+    {
+        msecXMin = interval;
+        delay = new Event(0, msecXMin, true);
     }
 }

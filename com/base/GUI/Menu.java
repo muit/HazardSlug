@@ -9,12 +9,14 @@ package com.base.GUI;
 import static com.base.GUI.Text.CENTER;
 import static com.base.GUI.Text.LEFT;
 import static com.base.GUI.Text.RIGHT;
+import com.base.engine.Background;
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 import com.base.engine.Camera;
+import com.base.engine.Hour;
 import com.base.engine.Main;
 import com.base.game.Config;
 import com.base.game.map.Block;
@@ -49,6 +51,7 @@ public final class Menu {
     	scene = new ArrayList<>();
         texts = new ArrayList<>();
     	setStatus(State.ST_INTRO);
+        load();
     }
     public Menu(State st)
     {
@@ -56,6 +59,7 @@ public final class Menu {
     	scene = new ArrayList<>();
         texts = new ArrayList<>();
     	setStatus(st);
+        load();
     }
     
     public Menu(State st, String err_message)
@@ -65,6 +69,12 @@ public final class Menu {
         texts = new ArrayList<>();
         this.err_message = err_message;
     	setStatus(st);
+        load();
+    }
+    public void load()
+    {
+        Hour.reset();
+        Hour.setInterval(50);
     }
     
     public void setStatus(State st)
@@ -315,6 +325,7 @@ public final class Menu {
     
     public void update()
     {
+        Hour.update();
         for(Block bl : scene)
             bl.updateSpr();
         
@@ -328,6 +339,8 @@ public final class Menu {
     }
     public void render()
     {
+        Background.renderBG();
+        
     	for(Block bl : scene)
             bl.render();
         
@@ -336,6 +349,8 @@ public final class Menu {
         
         for(Text tx : texts)
             tx.render();
+        
+        //Background.renderDarkness();
     }
     
     public void getInput()

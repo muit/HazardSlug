@@ -145,6 +145,7 @@ public class Main {
         }catch(OutOfMemoryError e){
             //Security To Error
             MemoryUsage heapUsage = memoryBean.getHeapMemoryUsage();
+            System.gc();
             long maxMemory = heapUsage.getMax() / (1024*1024);//(1024*1024) = Mb
             long usedMemory = heapUsage.getUsed() / (1024*1024);
             initMenu(State.ST_ERROR_PAGE, e+" : Memory Used: " + usedMemory + "Mb/" + maxMemory + "Mb");
