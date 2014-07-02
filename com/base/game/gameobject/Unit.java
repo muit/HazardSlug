@@ -12,6 +12,7 @@ import com.base.game.text.Log;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glTranslatef;
+import org.lwjgl.util.vector.Vector2f;
 
 /**
  *
@@ -36,10 +37,12 @@ public class Unit extends GameObject
     {
     	this.id = id;
         this.type = 3;
-        this.x = x;
-        this.y = y;
-        this.sx = sx;
-        this.sy = sy;
+        vectors = new Vector2f[] {
+            new Vector2f(x, y),
+            new Vector2f(x, y + sy),
+            new Vector2f(x + sx, y + sy),
+            new Vector2f(x + sx, y)
+        };
         spr = new UnitSprite(id,sx,sy);
     }
     
@@ -86,11 +89,20 @@ public class Unit extends GameObject
     }
     public void DoCast(Unit target, int id)
     {
+        DoCast(target, id, 0, 0);
+    }
+    public void DoCast(Unit target, int id, float x, float y)
+    {
         //Scripts de spell
         switch(id)
         {
             case 0: //Salpicadura
-                EffectManager.createEffect(this, id, x, y, target, 0.21f, true);
+                Log.sendMessageToAll(getName()+" lanzó Salpicadura.");
+                EffectManager.createEffect(this, id, getX(), getY(), new Vector2f(x, y), 0.25f);
+                break;
+            case 3: //Salpicadura Inteligente
+                Log.sendMessageToAll(getName()+" lanzó Salpicadura Inteligente a "+target.getName()+".");
+                EffectManager.createEffect(this, 0, getX(), getY(), target, 0.21f, true);
                 break;
             case 1: //Mordisco
                 Log.sendMessageToAll(target.getName()+" recibió Mordisco.");
@@ -102,7 +114,13 @@ public class Unit extends GameObject
             //On Effect Hit(id+1000): 
             case 1000: //Salpicadura 
                 Log.sendMessageToAll(target.getName()+" recibió Salpicadura.");
+                target.modifyHealth(1);
                 break;
+                
+            case 1001: //Mordisco
+                Log.sendMessageToAll(target.getName()+" recibió Mordisco.");
+                break;
+                
             case 1002: //Escupitajo
             	Log.sendMessageToAll(target.getName()+" recibió Escupitajo.");
             	break;
@@ -123,7 +141,7 @@ public class Unit extends GameObject
     {
         glPushMatrix();
         {
-            glTranslatef(x*16, y*16, 0);
+            glTranslatef(getX()*16, getY()*16, 0);
             spr.render();
         }
         glPopMatrix();
@@ -131,7 +149,7 @@ public class Unit extends GameObject
     
     protected void move()
     {
-        x+=getSpeed() * movx * getDelta();
+        setX(getX()+(getSpeed() * movx * getDelta()));
         if(movx == MOVE_LEFT)
         	spr.setAnimation(1);
         else if(movx == MOVE_RIGHT)
@@ -143,5 +161,11 @@ public class Unit extends GameObject
     public float getSpeed()
     {
         return stats.getSpeed();
+    }
+    
+    public boolean pointInside(float pX, float pY)
+    {
+        System.out.println(pX+" "+getX());
+        return ((getX() < pX && getX()+getSX() > pX) && (getY() < pY && getY() + getSY() > pY));
     }
 }

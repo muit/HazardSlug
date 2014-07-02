@@ -23,8 +23,10 @@ public class Npc extends Unit
     protected float DISTANCE_RANGE=0;
     protected float DAMPING;
     protected float ATTACK_SPEED;
-    protected Delay hitDelay;
+    private Delay hitDelay;
+    private Delay diedDisappearDelay;
     protected int SIZE;
+    private int miliSecondsToDisappear = 12000;
     private boolean meleRangeCorrect;
     private float positionBeforeCombatX, positionBeforeCombatY;
     
@@ -38,45 +40,62 @@ public class Npc extends Unit
         justEnterCombat = false;
         hitDelay = new Delay(0);
         hitDelay.end();
+        diedDisappearDelay = new Delay(0);
+        diedDisappearDelay.end();
         toCreature();
+        setDiedDisappearDelay(miliSecondsToDisappear);
     }
     
     @Override
     public void update()
     {
-        if(target == null)
+        if(stats.getHealth()>0)
         {
-            if(justEnterCombat)
-                justEnterCombat = false;
-            look();
-        }
-        else if(!getTarget().isAlive())
-        {
-            if(goToPos(positionBeforeCombatX,positionBeforeCombatY))
-                target=null;
+            //ALIVE
+            if(target == null)
+            {
+                if(justEnterCombat)
+                    justEnterCombat = false;
+                look();
+            }
+            else if(!getTarget().isAlive())
+            {
+                if(goToPos(positionBeforeCombatX,positionBeforeCombatY))
+                    target=null;
+            }
+            else
+            {
+                if(!justEnterCombat)
+                {
+                    justEnterCombat = true;
+                    EnterCombat(target);
+                    positionBeforeCombatX = getX();
+                    positionBeforeCombatY = getY();
+                }
+                if(!meleRangeCorrect)
+                    chase();
+                if(Util.LineOfSight(this,target)&& getTarget().isAlive())
+                    Attack();
+            }
         }
         else
         {
-            if(!justEnterCombat)
+            //NOT ALIVE
+            if(stats.hasJustDied())
+                JustDied(target);
+            Died();
+            if(diedDisappearDelay.over())
             {
-                justEnterCombat = true;
-                EnterCombat(target);
-                positionBeforeCombatX = x;
-                positionBeforeCombatY = y;
+                diedDisappearDelay.reset();
+                this.remove = true;
             }
-            if(!meleRangeCorrect)
-                chase();
-            if(Util.LineOfSight(this,target)&& getTarget().isAlive())
-                Attack();
         }
-        if(stats.getHealth()<=0)
-            JustDied(target);
         spr.update();
     }
     
     protected void look()
     {
-        ArrayList<Unit> objects = Main.sphereCollide(x, y, 10);
+        ArrayList<Unit> objects = Main.sphereCollide(getX(), getY(), 10);
         
         for( Unit go : objects)
         {
@@ -92,10 +111,10 @@ public class Npc extends Unit
     	float speed = getStats().getSpeed() * getDelta();
     	
     	// arctg(m)  m->v2/v1 (v1, v2)->(x-x2), (y-y2)
-    	double alpha = Math.PI + Math.atan2(-(getTarget().getY()-y), -(getTarget().getX()-x));
+    	double alpha = Math.PI + Math.atan2(-(getTarget().getY()-getY()), -(getTarget().getX()-getX()));
     	
-    	x += speed * Math.cos(alpha);
-    	y += speed * Math.sin(alpha);
+    	setX(getX()+(float)(speed * Math.cos(alpha)));
+    	setY(getY()+(float)(speed * Math.sin(alpha)));
     	
     	if(alpha>Math.PI/2 && alpha<Math.PI+Math.PI/2)
         	spr.setAnimation(1);
@@ -108,14 +127,18 @@ public class Npc extends Unit
     	float speed = getStats().getSpeed() * getDelta();
     	
     	// arctg(m)  m->v2/v1 (v1, v2)->(x-x2), (y-y2)
-    	double alpha = Math.PI + Math.atan2(-(Y-y), -(X-x));
+    	double alpha = Math.PI + Math.atan2(-(Y-getY()), -(X-getX()));
     	
-    	x += speed * Math.cos(alpha);
-    	y += speed * Math.sin(alpha);
-        return x==X && y==Y;
+    	setX(getX()+(float)(speed * Math.cos(alpha)));
+    	setY(getY()+(float)(speed * Math.sin(alpha)));
+        return getX()==X && getY()==Y;
     }
     
     protected void Attack()
+    {
+        
+    }
+    protected void Died()
     {
         
     }
@@ -159,9 +182,10 @@ public class Npc extends Unit
     {
         if(hitDelay.over())
         {
-            if(Util.distSqrt(x, y, target.getX(), target.getY())< Math.pow(MELEE_RANGE, 2))
+            if(Util.distSqrt(getX(), getY(), target.getX(), target.getY())< Math.pow(MELEE_RANGE, 2))
             {
                 meleRangeCorrect = true;
+                //Obtener Daño de habilidad de la DB!
                 int damage = 1;
                 getTarget().modifyHealth(damage);
                 resetAttackDelay();
@@ -169,5 +193,15 @@ public class Npc extends Unit
             else
                 meleRangeCorrect = false;
         }
+    }
+    
+    public void setDiedDisappearDelay(int time)
+    {
+        diedDisappearDelay = new Delay(time);
+        diedDisappearDelay.end();
+    }
+    public void resetDiedDisappearDelay()
+    {
+        diedDisappearDelay.start();
     }
 }

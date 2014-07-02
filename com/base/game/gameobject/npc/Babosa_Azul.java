@@ -19,11 +19,11 @@ public class Babosa_Azul extends Npc
     private final EventsMap event = new EventsMap();
     
     @SuppressWarnings("unused")
-	private final int EVENT_SALPICADURA = 0,
+	private final int EVENT_SALPICADURA_INTELIGENTE = 0,
                 EVENT_MORDEDURA   = 1;
     
     @SuppressWarnings("unused")
-	private final int SPELL_SALPICADURA = 0,
+	private final int SPELL_SALPICADURA_INTELIGENTE = 3,
                 SPELL_MORDEDURA   = 1;
     
     
@@ -33,6 +33,7 @@ public class Babosa_Azul extends Npc
         MELEE_RANGE = (float)1.5;
         DAMPING = 1.0f;
         setAttackDelay(0.8f);//0.8f: 1sec*% attack speed
+        stats.setName("Babosa Azul");
     }
     
     @Override
@@ -41,7 +42,7 @@ public class Babosa_Azul extends Npc
         //When npc enter combat:
         System.out.println("Zarigüella quiere sapatos para comer!!");
         
-        event.ScheduleEvent(EVENT_SALPICADURA, 2000);
+        event.ScheduleEvent(EVENT_SALPICADURA_INTELIGENTE, 2000);
         //End-------------------
     }
     
@@ -57,8 +58,8 @@ public class Babosa_Azul extends Npc
                 switch(id)
                 {
                 case 0:
-                    DoCast(getTarget(),SPELL_SALPICADURA);
-                    event.RestartEvent(EVENT_SALPICADURA);
+                    DoCast(getTarget(), SPELL_SALPICADURA_INTELIGENTE);
+                    event.RestartEvent(EVENT_SALPICADURA_INTELIGENTE);
                     break;
                 case 1:
                     //codigo si evento 1 se ejecuta
@@ -78,9 +79,13 @@ public class Babosa_Azul extends Npc
     @Override
     protected void JustDied(Unit killer)
     {
-    
+        System.out.println("JustDied");
     }
-    
+    @Override
+    protected void Died()
+    {
+        System.out.println("Died");
+    }
     @Override
     protected void DamageTaken(Unit who)
     {

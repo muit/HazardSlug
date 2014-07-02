@@ -18,6 +18,7 @@ import org.lwjgl.opengl.Display;
 import com.base.engine.Camera;
 import com.base.engine.Hour;
 import com.base.engine.Main;
+import com.base.engine.lightning.Lighting;
 import com.base.game.Config;
 import com.base.game.map.Block;
 import org.lwjgl.input.Mouse;
@@ -33,7 +34,7 @@ public final class Menu {
     private final ArrayList<Text> texts;
     
     private State status;
-    private final String version = "Beta 0.1.27";
+    private final String version = "Beta 0.1.3";
     private String err_message = null;
     public static enum State {
         ST_INTRO,
@@ -325,6 +326,7 @@ public final class Menu {
     
     public void update()
     {
+        Lighting.render();
         Hour.update();
         for(Block bl : scene)
             bl.updateSpr();

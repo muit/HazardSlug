@@ -6,11 +6,14 @@
 
 package com.base.game.map;
 
+import com.base.engine.Main;
 import com.base.game.Game;
 import com.base.game.Util;
+import com.base.game.gameobject.npc.Babosa_Azul;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import javax.swing.text.html.parser.Entity;
 
 /**
  *
@@ -55,6 +58,13 @@ public class Map implements Serializable {
                 if(chunks[i]==null)
                     chunks[i] = new Chunk();
                 chunks[i].generate(this, 645376435, i, ChunkMapSize);
+                
+                for(int e = 0; e < Util.random(0, 3); e++){
+                    int xSelected = Util.random(e*chunks[i].getChunkSizeX(), (e+1)*chunks[i].getChunkSizeX());
+                    Main.getGame().addEntity(
+                        new Babosa_Azul(xSelected, 245/*chunks[i].getFirstBlockIn(xSelected)*/, 1)
+                    );
+                }
             }
     }
     public void render(float playerx, float playerWidth)

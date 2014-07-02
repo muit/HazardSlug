@@ -70,6 +70,16 @@ public class Chunk {
     {
         return cubes[x];
     }
+    public int getFirstBlockIn(int x){
+        //BUGS AQUI
+        for(int i = chunkSizeY-1; i > 0; i--)
+        {
+            if(cubes[x][i] != null)
+                if(cubes[x][i].getId() != 0)
+                    return i;
+        }
+        return -1;
+    }
     
     public void generate(Map map, int seed, int id, int maxid)
     {

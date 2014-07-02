@@ -1,10 +1,12 @@
+package com.base.game.text;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-package com.base.game.text;
+
 
 import com.base.engine.Main;
 import com.base.game.gameobject.Player;

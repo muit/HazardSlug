@@ -4,6 +4,7 @@
  */
 package com.base.game.gameobject;
 
+import com.base.engine.Camera;
 import java.util.ArrayList;
 
 import com.base.engine.Main;
@@ -12,6 +13,7 @@ import com.base.game.gameobject.item.Item;
 import com.base.game.map.Block;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
  
 /**
  *
@@ -28,6 +30,15 @@ public class Player extends Unit
     private boolean inGround;
     private Block groundBlock;
     private ArrayList<Block> nearMapBlocks;
+    
+    @SuppressWarnings("unused")
+    private final int EVENT_SALPICADURA = 0,
+                EVENT_MORDEDURA   = 1;
+    
+    @SuppressWarnings("unused")
+    private final int SPELL_SALPICADURA = 0,
+                SPELL_MORDEDURA   = 1;
+    
     public Player(float X, float Y)
     {
     	modX = 1.5f;
@@ -40,7 +51,7 @@ public class Player extends Unit
         mapColision = false;
         groundBlock = null;
         nearMapBlocks = new ArrayList<>();
-        stats.setSpeed(0.20f);
+        stats.setSpeed(0.19f);
         toPlayer();
     }
     
@@ -48,49 +59,69 @@ public class Player extends Unit
     {
     	while (Keyboard.next()) 
     	{
-	        //if(!chatMode){
-	            if(getStats().isAlive())
-	            {
-	                if(Keyboard.isKeyDown(Keyboard.KEY_A))
-	                {
-	                    movx = MOVE_LEFT;
-	                    spr.setAnimation(1);
-	                }
-	                else if(Keyboard.isKeyDown(Keyboard.KEY_D))
-	                {
-	                    movx = MOVE_RIGHT;
-	                    spr.setAnimation(0);
-	                }
-	                else
-	                {
-	                    movx = MOVE_NULL;
-	                }
-	                
-	                if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
-	                    justJump = true;
-	            }
-	            else
-	            {
-	                Main.spawnGUI(0);
-	                movx = MOVE_NULL;
-	            }
-	        //}
-	        //else{
-	            
-	        //}  
-	    }
+            //if(!chatMode){
+                if(getStats().isAlive())
+                {
+                    if(Keyboard.isKeyDown(Keyboard.KEY_A))
+                    {
+                        movx = MOVE_LEFT;
+                        spr.setAnimation(1);
+                    }
+                    else if(Keyboard.isKeyDown(Keyboard.KEY_D))
+                    {
+                        movx = MOVE_RIGHT;
+                        spr.setAnimation(0);
+                    }
+                    else
+                    {
+                        movx = MOVE_NULL;
+                    }
+
+                    if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
+                        justJump = true;
+                }
+                else
+                {
+                    Main.spawnGUI(0);
+                    movx = MOVE_NULL;
+                }
+            //}
+            //else{
+
+            //}  
+        }
+        while (Mouse.next()) 
+    	{
+            if (Mouse.getEventButtonState()) {
+                if (Mouse.getEventButton() == 0) {
+                    click(Mouse.getX()/16 + Camera.getX()/16, Mouse.getY()/16 + Camera.getY()/16);
+                }
+            }else {
+                if (Mouse.getEventButton() == 0) {
+                }
+            }
+        }
     }
+    
+    private void click(float x, float y)
+    {
+        if(getStats().isAlive())
+        {
+            DoCast(null, SPELL_SALPICADURA, x, y);
+        }
+    }
+    
     @Override
     public void update()
     {
         move();
         fisic();
-        ArrayList<Block> nearMapBlocks = Main.sphereMapCollide(x, y, 5);
+        nearMapBlocks = Main.sphereMapCollide(getX(), getY(), 5);
         for(Block bl : nearMapBlocks)
         	bl.updateSpr();
-        if(y<=-16)//futura mapColision aqui
+        if(getY()<=-16)//futura mapColision aqui
         {
-            y=-16;
+            setY(getY()-16);
             inGround = true;
         }
         if(inGround)
@@ -100,8 +131,8 @@ public class Player extends Unit
         
         if(groundBlock != null)
         {
-            y=Math.round(y);
-            if(x-groundBlock.getX()<-1 || x-groundBlock.getX()>1)
+            setY(Math.round(getY()));
+            if(getX()-groundBlock.getX()<-1 || getX()-groundBlock.getX()>1)
                 groundBlock=null;
             
             gSpeed=0;
@@ -109,7 +140,7 @@ public class Player extends Unit
             if(justJump)
             {
                 stats.setJumping(true);
-                gSpeed=0.25;
+                gSpeed=0.5;
                 justJump = false;
                 groundBlock = null;
             }
@@ -120,12 +151,11 @@ public class Player extends Unit
         }
         else
         {
-            if(gSpeed <= -0.4375)
-                gSpeed=-0.4375;
+            if(gSpeed <= -0.8746)
+                gSpeed=-0.8746;
             else
                 gSpeed += stats.getGravity()*Time.getDelta();
 
-            y += gSpeed;
         }
         inGround = false;
         spr.update();
@@ -133,7 +163,7 @@ public class Player extends Unit
     
     public void fisic()
     {
-        y+=gSpeed;
+        setY(getY() + (float)gSpeed);
     }
     
     
@@ -179,15 +209,6 @@ public class Player extends Unit
     public void inGround(boolean inGround)
     {
         this.inGround = inGround;
-    }
-    public void setY(int y)
-    {
-    this.y = y;
-    }
-    
-    public void setX(int x)
-    {
-    this.x = x;
     }
     public void setGroundBlock(Block groundBlock)
     {

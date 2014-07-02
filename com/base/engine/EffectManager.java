@@ -7,6 +7,7 @@
 package com.base.engine;
 
 import com.base.game.gameobject.Unit;
+import org.lwjgl.util.vector.Vector2f;
 
 /**
  *
@@ -20,6 +21,10 @@ public class EffectManager {
     public static void createEffect(Unit me, int id, float x, float y, float sx, float sy, float speed)
     {
         Main.getGame().createEffect(me, id, x, y, sx, sy, speed);
+    }
+    public static void createEffect(Unit me, int id, float x, float y, Vector2f directionPos, float speed)
+    {
+        Main.getGame().createEffect(me, id, x, y, directionPos, speed);
     }
     public static void createEffect(Unit me, int id, float x, float y, Unit target, float speed, boolean follow)
     {

@@ -8,6 +8,7 @@ package com.base.engine;
 import com.base.GUI.Menu;
 import com.base.GUI.Menu.State;
 import static com.base.GUI.Menu.State.ST_MAIN_MENU;
+import com.base.engine.lightning.Lighting;
 import com.base.game.Config;
 import com.base.game.Game;
 import com.base.game.Time;
@@ -39,12 +40,11 @@ public class Main {
     private static boolean done, menuEnabled;
     public static void main(String[] args)
     {
-        
-        MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
         done = false;
         
         initDisplay();
         initGL();
+        Lighting.init();
         initMenu();
         
         
@@ -80,7 +80,7 @@ public class Main {
     {
     	if(menuEnabled)
     	{
-    		menu.getInput();
+            menu.getInput();
         }
     	else
     	{
@@ -170,11 +170,16 @@ public class Main {
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         glOrtho(0, Display.getWidth(), 0, Display.getHeight(), -1, 1);
+        glMatrixMode(GL_MODELVIEW);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
+        glMatrixMode(GL_MODELVIEW);
         glEnable(GL_TEXTURE_2D);
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-        glShadeModel(GL_SMOOTH);
-
+        //glShadeModel(GL_SMOOTH); No Needed
+        
         // enable alpha blending
         glEnable(GL_ALPHA);
         glEnable(GL_BLEND);
@@ -182,7 +187,6 @@ public class Main {
         glDepthFunc(GL_EQUAL);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-        glMatrixMode(GL_MODELVIEW);
 
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClearDepth(1.0f);
@@ -190,21 +194,26 @@ public class Main {
     }
     private static void initGame()
     {
+        Lighting.reset();
         game = new Game();
         menuEnabled = false;
     }
     private static void initMenu()
     {
+        Lighting.reset();
     	menu = new Menu();
     	menuEnabled = true;
     }
     private static void initMenu(State st)
     {
+        Lighting.reset();
     	menu = new Menu(st);
     	menuEnabled = true;
     }
     private static void initMenu(State st, String err_message)
     {
+        
+        Lighting.reset();
     	menu = new Menu(st, err_message);
     	menuEnabled = true;
     }
@@ -212,6 +221,7 @@ public class Main {
     {
         menu = null;
         game = null;
+        Lighting.cleanup();
         Display.destroy();
         Keyboard.destroy();
         Mouse.destroy();

@@ -10,6 +10,7 @@ import com.base.engine.ItemSprite;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glTranslatef;
+import org.lwjgl.util.vector.Vector2f;
 
 /**
  *
@@ -33,10 +34,12 @@ public class Item extends GameObject {
         this.id = id;
         this.name = db.getItemName(id);
         this.type = 3;
-        this.x = x;
-        this.y = y;
-        this.sx = sx;
-        this.sy = sy;
+        vectors = new Vector2f[] {
+            new Vector2f(x, y),
+            new Vector2f(x, y + sy),
+            new Vector2f(x + sx, y + sy),
+            new Vector2f(x + sx, y)
+        };
         spr = new ItemSprite(id,sx,sy);
     }
     
@@ -45,7 +48,7 @@ public class Item extends GameObject {
     {
         glPushMatrix();
         {
-            glTranslatef(x*16, y*16, 0);
+            glTranslatef(getX()*16, getY()*16, 0);
             spr.render();
         }
         glPopMatrix();
@@ -53,7 +56,7 @@ public class Item extends GameObject {
     
     protected void fisic()
     {
-        y-=getGSpeed()/16;
+        setY(getY()-getGSpeed()/16);
     }
     
     protected float getGSpeed()

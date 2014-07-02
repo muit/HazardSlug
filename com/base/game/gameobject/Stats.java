@@ -21,6 +21,7 @@ public class Stats {
     private boolean jumping;
     private boolean leveable;
     private boolean alive;
+    private boolean trigger_JustDied = false;
     private float gravity;
     
     public Stats(int xp, boolean leveable)
@@ -45,7 +46,7 @@ public class Stats {
         energy = maxEnergy;
         alive = true;
         jumping=false;
-        gravity = -0.0105f;
+        gravity = -0.0210f;
     }
     //XP////////////////////////////////////////////////////////////////////////
     public void addXp(int plus)
@@ -90,7 +91,32 @@ public class Stats {
     }
     public void setHealth(int health)
     {
-        this.health = health;
+        if(health <= 0)
+        {
+            health = 0;
+            alive = false;
+            trigger_JustDied = true;
+        }
+        else
+        {
+            this.health = health;
+        }
+    }
+    public boolean modifyHealth(int live)
+    {
+        int newhealth = health+live;
+        if(newhealth <= 0)
+        {
+            health = 0;
+            alive = false;
+            trigger_JustDied = true;
+            return true;
+        }
+        else
+        {
+            health = newhealth;
+            return false;
+        }
     }
     public int getMaxHealth()
     {
@@ -100,20 +126,12 @@ public class Stats {
     {
         this.maxHealth = maxHealth;
     }
-    public boolean modifyHealth(int live)
-    {
-        int newhealth = health+live;
-        if(newhealth <= 0)
-        {
-            health = 0;
-            alive = false;
+    public boolean hasJustDied(){
+        if(trigger_JustDied){
+            trigger_JustDied = false;
             return true;
         }
-        else
-        {
-            health = newhealth;
-            return false;
-        }
+        return false;
     }
     
     public boolean isAlive()
