@@ -8,10 +8,7 @@ package com.base.engine.net;
 
 import com.base.engine.net.packets.Connect_Packet;
 import static com.base.engine.net.packets.Connect_Packet.*;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 import java.net.UnknownHostException;

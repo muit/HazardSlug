@@ -6,7 +6,6 @@
 
 package com.base.engine;
 
-import com.base.engine.EffectSprite;
 import com.base.game.Delay;
 import com.base.game.Time;
 import com.base.game.Util;
